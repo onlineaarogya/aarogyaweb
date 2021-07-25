@@ -15,6 +15,7 @@ import {
 import { IconText } from 'components/atoms';
 import { SectionHeader } from 'components/molecules';
 import AlertMassage from '../../../../components/helper/AlertMessage';
+import MetaTitle from 'components/helper/MetaTitle';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -63,25 +64,16 @@ const Application = props => {
     defaultMatches: true,
   });
   const [status, setStatusBase] = React.useState('');
-  const handleSubmit = values => {
-    let data = new FormData();
-
-    data.append('field_resume_c', values.photo1);
-    return fetch('http://localhost:8888/oaarogya/web/api/post-contact', {
-      method: 'post',
-      // headers: new Headers({
-      //   Accept: 'application/json',
-      // }),
-      body: data,
-    })
-      .then(response => response.json())
-      .catch(error => console.log(error));
-  };
 
   console.log(status);
 
   return (
     <div className={className} {...rest}>
+      <MetaTitle
+        title={`${api_data.title} | OnlineAarogya}`}
+        metaKeyWord="Jobs, OnlineAarogya"
+        metaDescription="ACPL is a start-up in the field of medical healthcare including tele-medicine. The software platform will enable patients to search doctors for various specialties, check their profile, book appointment, and take consultation. The company is going to start the pilot launch by end of Aug 2021 and a full-scale launch of services by end of Oct 2021. The company’s mission is to create medical healthcare eco-system accessible, easier and better in terms of quality especially serving to the rural and non-metro geographies, which constitutes more than 75% of the population."
+      />
       <SectionHeader
         title="Apply fo this job"
         // subtitle="After 3 days all of your offers will arrive and you will have another 7 days to select your new company."
