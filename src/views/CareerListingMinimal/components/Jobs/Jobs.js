@@ -20,9 +20,15 @@ const Jobs = props => {
         subtitle="Welcome to our Careers section. Please review the positions we are currently hiring for and apply to the ones that interest you."
         subtitleColor="textPrimary"
         ctaGroup={[
-          <Button color="primary" size="large" variant="contained">
-            About the company
-          </Button>,
+          <>
+            <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/about-us`}>
+              <a>
+                <Button color="primary" size="large" variant="contained">
+                  About the company
+                </Button>
+              </a>
+            </Link>
+          </>,
         ]}
         data-aos="fade-up"
       />

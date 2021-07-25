@@ -64,6 +64,7 @@ const Application = props => {
     defaultMatches: true,
   });
   const [status, setStatusBase] = React.useState('');
+  const [fileName, setFileName] = React.useState('');
 
   console.log(status);
 
@@ -121,6 +122,7 @@ const Application = props => {
             data.append('field_email', values.email);
             data.append('body', values.massage);
             data.append('field_applied_for_', values.nid);
+            // console.log('dsds',values.resume);
             return fetch(
               `${process.env.NEXT_PUBLIC_DB_HOST}/api/post-contact`,
               {
@@ -148,7 +150,13 @@ const Application = props => {
                 setSubmitting(false);
                 resetForm(values);
               })
-              .catch(error => console.log(error));
+              .catch(error => {
+                setStatusBase({
+                  key: 22,
+                  status: 'error',
+                  msg: error,
+                });
+              });
           }}
         >
           {({
@@ -230,9 +238,11 @@ const Application = props => {
                       name="file"
                       onChange={event => {
                         setFieldValue('resume', event.target.files[0]);
+                        setFileName(event.target.files[0].name);
                       }}
                       style={{ display: 'none' }}
                     />
+                    <span style={{ marginLeft: '10px' }}>{fileName}</span>
                   </Button>
                 </Grid>
 
