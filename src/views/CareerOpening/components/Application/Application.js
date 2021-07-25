@@ -200,6 +200,7 @@ const Application = props => {
                     helperText={touched.email && errors.email}
                     label="Enter your email address"
                     name="email"
+                    type="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.email}
