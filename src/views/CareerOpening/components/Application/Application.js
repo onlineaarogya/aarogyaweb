@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 const Application = props => {
   const { api_data, className, ...rest } = props;
-  console.log('api', api_data);
+  // console.log('api', api_data);
 
   const classes = useStyles();
 
@@ -139,7 +139,7 @@ const Application = props => {
                   status: 'success',
                   msg:
                     'Your application for the' +
-                    jobName +
+                    values.jobName +
                     'job has been successfully submitted.',
                 });
                 setSubmitting(false);
