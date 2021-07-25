@@ -125,6 +125,7 @@ const Application = props => {
               `${process.env.NEXT_PUBLIC_DB_HOST}/api/post-contact`,
               {
                 method: 'post',
+                mode: 'no-cors',
                 // headers: new Headers({
                 //   Accept: 'application/json',
                 // }),
