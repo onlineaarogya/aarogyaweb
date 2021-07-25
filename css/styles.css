@@ -1,0 +1,31 @@
+.MuiButton-label {
+  font-weight: 700 !important;
+}
+.category > .card-base__content {
+  padding: 16px 21px !important;
+}
+
+.MuiTab-wrapper {
+  /* width: 100%;
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center; */
+  font-size: 15px;
+  font-weight: 600;
+}
+th {
+  font-weight: bold !important;
+}
+.MuiButton-root {
+  text-transform: capitalize !important;
+}
+.MuiTab-root {
+  text-transform: capitalize !important;
+}
+
+@media only screen and (min-device-width: 480px) {
+  .mobileContainer {
+    margin: 0px -25px;
+  }
+}
