@@ -113,7 +113,7 @@ const Application = props => {
               .max(255)
               .required('email is required'),
           })}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { resetForm, setSubmitting }) => {
             let data = new FormData();
 
             data.append('title', values.full_name);
@@ -125,7 +125,7 @@ const Application = props => {
               `${process.env.NEXT_PUBLIC_DB_HOST}/api/post-contact`,
               {
                 method: 'post',
-                mode: 'no-cors',
+                // mode: 'no-cors',
                 // headers: new Headers({
                 //   Accept: 'application/json',
                 // }),
@@ -134,7 +134,9 @@ const Application = props => {
             )
               .then(response => response.json())
               .then(result => {
-                console.log('Success:', result);
+                // console.log('Success:', result);
+                // console.log(result);
+
                 setStatusBase({
                   key: 22,
                   status: 'success',
@@ -144,6 +146,7 @@ const Application = props => {
                     'job has been successfully submitted.',
                 });
                 setSubmitting(false);
+                resetForm(values);
               })
               .catch(error => console.log(error));
           }}
@@ -263,6 +266,7 @@ const Application = props => {
                     size="large"
                     type="submit"
                     variant="contained"
+                    // onClick={e => resetForm()}
                   >
                     Apply Now
                   </Button>
