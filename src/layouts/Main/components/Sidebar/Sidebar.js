@@ -9,7 +9,7 @@ import { SidebarNav } from './components';
 const useStyles = makeStyles(theme => ({
   drawer: {
     width: '100%',
-    maxWidth: 325,
+    maxWidth: 225,
   },
   root: {
     height: '100%',
@@ -33,9 +33,9 @@ const Sidebar = props => {
       open={open}
       variant={variant}
     >
-      {/* <div {...rest} className={clsx(classes.root, className)}>
+      <div {...rest} className={clsx(classes.root, className)}>
         <SidebarNav className={classes.nav} pages={pages} onClose={onClose} />
-      </div> */}
+      </div>
     </Drawer>
   );
 };

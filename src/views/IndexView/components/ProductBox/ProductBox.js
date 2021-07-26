@@ -65,7 +65,7 @@ const ProductBox = props => {
       authorPhoto: {
         src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/onlineConsult.png',
         srcSet:
-          process.env.NEXT_PUBLIC_BASE_URL + '/assets/onlineConsult@2x.png 2x',
+          process.env.NEXT_PUBLIC_BASE_URL + '/assets/onlineConsult.png 2x',
       },
       authorName: 'Online Aarogya',
       authorOccupation: 'Growth Marketer, Crealytics',
@@ -76,8 +76,7 @@ const ProductBox = props => {
       authorPhoto: {
         src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/pet-Consultation.png',
         srcSet:
-          process.env.NEXT_PUBLIC_BASE_URL +
-          '/assets/pet-Consultation@2x.png 2x',
+          process.env.NEXT_PUBLIC_BASE_URL + '/assets/pet-Consultation.png 2x',
       },
       authorName: 'Pet Aarogya',
       authorOccupation: 'Lead Generation, Alternative Capital',
@@ -87,7 +86,7 @@ const ProductBox = props => {
     {
       authorPhoto: {
         src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/MEDI-FILE.png',
-        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/MEDI-FILE@2x.ng 2x',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/MEDI-FILE.png 2x',
       },
       authorName: 'MediFiles',
       authorOccupation: 'Head of Operations, Parkfield Commerce',
@@ -97,7 +96,7 @@ const ProductBox = props => {
     {
       authorPhoto: {
         src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/yoga.png',
-        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/yoga@2x.png 2x',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/yoga.png 2x',
       },
       authorName: 'ShapeItUp',
       authorOccupation: 'Growth Marketer, Crealytics',
@@ -107,7 +106,7 @@ const ProductBox = props => {
     {
       authorPhoto: {
         src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/mall.png',
-        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/mall@2x.png 2x',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/mall.png 2x',
       },
       authorName: 'Aarogya Mall',
       authorOccupation: 'Lead Generation, Alternative Capital',
@@ -117,8 +116,7 @@ const ProductBox = props => {
     {
       authorPhoto: {
         src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/LETS-tALK.png',
-        srcSet:
-          process.env.NEXT_PUBLIC_BASE_URL + '/assets/LETS-tALK@2x.png 2x',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/LETS-tALK.png 2x',
       },
       authorName: "Let's Talk",
       authorOccupation: 'Head of Operations, Parkfield Commerce',

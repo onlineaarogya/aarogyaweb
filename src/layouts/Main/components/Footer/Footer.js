@@ -251,14 +251,23 @@ const Footer = props => {
                       Aarogya Consult Private Limited
                     </Typography>
                   </ListItem>
-                  <Typography variant="body2" className={classes.menuGroupItem}>
+                  <Typography
+                    variant="body2"
+                    className={(classes.menuGroupItem, classes.navLink)}
+                  >
                     802, Landmark Business Hub, Silvassa, <br></br>Dadra and
                     Nagar Haveli and Daman and Diu, 396230
                   </Typography>
-                  <Typography variant="body2" className={classes.menuGroupItem}>
+                  <Typography
+                    variant="body2"
+                    className={(classes.menuGroupItem, classes.navLink)}
+                  >
                     hr@oaarogya.com
                   </Typography>
-                  <Typography variant="body2" className={classes.menuGroupItem}>
+                  <Typography
+                    variant="body2"
+                    className={(classes.menuGroupItem, classes.navLink)}
+                  >
                     +91 8866126777
                   </Typography>
                 </List>

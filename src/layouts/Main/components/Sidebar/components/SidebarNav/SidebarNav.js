@@ -11,8 +11,10 @@ import {
   ListItemIcon,
   Divider,
   Button,
+  ListItemText,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import Link from 'next/link';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -77,7 +79,7 @@ const SidebarNav = props => {
         </ListItem>
         {item.pages.map((page, i) => (
           <ListItem disableGutters key={i} className={classes.menuGroupItem}>
-            <Typography
+            {/* <Typography
               variant="body2"
               component={'a'}
               href={page.href}
@@ -86,27 +88,28 @@ const SidebarNav = props => {
               onClick={() => onClose()}
             >
               {page.title}
-            </Typography>
+            </Typography> */}
+            hello
           </ListItem>
         ))}
       </List>
     );
   };
 
-  // const LandingPages = () => {
-  //   const { services, apps, web } = landings.children;
-  //   return (
-  //     <div className={classes.menu}>
-  //       <div className={classes.menuItem}>
-  //         <MenuGroup item={services} />
-  //         <MenuGroup item={apps} />
-  //       </div>
-  //       <div className={classes.menuItem}>
-  //         <MenuGroup item={web} />
-  //       </div>
-  //     </div>
-  //   );
-  // };
+  const LandingPages = () => {
+    const { services, apps, web } = landings.children;
+    return (
+      <div className={classes.menu}>
+        <div className={classes.menuItem}>
+          <MenuGroup item={services} />
+          <MenuGroup item={apps} />
+        </div>
+        <div className={classes.menuItem}>
+          <MenuGroup item={web} />
+        </div>
+      </div>
+    );
+  };
 
   const SupportedPages = () => {
     const {
@@ -152,56 +155,50 @@ const SidebarNav = props => {
 
   return (
     <List {...rest} className={clsx(classes.root, className)}>
-      <ListItem className={classes.closeIcon} onClick={() => onClose()}>
-        <ListItemIcon className={classes.listItemIcon}>
-          <CloseIcon fontSize="small" />
-        </ListItemIcon>
+      <ListItem button>
+        <Link href="/">
+          <ListItemText primary="Home" />
+        </Link>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Typography variant="h6" color="textPrimary" gutterBottom>
-          Landings
-        </Typography>
-        {/* <LandingPages /> */}
+      <ListItem button>
+        <Link href="about-us">
+          <ListItemText primary="About Us" />
+        </Link>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Divider className={classes.divider} />
+      <ListItem button>
+        <Link href="career">
+          <ListItemText primary="Career" />
+        </Link>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Typography variant="h6" color="textPrimary" gutterBottom>
-          Pages
-        </Typography>
-        <SupportedPages />
+      <ListItem button>
+        <Link href="contact-us">
+          <ListItemText primary="Contact Us" />
+        </Link>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Divider className={classes.divider} />
+      <ListItem button>
+        <Link href="our-leadership-team">
+          <ListItemText primary="Leadership Team" />
+        </Link>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Typography variant="h6" color="textPrimary" gutterBottom>
-          Account
-        </Typography>
-        <AccountPages />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          variant="outlined"
-          fullWidth
-          component="a"
-          href="/documentation"
-        >
-          Documentation
-        </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button
-          variant="contained"
+
+      <Divider />
+      <ListItem>
+        <Typography
+          variant="body2"
           color="primary"
-          fullWidth
-          component="a"
-          target="blank"
-          href="https://material-ui.com/store/items/the-front-landing-page/"
+          className={classes.menuGroupTitle}
         >
-          Buy Now
-        </Button>
+          Services
+        </Typography>
+      </ListItem>
+      <ListItem button>
+        <ListItemText primary="Quick Consultation" />
+      </ListItem>
+      <ListItem button>
+        <ListItemText primary="Online Consultation" />
+      </ListItem>
+      <ListItem button>
+        <ListItemText primary="In Clinic Appointment" />
       </ListItem>
     </List>
   );

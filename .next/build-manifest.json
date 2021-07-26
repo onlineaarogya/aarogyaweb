@@ -29,10 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/career.js"
     ],
-    "/job-details/[jobId]": [
+    "/coming-soon": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/job-details/[jobId].js"
+      "static/chunks/pages/coming-soon.js"
     ]
   },
   "ampFirstPages": []
