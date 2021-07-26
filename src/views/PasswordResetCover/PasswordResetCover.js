@@ -52,7 +52,7 @@ const PasswordResetCover = () => {
         }
         rightSide={
           <Image
-            src="https://assets.maccarianagency.com/the-front/photos/account/cover-4.jpg"
+            src="assets/logon_bg.jpg"
             className={classes.image}
             lazy={false}
           />

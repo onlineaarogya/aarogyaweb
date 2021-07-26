@@ -3,5 +3,5 @@
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
   "/career": "pages/career.js",
-  "/": "pages/index.js"
+  "/job-details/[jobId]": "pages/job-details/[jobId].js"
 }

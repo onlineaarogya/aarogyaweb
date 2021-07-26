@@ -64,7 +64,7 @@ const SigninCover = () => {
         }
         rightSide={
           <Image
-            src="https://www.booking-wp-plugin.com/wp-content/uploads/2019/06/Banner-11.jpg"
+            src="assets/logon_bg.jpg"
             className={classes.image}
             lazy={false}
           />

@@ -36,55 +36,45 @@ const IndexView = ({ themeMode }) => {
     {
       title: 'Period doubts or Pregnancy',
       icon: {
-        src:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/irregular-painful+period.png',
+        src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Period-Douts.png',
         srcSet:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/irregular-painful+period.png 2x',
+          process.env.NEXT_PUBLIC_BASE_URL + '/assets/Period-Douts.png 2x',
       },
     },
     {
       title: 'Acne, pimple or skin issues',
       icon: {
-        src:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/Acne.png',
-        srcSet:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/Acne.png 2x',
+        src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Pimple.png',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Pimple.png 2x',
       },
     },
     {
       title: 'Performance issues in bed',
       icon: {
-        src:
-          'https://www.practo.com/consult/static/images/top-speciality-sexology.svg',
+        src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Performance-Issue.png',
         srcSet:
-          'https://www.practo.com/consult/static/images/top-speciality-sexology.svg 2x',
+          process.env.NEXT_PUBLIC_BASE_URL + '/assets/Performance-Issue.png 2x',
       },
     },
     {
       title: 'Child not feeling well',
       icon: {
-        src:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/coughing.png',
-        srcSet:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/coughing.png 2x',
+        src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Child-Fever.png',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Child-Fever.png 2x',
       },
     },
     {
       title: 'Depression or anxiety',
       icon: {
-        src:
-          'https://www.practostatic.com/acred/search-assets/2/12-mental-wellness.png',
-        srcSet:
-          'https://www.practostatic.com/acred/search-assets/2/12-mental-wellness.png 2x',
+        src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Depression.png',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Depression.png 2x',
       },
     },
     {
-      title: 'Child not feeling well',
+      title: 'Cold, cough or fever',
       icon: {
-        src:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/coughing.png',
-        srcSet:
-          'https://www.practostatic.com/consult/consult-home/symptoms_icon/coughing.png 2x',
+        src: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Cough.png',
+        srcSet: process.env.NEXT_PUBLIC_BASE_URL + '/assets/Cough.png 2x',
       },
     },
   ];
