@@ -76,7 +76,7 @@ const Application = props => {
         metaDescription="ACPL is a start-up in the field of medical healthcare including tele-medicine. The software platform will enable patients to search doctors for various specialties, check their profile, book appointment, and take consultation. The company is going to start the pilot launch by end of Aug 2021 and a full-scale launch of services by end of Oct 2021. The company’s mission is to create medical healthcare eco-system accessible, easier and better in terms of quality especially serving to the rural and non-metro geographies, which constitutes more than 75% of the population."
       />
       <SectionHeader
-        title="Apply fo this job"
+        title="Apply for this job"
         // subtitle="After 3 days all of your offers will arrive and you will have another 7 days to select your new company."
         subtitleProps={{
           variant: 'body1',
@@ -258,7 +258,7 @@ const Application = props => {
                     error={Boolean(touched.massage && errors.massage)}
                     fullWidth
                     helperText={touched.massage && errors.massage}
-                    label="Massage..."
+                    label="Message..."
                     name="massage"
                     onBlur={handleBlur}
                     onChange={handleChange}
