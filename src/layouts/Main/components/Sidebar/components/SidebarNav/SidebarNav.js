@@ -192,13 +192,19 @@ const SidebarNav = props => {
         </Typography>
       </ListItem>
       <ListItem button>
-        <ListItemText primary="Quick Consultation" />
+        <Link href="coming-soon">
+          <ListItemText primary="Quick Consultation" />
+        </Link>
       </ListItem>
       <ListItem button>
-        <ListItemText primary="Online Consultation" />
+        <Link href="coming-soon">
+          <ListItemText primary="Online Consultation" />
+        </Link>
       </ListItem>
       <ListItem button>
-        <ListItemText primary="In Clinic Appointment" />
+        <Link href="coming-soon">
+          <ListItemText primary="In Clinic Appointment" />
+        </Link>
       </ListItem>
     </List>
   );

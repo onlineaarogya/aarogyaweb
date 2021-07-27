@@ -119,7 +119,7 @@ const Application = props => {
 
             data.append('title', values.full_name);
             data.append('field_resume_c', values.resume);
-            data.append('field_email', values.email);
+            data.append('email', values.email);
             data.append('body', values.massage);
             data.append('field_applied_for_', values.nid);
             // console.log('dsds',values.resume);

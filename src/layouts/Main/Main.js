@@ -29,15 +29,15 @@ const Main = ({ children, themeToggler, themeMode }) => {
           pages: [
             {
               title: 'Quick Consultation',
-              href: '/',
+              href: 'coming-soon',
             },
             {
               title: 'In Clinic Appointment',
-              href: '/',
+              href: 'coming-soon',
             },
             {
               title: 'Online Consultation ',
-              href: '/',
+              href: 'coming-soon',
             },
           ],
         },

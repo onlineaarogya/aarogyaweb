@@ -79,7 +79,7 @@ const ComingSoon = () => {
         }
         rightSide={
           <Image
-            src="https://assets.maccarianagency.com/the-front/photos/account/cover-3.png"
+            src={process.env.NEXT_PUBLIC_BASE_URL + '/assets/coming.jpeg'}
             className={classes.image}
             lazy={false}
           />

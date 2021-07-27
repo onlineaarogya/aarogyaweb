@@ -93,8 +93,8 @@ const Team = props => {
           data-aos="fade-up"
         >
           <Image
-            src="https://assets.maccarianagency.com/the-front/illustrations/team.png"
-            srcSet="https://assets.maccarianagency.com/the-front/illustrations/team@2x.png 2x"
+            src="assets/Why-Online-Aarogya.png"
+            srcSet="assets/Why-Online-Aarogya.png 2x"
             alt="team"
             className={classes.image}
           />
