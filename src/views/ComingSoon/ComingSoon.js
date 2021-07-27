@@ -79,7 +79,7 @@ const ComingSoon = () => {
         }
         rightSide={
           <Image
-            src={process.env.NEXT_PUBLIC_BASE_URL + '/assets/coming.jpeg'}
+            src="https://images.unsplash.com/photo-1508780709619-79562169bc64"
             className={classes.image}
             lazy={false}
           />

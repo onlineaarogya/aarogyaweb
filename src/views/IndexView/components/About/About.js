@@ -65,10 +65,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     width: '100%',
   },
-  mobileApp: {
-    position: 'relative',
-    left: '57px',
-  },
+  // mobileApp: {
+  //   position: 'relative',
+  //   left: '57px',
+  // },
 }));
 
 const About = props => {
@@ -81,11 +81,11 @@ const About = props => {
   });
 
   return (
-    <div>
+    <div className="mobileDiv">
       <HeroShaped
         leftSide={
           <SectionHeader
-            className={classes.mobileApp}
+            className="mobileApp"
             title={
               <span>
                 Click on the icons to download the app

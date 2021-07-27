@@ -5,6 +5,11 @@
   padding: 16px 21px !important;
 }
 
+.mobileDiv > .hero-shaped {
+  position: relative !important;
+  left: 57px !important;
+}
+
 .MuiTab-wrapper {
   /* width: 100%;
   display: inline-flex;
@@ -27,5 +32,12 @@ th {
 @media only screen and (min-device-width: 480px) {
   .mobileContainer {
     margin: 0px -25px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .mobileDiv > .hero-shaped {
+    position: relative !important;
+    left: 0px !important;
   }
 }
