@@ -81,18 +81,6 @@ const Navbar = ({ onMobileClose, openMobile }) => {
             SEE ALL PAGES
           </Button>
         </Box>
-        <Box display="flex" justifyContent="center" mt={2}>
-          <Button
-            color="primary"
-            component="a"
-            href="https://material-ui.com/store/items/the-front-landing-page/"
-            variant="contained"
-            target="blank"
-            fullWidth
-          >
-            BUY NOW
-          </Button>
-        </Box>
       </Box>
     </Box>
   );

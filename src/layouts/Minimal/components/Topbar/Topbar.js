@@ -46,8 +46,8 @@ const Topbar = ({ themeMode, className, ...rest }) => {
             className={classes.logoImage}
             src={
               themeMode === 'light'
-                ? 'http://localhost:3000/assets/logo-blue.png'
-                : 'http://localhost:3000/assets/logo-white.png'
+                ? process.env.NEXT_PUBLIC_BASE_URL + '/assets/logo-blue.png'
+                : process.env.NEXT_PUBLIC_BASE_URL + '/assets/logo-blue.png'
             }
             alt="Oaarogya Logo"
             lazy={false}
