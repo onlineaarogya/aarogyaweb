@@ -66,7 +66,7 @@ const Application = props => {
   const [status, setStatusBase] = React.useState('');
   const [fileName, setFileName] = React.useState('');
 
-  console.log(status);
+  // console.log(status);
 
   return (
     <div className={className} {...rest}>

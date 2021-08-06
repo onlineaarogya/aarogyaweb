@@ -9,9 +9,12 @@ import {
   Typography,
   ListItem,
   makeStyles,
+  ListItemIcon,
+  ListItemText,
 } from '@material-ui/core';
 import NavItem from './components/NavItem';
 import { components } from './data';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles(theme => ({
   mobileDrawer: {
@@ -43,44 +46,23 @@ const Navbar = ({ onMobileClose, openMobile }) => {
     <Box height="100%" display="flex" flexDirection="column">
       <Box p={2} paddingBottom={0}>
         <List>
-          {components.map(item => (
-            <div key={item.id}>
-              <ListItem className={classes.navGroupTitle}>
-                <Typography
-                  variant="button"
-                  color="textSecondary"
-                  className={classes.title}
-                >
-                  {item.title}
-                </Typography>
-              </ListItem>
-              <List disablePadding className={classes.navGroup}>
-                {item.pages.map(page => (
-                  <NavItem
-                    href={page.href}
-                    key={page.id}
-                    title={page.title}
-                    id={page.id}
-                  />
-                ))}
-              </List>
-            </div>
-          ))}
+        <ListItem button>
+        <ListItemIcon>
+          <StarIcon />
+        </ListItemIcon>
+        <ListItemText primary="Chelsea Otakan" />
+      </ListItem>
+      <ListItem button>
+      <ListItemIcon>
+      <StarIcon />
+    </ListItemIcon>
+        <ListItemText  primary="Eric Hoffman" />
+      </ListItem>
         </List>
       </Box>
       <Box flexGrow={1} />
       <Box p={2} paddingTop={0}>
-        <Box display="flex" justifyContent="center" mt={2}>
-          <Button
-            color="primary"
-            component="a"
-            href="/"
-            variant="outlined"
-            fullWidth
-          >
-            SEE ALL PAGES
-          </Button>
-        </Box>
+
       </Box>
     </Box>
   );
