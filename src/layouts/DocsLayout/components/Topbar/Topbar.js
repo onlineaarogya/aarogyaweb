@@ -11,6 +11,7 @@ import {
   ListItem,
   Button,
   makeStyles,
+  Avatar,
 } from '@material-ui/core';
 import { Image, DarkModeToggler } from 'components/atoms';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -18,6 +19,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 const useStyles = makeStyles(theme => ({
   root: {
     borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+  loginAvatar:{
+    marginLeft: '9px',
+    width: '30px',
+    height: '30px',
   },
   logoContainer: {
     width: 100,
@@ -28,8 +34,10 @@ const useStyles = makeStyles(theme => ({
     },
   },
   logoImage: {
-    width: '100%',
-    height: '100%',
+    position: 'relative',
+    height: 'auto',
+    top: '-17px',
+    width: '130px',
   },
   navigationContainer: {
     display: 'flex',
@@ -72,19 +80,20 @@ const TopBar = ({
     >
       <Toolbar>
         <div className={classes.logoContainer}>
-          <a href="/" title="thefront">
+          <a href="/" title="OnlineAarogya">
             <Image
               className={classes.logoImage}
               src={
                 themeMode === 'light'
-                  ? 'https://assets.maccarianagency.com/the-front/logos/logo.svg'
-                  : 'https://assets.maccarianagency.com/the-front/logos/logo-negative.svg'
+                  ? process.env.NEXT_PUBLIC_BASE_URL + '/assets/logo-blue.png'
+                  : process.env.NEXT_PUBLIC_BASE_URL + '/assets/logo-blue.png'
               }
-              alt="thefront"
+              alt="OnlineAarogya"
               lazy={false}
             />
           </a>
         </div>
+
         <Box flexGrow={1} />
         <DarkModeToggler themeMode={themeMode} onClick={() => themeToggler()} />
         <Hidden smDown>
@@ -98,23 +107,12 @@ const TopBar = ({
                 href="/"
                 variant="outlined"
               >
-                SEE ALL PAGES
+               Rahul Yadav
+
+                <Avatar className={classes.loginAvatar} src="/broken-image.jpg" />
               </Button>
             </ListItem>
-            <ListItem
-              className={clsx(classes.listItem, 'menu-item--no-dropdown')}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                component="a"
-                target="blank"
-                href="https://material-ui.com/store/items/the-front-landing-page/"
-                className={classes.listItemButton}
-              >
-                Buy Now
-              </Button>
-            </ListItem>
+
           </List>
         </Hidden>
         <Hidden mdUp>

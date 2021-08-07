@@ -263,7 +263,7 @@ const Topbar = ({
                   ? process.env.NEXT_PUBLIC_BASE_URL + '/assets/logo-blue.png'
                   : process.env.NEXT_PUBLIC_BASE_URL + '/assets/logo-blue.png'
               }
-              alt="thefront"
+              alt="OnlineAarogya"
               lazy={false}
             />
           </a>

@@ -29,7 +29,7 @@ export default function AlertMessage({ message, status }) {
 }
 
 AlertMessage.propTypes = {
-  message: PropTypes.number.isRequired,
+  message: PropTypes.string.isRequired,
   // snackbar status type or validation
   status: PropTypes.string.isRequired,
 };

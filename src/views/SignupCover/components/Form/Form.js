@@ -1,9 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid, Button, TextField } from '@material-ui/core';
+import {
+  Typography,
+  Grid,
+  Button,
+  TextField,
+  MenuItem,
+  LinearProgress,
+} from '@material-ui/core';
 import validate from 'validate.js';
 import { LearnMoreLink } from 'components/atoms';
 import Link from 'next/link';
+import { getPatientRegister } from '../../../../components/helper/PatientApi';
+import AlertMassage from '../../../../components/helper/AlertMessage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,10 +39,16 @@ const schema = {
       maximum: 120,
     },
   },
-  password: {
+  title: {
     presence: { allowEmpty: false, message: 'is required' },
+    // length: {
+    //   minimum: 8,
+    // },
+  },
+  email: {
+    presence: { allowEmpty: false, message: 'is required', email: true },
     length: {
-      minimum: 8,
+      maximum: 120,
     },
   },
 };
@@ -47,6 +62,9 @@ const Form = () => {
     touched: {},
     errors: {},
   });
+
+  const [subming, setSubiting] = React.useState(false);
+  const [status, setStatusBase] = React.useState('');
 
   React.useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -77,11 +95,47 @@ const Form = () => {
     }));
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-
+    setSubiting(true);
     if (formState.isValid) {
-      window.location.replace('/');
+      
+      // window.location.replace('/');
+
+      var data = JSON.stringify({"title":formState.values.title,"first_name":formState.values.firstName,"middle_name":"","last_name":formState.values.lastName,"mobile":formState.values.mobile,"email":formState.values.email});
+     
+         const res = await getPatientRegister(data);
+         if(res.success){
+          setStatusBase('')
+         setStatusBase({
+          key: 22,
+          status: 'success',
+          msg:
+            'Account has been created successfully.',
+        });
+        
+      }else{
+        // setStatusBase('');
+        // // console.log('hello error else');
+        // setStatusBase({
+        //   key: 22,
+        //   status: 'error',
+        //   msg:res.message,
+        // });
+
+        setStatusBase('')
+          setStatusBase({
+            key: 22,
+            status: 'error',
+            msg: res.errors.email ? res.errors.email : '' + res.errors.mobile ? ' ' + res.errors.mobile:'',
+       
+        });
+          
+                  
+
+      }
+      // console.log('res', res);
+      setSubiting(false);
     }
 
     setFormState(formState => ({
@@ -95,12 +149,40 @@ const Form = () => {
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
-
+  // console.log('api Url', process.env.NEXT_PUBLIC_PATIENT_API_URL);
   return (
     <div className={classes.root}>
+    {status ? (
+      <AlertMassage
+        key={status.key}
+        message={status.msg}
+        status={status.status}
+      />
+    ) : null}
       <form name="password-reset-form" method="post" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={2}>
+            <TextField
+              // placeholder="Firs"
+              label="Title *"
+              variant="outlined"
+              size="medium"
+              name="title"
+              fullWidth
+              select
+              helperText={hasError('title') ? formState.errors.title[0] : null}
+              error={hasError('title')}
+              onChange={handleChange}
+              // type="title"
+              value={formState.values.title || ''}
+            >
+              <MenuItem value="Mr">Mr</MenuItem>
+              <MenuItem value="Miss">Miss</MenuItem>
+              {/* <MenuItem value="2">Enterprise</MenuItem> */}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={5}>
             <TextField
               placeholder="First name"
               label="First name *"
@@ -117,7 +199,7 @@ const Form = () => {
               value={formState.values.firstName || ''}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <TextField
               placeholder="Last name"
               label="Last name *"
@@ -153,19 +235,17 @@ const Form = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              placeholder="Password"
-              label="Password *"
+              placeholder="Email"
+              label="Email *"
               variant="outlined"
               size="medium"
-              name="password"
+              name="email"
               fullWidth
-              helperText={
-                hasError('password') ? formState.errors.password[0] : null
-              }
-              error={hasError('password')}
+              helperText={hasError('email') ? formState.errors.email[0] : null}
+              error={hasError('email')}
               onChange={handleChange}
-              type="password"
-              value={formState.values.password || ''}
+              type="email"
+              value={formState.values.email || ''}
             />
           </Grid>
           <Grid item xs={12}>
@@ -183,8 +263,10 @@ const Form = () => {
               color="primary"
               fullWidth
             >
-              Send
+              Submit
             </Button>
+            {subming ? <LinearProgress /> : null}
+            
           </Grid>
           <Grid item xs={12}>
             <Typography

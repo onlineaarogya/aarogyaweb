@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -101,6 +101,27 @@ const Main = props => {
     setFlavors({ ...flavors, [event.target.name]: event.target.checked });
   };
 
+  // code for get current location for landing patient
+  // const a = navigator.geolocation.getCurrentPosition(
+  //   success => {
+  //     console.log(success); // `have the lat and long`
+  //   },
+  //   failure => {
+  //     //`enter code here if failed`
+  //   },
+  // );
+
+  useEffect(() => {
+    // if (navigator.geolocation) {
+    //   alert('GeoLocation is Available!');
+    // } else {
+    //   alert('Sorry Not available!');
+    // }
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log('Latitude is :', position.coords.latitude);
+      console.log('Longitude is :', position.coords.longitude);
+    });
+  }, []);
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       {/* <DescriptionCta

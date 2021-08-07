@@ -530,7 +530,7 @@ const Main = ({ children, themeToggler, themeMode }) => {
         <Divider />
         {children}
       </main>
-      <Footer pages={footer_links} />
+      <Footer pages={footer_links} themeMode={themeMode} />
     </div>
   );
 };

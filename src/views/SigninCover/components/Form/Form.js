@@ -1,9 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, Button, TextField } from '@material-ui/core';
-import validate from 'validate.js';
+import validate, { async } from 'validate.js';
 import { LearnMoreLink } from 'components/atoms';
 import Link from 'next/link';
+import { getPatientLogin } from '../../../../components/helper/PatientApi';
+import AlertMassage from '../../../../components/helper/AlertMessage';
+import Router from 'next/router'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,14 +19,15 @@ const schema = {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
       maximum: 10,
+      message: "must be 10 digit"
     },
   },
-  password: {
-    presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      minimum: 8,
-    },
-  },
+  // password: {
+  //   presence: { allowEmpty: false, message: 'is required' },
+  //   length: {
+  //     minimum: 8,
+  //   },
+  // },
 };
 
 const Form = () => {
@@ -35,6 +39,9 @@ const Form = () => {
     touched: {},
     errors: {},
   });
+
+  const [subming, setSubiting] = React.useState(false);
+  const [status, setStatusBase] = React.useState('');
 
   React.useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -65,11 +72,34 @@ const Form = () => {
     }));
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
     if (formState.isValid) {
-      window.location.replace('/');
+      var data = JSON.stringify({"mobile":formState.values.mobile});
+     
+      const res = await getPatientLogin(data);
+      if(res.success){
+       setStatusBase('')
+      setStatusBase({
+       key: 22,
+       status: 'success',
+       msg:
+         'Check your mobile for the OTP',
+     });
+     Router.push('/signup', undefined, { shallow: true })
+     
+   }else{
+     setStatusBase('');
+     setStatusBase({
+       key: 22,
+       status: 'error',
+       msg:res.message,
+     });           
+
+   }
+   console.log('res', res);
+   setSubiting(false);
     }
 
     setFormState(formState => ({
@@ -86,6 +116,13 @@ const Form = () => {
 
   return (
     <div className={classes.root}>
+    {status ? (
+      <AlertMassage
+        key={status.key}
+        message={status.msg}
+        status={status.status}
+      />
+    ) : null}
       <form name="password-reset-form" method="post" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -105,23 +142,7 @@ const Form = () => {
               value={formState.values.mobile || ''}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              placeholder="Password"
-              label="Password *"
-              variant="outlined"
-              size="medium"
-              name="password"
-              fullWidth
-              helperText={
-                hasError('password') ? formState.errors.password[0] : null
-              }
-              error={hasError('password')}
-              onChange={handleChange}
-              type="password"
-              value={formState.values.password || ''}
-            />
-          </Grid>
+
           <Grid item xs={12}>
             <i>
               <Typography variant="subtitle2">

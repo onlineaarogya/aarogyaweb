@@ -25,6 +25,13 @@ const useStyles = makeStyles(theme => ({
     },
     background: '#e4e6e6',
   },
+  rootMode: {
+    padding: theme.spacing(6, 0),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(12, 0),
+    },
+    background: '#1a202c',
+  },
 
   footerContainer: {
     maxWidth: theme.layout.contentWidth,
@@ -99,12 +106,15 @@ const useStyles = makeStyles(theme => ({
   navLink: {
     color: 'rgb(78 77 84)',
   },
+  navLinkMode: {
+    color: 'rgb(231 231 232)',
+  },
 }));
 
 const Footer = props => {
-  const { pages, className, ...rest } = props;
+  const { pages, themeMode, className, ...rest } = props;
 
-  console.log(pages);
+  console.log('theme', props);
 
   const classes = useStyles();
 
@@ -127,7 +137,10 @@ const Footer = props => {
               variant="body2"
               component={'a'}
               href={page.href}
-              className={clsx(classes.navLink, 'submenu-item')}
+              className={clsx(
+                themeMode === 'light' ? classes.navLink : classes.navLinkMode,
+                'submenu-item',
+              )}
             >
               {page.title}
             </Typography>
@@ -197,7 +210,13 @@ const Footer = props => {
   };
 
   return (
-    <div {...rest} className={clsx(classes.root, className)}>
+    <div
+      {...rest}
+      className={clsx(
+        themeMode === 'light' ? classes.root : classes.rootMode,
+        className,
+      )}
+    >
       <div className={classes.footerContainer}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={2}>
@@ -253,20 +272,35 @@ const Footer = props => {
                   </ListItem>
                   <Typography
                     variant="body2"
-                    className={(classes.menuGroupItem, classes.navLink)}
+                    className={
+                      (classes.menuGroupItem,
+                      themeMode === 'light'
+                        ? classes.navLink
+                        : classes.navLinkMode)
+                    }
                   >
                     802, Landmark Business Hub, Silvassa, <br></br>Dadra and
                     Nagar Haveli and Daman and Diu, 396230
                   </Typography>
                   <Typography
                     variant="body2"
-                    className={(classes.menuGroupItem, classes.navLink)}
+                    className={
+                      (classes.menuGroupItem,
+                      themeMode === 'light'
+                        ? classes.navLink
+                        : classes.navLinkMode)
+                    }
                   >
                     hr@oaarogya.com
                   </Typography>
                   <Typography
                     variant="body2"
-                    className={(classes.menuGroupItem, classes.navLink)}
+                    className={
+                      (classes.menuGroupItem,
+                      themeMode === 'light'
+                        ? classes.navLink
+                        : classes.navLinkMode)
+                    }
                   >
                     +91 8866126777
                   </Typography>
