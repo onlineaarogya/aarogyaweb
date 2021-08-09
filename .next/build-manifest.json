@@ -24,10 +24,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/account/account-info": [
+    "/account/update-profile": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/account/account-info.js"
+      "static/chunks/pages/account/update-profile.js"
     ]
   },
   "ampFirstPages": []
