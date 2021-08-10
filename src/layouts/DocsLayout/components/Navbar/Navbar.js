@@ -15,6 +15,7 @@ import {
 import NavItem from './components/NavItem';
 import { components } from './data';
 import StarIcon from '@material-ui/icons/Star';
+import PersonIcon from '@material-ui/icons/Person';
 
 const useStyles = makeStyles(theme => ({
   mobileDrawer: {
@@ -48,16 +49,54 @@ const Navbar = ({ onMobileClose, openMobile }) => {
         <List>
         <ListItem button>
         <ListItemIcon>
-          <StarIcon />
+          <PersonIcon />
         </ListItemIcon>
-        <ListItemText primary="Chelsea Otakan" />
+        <ListItemText primary="Account Profile" />
       </ListItem>
       <ListItem button>
-      <ListItemIcon>
-      <StarIcon />
-    </ListItemIcon>
-        <ListItemText  primary="Eric Hoffman" />
+         <ListItemIcon>
+          <i class="fas fa-handshake-slash"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Subscription" />
       </ListItem>
+
+      <ListItem button>
+         <ListItemIcon>
+          <i class="fas fa-users"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Family Members" />
+      </ListItem>
+
+      <ListItem button>
+         <ListItemIcon>
+           <i class="fas fa-user-md"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Family Doctor" />
+      </ListItem>
+
+    
+      <ListItem button>
+         <ListItemIcon>
+          <i class="fas fa-calendar-check"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Consultation" />
+      </ListItem>
+
+      <ListItem button>
+         <ListItemIcon>
+         <i class="far fa-calendar-alt"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Calender" />
+      </ListItem>
+
+
+      <ListItem button>
+         <ListItemIcon>
+         <i class="fas fa-divide"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Offer" />
+      </ListItem>
+
         </List>
       </Box>
       <Box flexGrow={1} />

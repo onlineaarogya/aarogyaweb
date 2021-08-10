@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from './AddDependent';","map":{"version":3,"sources":["C:/Users/onlin/OneDrive/Desktop/site/aarogyaweb/src/views/AfterLogin/AddDependent/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,gBAAxB","sourcesContent":["export { default } from './AddDependent';"]},"metadata":{},"sourceType":"module"}
