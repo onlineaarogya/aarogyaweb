@@ -24,10 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/account/account-info": [
+    "/account/all-consultations": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/account/account-info.js"
+      "static/chunks/pages/account/all-consultations.js"
+    ],
+    "/account/our-doctor": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/account/our-doctor.js"
     ]
   },
   "ampFirstPages": []

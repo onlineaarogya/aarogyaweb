@@ -29,4 +29,19 @@ const getPatientLogin = async data => {
   return regResponse;
 };
 
-export { getPatientLogin, getPatientRegister };
+// function for patient login and get otp verification 
+const getPatientLoginOtpVerrification = async data => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: data,
+  };
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_PATIENT_API_URL + 'auth/verifyOtp',
+    requestOptions,
+  );
+  const regResponse = await response.json();
+  return regResponse;
+};
+
+export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerrification };

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from './AddFamily';","map":{"version":3,"sources":["/Users/praveensingh/Sites/aarogyaAppPro/src/views/AfterLogin/AddFamily/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,aAAxB","sourcesContent":["export { default } from './AddFamily';"]},"metadata":{},"sourceType":"module"}

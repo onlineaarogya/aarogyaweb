@@ -87,7 +87,7 @@ const Form = () => {
        msg:
          'Check your mobile for the OTP',
      });
-     Router.push('/signup', undefined, { shallow: true })
+     Router.push(`/signin-otp?mob=${formState.values.mobile}`, undefined, { shallow: true })
      
    }else{
      setStatusBase('');

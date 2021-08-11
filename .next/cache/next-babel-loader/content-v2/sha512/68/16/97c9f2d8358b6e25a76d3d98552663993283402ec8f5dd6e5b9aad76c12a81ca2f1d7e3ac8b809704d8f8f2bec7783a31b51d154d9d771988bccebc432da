@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from './ViewAllFamilyDoctor';","map":{"version":3,"sources":["/Users/praveensingh/Sites/aarogyaAppPro/src/views/AfterLogin/ViewAllFamilyDoctor/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,uBAAxB","sourcesContent":["export { default } from './ViewAllFamilyDoctor';"]},"metadata":{},"sourceType":"module"}

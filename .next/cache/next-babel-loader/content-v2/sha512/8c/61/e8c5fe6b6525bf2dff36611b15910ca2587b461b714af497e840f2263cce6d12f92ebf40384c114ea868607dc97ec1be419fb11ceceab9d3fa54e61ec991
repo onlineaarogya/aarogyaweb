@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default as Loading } from './Loading';\nexport { default as Consultations } from './Consultations';","map":null,"metadata":{},"sourceType":"module"}

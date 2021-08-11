@@ -35,14 +35,25 @@ const useStyles = makeStyles(theme => ({
 const PasswordResetCover = () => {
   const classes = useStyles();
 
+  const [mobile, setMobile] = React.useState()
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('mob');
+    var msg = "Check your Mobile Number for the OTP (" + myParam + ")"; 
+    setMobile(msg)
+  }, []);
+
+
+var msg = "dd"
+
   return (
     <div className={classes.root}>
       <HeroShaped
         leftSide={
           <div className={classes.formContainer}>
             <SectionHeader
-              title="Password reset"
-              subtitle="Enter your email to reset your password."
+              title="Enter OTP"
+              subtitle={mobile}
               titleProps={{
                 variant: 'h3',
               }}
