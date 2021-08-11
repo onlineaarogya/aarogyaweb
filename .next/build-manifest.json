@@ -24,10 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/account/family-member": [
+    "/account/add-family-member": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/account/family-member.js"
+      "static/chunks/pages/account/add-family-member.js"
+    ],
+    "/account/our-doctor": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/account/our-doctor.js"
     ]
   },
   "ampFirstPages": []

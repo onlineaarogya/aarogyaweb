@@ -23,6 +23,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import  { useState } from "react";
+import Link from 'next/link';
 
 const useStyles = makeStyles(theme => ({
   mobileDrawer: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontWeight: 700,
+  },
+  iconWidth:{
+    minWidth:"32px",
+    color:"#ec3832"
   },
   navGroup: {
     marginBottom: theme.spacing(2),
@@ -62,59 +67,75 @@ const Navbar = ({ onMobileClose, openMobile }) => {
     <Box height="100%" display="flex" flexDirection="column">
       <Box p={2} paddingBottom={0}>
         <List>
-        <ListItem button>
-        <ListItemIcon>
-          <PersonIcon />
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/account-info`}>
+         <ListItem button>
+          <ListItemIcon className={classes.iconWidth}>
+          <i class="fas fa-user-alt"></i>
         </ListItemIcon>
         <ListItemText className="accountInfo" primary="Account Profile" />
       </ListItem>
+      </Link>
       <ListItem button>
-         <ListItemIcon>
+         <ListItemIcon className={classes.iconWidth}>
           <i class="fas fa-handshake-slash"></i>
            </ListItemIcon>
         <ListItemText  primary="Subscription" />
       </ListItem>
 
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/family-member`}>
       <ListItem button>
-         <ListItemIcon>
+         <ListItemIcon className={classes.iconWidth}>
           <i class="fas fa-users"></i>
            </ListItemIcon>
         <ListItemText  primary="Family Members" />
       </ListItem>
+      </Link>
 
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/family-doctor`}>
       <ListItem button>
-         <ListItemIcon>
+         <ListItemIcon className={classes.iconWidth}>
            <i class="fas fa-user-md"></i>
            </ListItemIcon>
         <ListItemText  primary="Family Doctor" />
       </ListItem>
+      </Link>
 
-    
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/our-doctor`}>
       <ListItem button>
-         <ListItemIcon>
+         <ListItemIcon className={classes.iconWidth}>
+           <i class="fas fa-user-md"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Our Doctor" />
+      </ListItem>
+      </Link>
+
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/all-consultations`}>
+      <ListItem button>
+         <ListItemIcon className={classes.iconWidth}>
           <i class="fas fa-calendar-check"></i>
            </ListItemIcon>
         <ListItemText  primary="Consultation" />
       </ListItem>
-
+      </Link>
+{/* 
       <ListItem button>
          <ListItemIcon>
          <i class="far fa-calendar-alt"></i>
            </ListItemIcon>
         <ListItemText  primary="Calender" />
-      </ListItem>
+      </ListItem> */}
 
 
       <ListItem button>
-         <ListItemIcon>
+         <ListItemIcon className={classes.iconWidth}>
          <i class="fas fa-divide"></i>
            </ListItemIcon>
         <ListItemText  primary="Offer" />
       </ListItem>
 
       <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
+        <ListItemIcon className={classes.iconWidth}>
+        <i class="fas fa-file-download"></i>
         </ListItemIcon>
         <ListItemText primary="Medifiles" />
         {open ? <ExpandLess /> : <ExpandMore />}
@@ -123,8 +144,8 @@ const Navbar = ({ onMobileClose, openMobile }) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested} style={{marginLeft:"14px"}}>
-            <ListItemIcon>
-             <DescriptionIcon/>
+            <ListItemIcon className={classes.iconWidth}>
+             <i class="far fa-file-alt"></i>
             </ListItemIcon>
             <ListItemText primary="Record" />
           </ListItem>

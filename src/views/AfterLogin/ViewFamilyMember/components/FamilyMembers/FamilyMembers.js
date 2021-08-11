@@ -17,6 +17,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from 'next/link';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -56,9 +57,12 @@ const FamilyMembers = props => {
   }, [0]);
 
   const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+    { id: 1,firstName: 'Jon' ,lastName: 'Seth', email:"seth@yahoo.com", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+    { id: 1,firstName: 'Jonis' ,lastName: 'Anam', email:"ana@gmail.com", state:"Gujrat",city:"Rajkot",address:"Outer Village"},
+    { id: 1,firstName: 'Amber' ,lastName: 'Saxena', email:"sad12@gmail.com", state:"MP",city:"Indore",address:"Stadium Road"},
+    { id: 1,firstName: 'Rabies' ,lastName: 'Kumar', email:"rabies@yahoo.com", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+    { id: 1,firstName: 'Dinesh' ,lastName: 'Singh', email:"ds23@yahoo.in", state:"Sikkim",city:"Gangtok",address:"Outer City"},
+    { id: 1,firstName: 'Sahil' ,lastName: 'Saxena', email:"sad12@gmail.com", state:"MP",city:"Indore",address:"Stadium Road"},
   ];
 
   return (
@@ -95,22 +99,27 @@ const FamilyMembers = props => {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell component="th">Name</TableCell>
-                <TableCell align="right">Mobile Number</TableCell>
-                <TableCell align="right">email</TableCell>
-                <TableCell align="right">Specialization</TableCell>
-                <TableCell align="right">State</TableCell>
-                <TableCell align="right">City</TableCell>
-                <TableCell align="right">Address</TableCell>
+                <TableCell component="th">Image</TableCell>
+                <TableCell component="th">First Name</TableCell>
+                <TableCell >Last Name</TableCell>
+                <TableCell>email</TableCell>
+                <TableCell>State</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>Address</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map(row => (
                 <TableRow key={row.id}>
+                  
+                  <TableCell> <Avatar variant="square" className={classes.square}>P</Avatar></TableCell>
                   <TableCell>{row.firstName}</TableCell>
-                  <TableCell align="right">{row.lastName}</TableCell>
-                  <TableCell align="right">{row.age}</TableCell>
-                  {/* <TableCell align="right">{row.carbs}</TableCell>
+                  <TableCell >{row.lastName}</TableCell>
+                  <TableCell >{row.email}</TableCell>
+                  <TableCell >{row.state}</TableCell>
+                  <TableCell >{row.city}</TableCell>
+                  <TableCell >{row.address}</TableCell>
+                  {/* <TableCell >{row.carbs}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell> */}
                 </TableRow>
               ))}

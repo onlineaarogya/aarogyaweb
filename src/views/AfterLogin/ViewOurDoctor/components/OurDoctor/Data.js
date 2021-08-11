@@ -202,7 +202,7 @@ const Data = props => {
                 field: 'photo',
                 render: rowData => (
                   <img
-                    style={{ height: 60, borderRadius: '50%' }}
+                    style={{ height: 60, borderRadius: '4px' }}
                     src={rowData.photo}
                   />
                 ),

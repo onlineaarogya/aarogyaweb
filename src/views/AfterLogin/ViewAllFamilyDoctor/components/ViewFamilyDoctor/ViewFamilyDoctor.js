@@ -57,9 +57,12 @@ const ViewFamilyDoctor = props => {
   }, [0]);
 
   const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+    { id: 1,name: 'Dr.Anish' , mobile:8792020200, email:"seth@yahoo.com",specilist:"Dentist", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+    { id: 1,name: 'Dr.Krupa', mobile:7903992929, email:"ana@gmail.com",specilist:"Kedney", state:"Gujrat",city:"Rajkot",address:"Outer Village"},
+    { id: 1,name: 'Dr.Rabies', mobile:7793939939, email:"sad12@gmail.com",specilist:"Surgon", state:"MP",city:"Indore",address:"Stadium Road"},
+    { id: 1,name: 'Dr.Kamla', mobile:8803399392, email:"rabies@yahoo.com",specilist:"Artho", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+    { id: 1,name: 'Dr.Trmup', mobile:9039328833, email:"ds23@yahoo.in",specilist:"Medicine", state:"Sikkim",city:"Gangtok",address:"Outer City"},
+   
   ];
 
   return (
@@ -99,20 +102,25 @@ const ViewFamilyDoctor = props => {
             <TableHead>
               <TableRow>
                 <TableCell component="th">Name</TableCell>
-                <TableCell align="right">Mobile Number</TableCell>
-                <TableCell align="right">email</TableCell>
-                <TableCell align="right">Specialization</TableCell>
-                <TableCell align="right">State</TableCell>
-                <TableCell align="right">City</TableCell>
-                <TableCell align="right">Address</TableCell>
+                <TableCell>Mobile Number</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Specialization</TableCell>
+                <TableCell>State</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>Address</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map(row => (
                 <TableRow key={row.id}>
-                  <TableCell>{row.firstName}</TableCell>
-                  <TableCell align="right">{row.lastName}</TableCell>
-                  <TableCell align="right">{row.age}</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.mobile}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.specilist}</TableCell>
+                  <TableCell>{row.state}</TableCell>
+                  <TableCell>{row.city}</TableCell>
+                  <TableCell>{row.address}</TableCell>
+
                   {/* <TableCell align="right">{row.carbs}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell> */}
                 </TableRow>

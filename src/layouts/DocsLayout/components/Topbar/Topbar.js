@@ -105,7 +105,7 @@ const TopBar = ({
     const StyledMenuItem = withStyles((theme) => ({
       root: {
         '&:focus': {
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.secondary.main,
           '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
             color: theme.palette.common.white,
           },
@@ -161,9 +161,10 @@ const TopBar = ({
               >
                Rahul Yadav
 
-                <Avatar className={classes.loginAvatar} src="/broken-image.jpg" />
+                <Avatar variant="square" className={classes.loginAvatar} src="/broken-image.jpg" />
               </Button>
             </ListItem>
+             <Box mt={2}>
               <StyledMenu
                 id="customized-menu"
                 anchorEl={anchorEl}
@@ -177,8 +178,8 @@ const TopBar = ({
                 </ListItemIcon>
                 <ListItemText primary="Logout" />
               </StyledMenuItem>
-             
             </StyledMenu>
+            </Box>
 
           </List>
         </Hidden>
