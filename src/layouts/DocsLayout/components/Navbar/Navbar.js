@@ -16,6 +16,13 @@ import NavItem from './components/NavItem';
 import { components } from './data';
 import StarIcon from '@material-ui/icons/Star';
 import PersonIcon from '@material-ui/icons/Person';
+import Collapse from '@material-ui/core/Collapse';
+import DescriptionIcon from '@material-ui/icons/Description';
+import StarBorder from '@material-ui/icons/StarBorder';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import  { useState } from "react";
 
 const useStyles = makeStyles(theme => ({
   mobileDrawer: {
@@ -42,6 +49,14 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  // Set Sidebar Menu Icon Color 
+ 
 
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
@@ -51,7 +66,7 @@ const Navbar = ({ onMobileClose, openMobile }) => {
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
-        <ListItemText primary="Account Profile" />
+        <ListItemText className="accountInfo" primary="Account Profile" />
       </ListItem>
       <ListItem button>
          <ListItemIcon>
@@ -97,7 +112,28 @@ const Navbar = ({ onMobileClose, openMobile }) => {
         <ListItemText  primary="Offer" />
       </ListItem>
 
+      <ListItem button onClick={handleClick}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Medifiles" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested} style={{marginLeft:"14px"}}>
+            <ListItemIcon>
+             <DescriptionIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Record" />
+          </ListItem>
+          
         </List>
+      </Collapse>       
+ 
+
+       </List>
       </Box>
       <Box flexGrow={1} />
       <Box p={2} paddingTop={0}>
