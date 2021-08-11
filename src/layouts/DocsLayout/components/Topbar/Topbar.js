@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Box,
@@ -15,6 +16,12 @@ import {
 } from '@material-ui/core';
 import { Image, DarkModeToggler } from 'components/atoms';
 import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import ListItemText from '@material-ui/core/ListItemText';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,8 +75,52 @@ const TopBar = ({
   themeToggler,
   themeMode,
   ...rest
-}) => {
+  }) => {
   const classes = useStyles();
+
+
+
+  // Code for Right Dropdown  Menu 
+  
+  const StyledMenu = withStyles({
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
+       })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      {...props}
+    />
+    ));
+
+    const StyledMenuItem = withStyles((theme) => ({
+      root: {
+        '&:focus': {
+          backgroundColor: theme.palette.primary.main,
+          '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+            color: theme.palette.common.white,
+          },
+        },
+      },
+    }))(MenuItem);
+    
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  // Code for Right Dropdown menu ends 
 
   return (
     <AppBar
@@ -104,14 +155,30 @@ const TopBar = ({
               <Button
                 className={classes.listItemText}
                 component="a"
-                href="/"
+               
                 variant="outlined"
+                onClick={handleClick}
               >
                Rahul Yadav
 
                 <Avatar className={classes.loginAvatar} src="/broken-image.jpg" />
               </Button>
             </ListItem>
+              <StyledMenu
+                id="customized-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <ExitToAppIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </StyledMenuItem>
+             
+            </StyledMenu>
 
           </List>
         </Hidden>
