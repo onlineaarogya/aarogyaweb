@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var mapData = [{\n  location: {\n    y: 20.264818,\n    x: 73.00425,\n    address: 'silvassa'\n  }\n} // {\n//   location: {\n//     y: 45.313211,\n//     x: 9.0123,\n//     address: 'Via ',\n//   },\n// },\n];","map":null,"metadata":{},"sourceType":"module"}
