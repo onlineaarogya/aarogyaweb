@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './ParallaxExample';","map":{"version":3,"sources":["/Users/praveensingh/Sites/aarogyaApp/src/views/Documentation/examples/ParallaxExample/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,mBAAxB","sourcesContent":["export { default } from './ParallaxExample';"]},"metadata":{},"sourceType":"module"}

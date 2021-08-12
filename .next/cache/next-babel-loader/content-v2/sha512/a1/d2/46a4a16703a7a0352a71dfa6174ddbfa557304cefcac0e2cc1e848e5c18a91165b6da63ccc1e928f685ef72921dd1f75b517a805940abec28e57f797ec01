@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Categories';","map":{"version":3,"sources":["C:/Users/onlin/OneDrive/Desktop/site/aarogyaweb/src/views/IndexView/components/Categories/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,cAAxB","sourcesContent":["export { default } from './Categories';\r\n"]},"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Viewdoctor';","map":{"version":3,"sources":["/Users/praveensingh/Sites/aarogyaApp/src/views/Account/components/Viewdoctor/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,cAAxB","sourcesContent":["export { default } from './Viewdoctor';\n"]},"metadata":{},"sourceType":"module"}

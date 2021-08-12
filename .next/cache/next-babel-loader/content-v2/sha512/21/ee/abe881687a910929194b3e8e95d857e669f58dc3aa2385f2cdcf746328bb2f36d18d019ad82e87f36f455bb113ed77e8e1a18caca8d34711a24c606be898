@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Products';","map":{"version":3,"sources":["C:/Users/onlin/OneDrive/Desktop/site/aarogyaweb/src/views/IndexView/components/Products/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,YAAxB","sourcesContent":["export { default } from './Products';\r\n"]},"metadata":{},"sourceType":"module"}

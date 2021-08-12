@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './ProductBox';","map":{"version":3,"sources":["/Users/praveensingh/Sites/aarogyaApp/src/views/IndexView/components/ProductBox/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT,QAAwB,cAAxB","sourcesContent":["export { default } from './ProductBox';\n"]},"metadata":{},"sourceType":"module"}
