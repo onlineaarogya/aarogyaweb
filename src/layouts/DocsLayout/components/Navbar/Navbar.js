@@ -39,7 +39,8 @@ const useStyles = makeStyles(theme => ({
   },
   iconWidth:{
     minWidth:"32px",
-    color:"#ec3832"
+    color:"#ec3832",
+    fontSize:"16px",
   },
   navGroup: {
     marginBottom: theme.spacing(2),
@@ -61,7 +62,6 @@ const Navbar = ({ onMobileClose, openMobile }) => {
   };
 
   // Set Sidebar Menu Icon Color 
- 
 
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
@@ -117,14 +117,6 @@ const Navbar = ({ onMobileClose, openMobile }) => {
         <ListItemText  primary="Consultation" />
       </ListItem>
       </Link>
-{/* 
-      <ListItem button>
-         <ListItemIcon>
-         <i class="far fa-calendar-alt"></i>
-           </ListItemIcon>
-        <ListItemText  primary="Calender" />
-      </ListItem> */}
-
 
       <ListItem button>
          <ListItemIcon className={classes.iconWidth}>
@@ -152,8 +144,6 @@ const Navbar = ({ onMobileClose, openMobile }) => {
           
         </List>
       </Collapse>       
- 
-
        </List>
       </Box>
       <Box flexGrow={1} />
