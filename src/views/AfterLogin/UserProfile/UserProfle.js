@@ -18,7 +18,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {ProgressBarLine} from 'react-progressbar-line';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // Picker
 
@@ -188,36 +187,7 @@ function UserProfile() {
                </Grid>  
             </Box>
          
-           {/* <Box alignContent="flex-end" boxShadow={2}  style={{backgroundColor:"#f7f7f7"}} mb={2} p={2}>
-              <Typography align="left" variant="h6"><b>Profile Progress</b></Typography>
-              <div style={{width:"250px"}}>
-              
-               <ProgressBarLine value={70} min={0} max={100} strokeWidth={2} trailWidth={2} styles={{
-                path: {
-                  stroke: '#17b978'
-                },
-                trail: {
-                  stroke: '#a7ff83'
-                },
-                text: {
-                  fill: 'white',
-                  textAlign: 'center',
-                  fontSize: '16px',
-                }
-              }}
-            />
-          
-            <Box mt={1}>   
-              <Typography align="center" style={{color:"#9f9f9f"}}>
-                        Completed - 70%
-              </Typography>
-            </Box> 
-           
-           </div> */}
          
-     
-        
-
             <Box mb={2}><Typography variant="h6"><b>Dependent Details</b></Typography></Box>
             <TableContainer component={Paper}>
               <Table  className={classess.table}  aria-label="simple table">
