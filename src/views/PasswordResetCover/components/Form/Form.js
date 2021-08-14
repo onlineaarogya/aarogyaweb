@@ -3,6 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, Button, TextField } from '@material-ui/core';
 import validate from 'validate.js';
 import { LearnMoreLink } from 'components/atoms';
+import { getPatientLoginOtpVerification } from '../../../../components/helper/PatientApi';
+import AlertMassage from '../../../../components/helper/AlertMessage';
+import Router from 'next/router'
+import Encodr from "encodr"
+import Cookies from 'js-cookie'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,12 +15,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 const schema = {
-  email: {
+  otp: {
     presence: { allowEmpty: false, message: 'is required' },
-    email: true,
+    // otp: true,
     length: {
-      maximum: 300,
+      maximum: 6,
     },
   },
 };
@@ -29,7 +35,7 @@ const Form = () => {
     touched: {},
     errors: {},
   });
-
+  const [mobile, setMobile] = React.useState()
   React.useEffect(() => {
     const errors = validate(formState.values, schema);
 
@@ -38,6 +44,11 @@ const Form = () => {
       isValid: errors ? false : true,
       errors: errors || {},
     }));
+
+    // for for mobile number
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('mob');
+    setMobile(myParam)
   }, [formState.values]);
 
   const handleChange = event => {
@@ -59,11 +70,47 @@ const Form = () => {
     }));
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
+
     event.preventDefault();
+  
 
     if (formState.isValid) {
-      window.location.replace('/');
+      var data = JSON.stringify({"mobile":mobile, "vtype":"login_otp", "otp":formState.values.otp});
+     
+      const res = await getPatientLoginOtpVerification(data);
+      if(res.success){
+       setStatusBase('')
+      setStatusBase({
+       key: 22,
+       status: 'success',
+       msg:
+         'Check your mobile for the OTP',
+     });
+    //  Router.push(`/signin-otp?mob=${formState.values.mobile}`, undefined, { shallow: true })
+    let d = {
+      id: res.user.id,
+      name: res.user.name,
+      avatar: res.user.avatar,
+  }
+
+    const JSON = new Encodr("json"); 
+    var enData = JSON.encode(res);
+    // var enData = JSON.decode(enData);
+
+     Cookies.set('token', enData)
+     console.log('encodeData', enData);
+   }else{
+     setStatusBase('');
+     setStatusBase({
+       key: 22,
+       status: 'error',
+       msg:res.message,
+     });           
+
+   }
+   console.log('res', res);
+   setSubiting(false);
     }
 
     setFormState(formState => ({
@@ -78,23 +125,33 @@ const Form = () => {
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
+    const [subming, setSubiting] = React.useState(false);
+    const [status, setStatusBase] = React.useState('');
+
   return (
     <div className={classes.root}>
+    {status ? (
+      <AlertMassage
+        key={status.key}
+        message={status.msg}
+        status={status.status}
+      />
+    ) : null}
       <form name="password-reset-form" method="post" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              placeholder="E-mail"
-              label="E-mail *"
+              placeholder="Enter Mobile OTP"
+              label="OTP *"
               variant="outlined"
               size="medium"
-              name="email"
+              name="otp"
               fullWidth
-              helperText={hasError('email') ? formState.errors.email[0] : null}
-              error={hasError('email')}
+              helperText={hasError('otp') ? formState.errors.otp[0] : null}
+              error={hasError('otp')}
               onChange={handleChange}
-              type="email"
-              value={formState.values.email || ''}
+              type="number"
+              value={formState.values.otp || ''}
             />
           </Grid>
           <Grid item xs={12}>
@@ -112,7 +169,7 @@ const Form = () => {
               color="primary"
               fullWidth
             >
-              Send
+              Submit
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -121,8 +178,8 @@ const Form = () => {
               color="textSecondary"
               align="center"
             >
-              Remember your password?{' '}
-              <LearnMoreLink title="Sign in here" href="/signin-cover" />
+              Didn't  recieve code  ?  
+              <LearnMoreLink title="Resent OTP" href="/signin-cover" />
             </Typography>
           </Grid>
         </Grid>
