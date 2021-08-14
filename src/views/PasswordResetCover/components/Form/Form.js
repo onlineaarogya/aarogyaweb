@@ -85,9 +85,9 @@ const Form = () => {
        key: 22,
        status: 'success',
        msg:
-         'Check your mobile for the OTP',
+         'Your mobile number is verified!',
      });
-    //  Router.push(`/signin-otp?mob=${formState.values.mobile}`, undefined, { shallow: true })
+     Router.push(`/account`, undefined, { shallow: true })
     let d = {
       id: res.user.id,
       name: res.user.name,

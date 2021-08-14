@@ -28,6 +28,14 @@ th {
 .MuiTab-root {
   text-transform: capitalize !important;
 }
+.notification {
+  position: relative;
+  left: -20px;
+}
+.notification svg {
+  color: #2d3748;
+  font-size: 37px;
+}
 
 @media only screen and (min-device-width: 480px) {
   .mobileContainer {
