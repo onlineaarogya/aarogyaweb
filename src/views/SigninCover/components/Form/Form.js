@@ -81,13 +81,13 @@ const Form = () => {
       const res = await getPatientLogin(data);
       if(res.success){
        setStatusBase('')
-      setStatusBase({
-       key: 22,
-       status: 'success',
-       msg:
-         'Check your mobile for the OTP',
-     });
-     Router.push('/signup', undefined, { shallow: true })
+       setStatusBase({
+        key: 22,
+        status: 'success',
+        msg:
+          'Check your mobile for the OTP',
+      });
+      Router.push(`/signin-otp?mob=${formState.values.mobile}`, undefined, { shallow: true })
      
    }else{
      setStatusBase('');
