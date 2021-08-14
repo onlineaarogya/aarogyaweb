@@ -105,14 +105,17 @@ export default function CustomizedDialogs(props) {
 
       // Record Store in Array 
 
+      // let empArray = []
+      let buffer = []
 
-      // let buffer = []
+      let empArray = [{"name":filess ? filess.[0].file.name : null},{"type":filess ? filess.[0].file.type : null},{"fileSize":filess ? filess.[0].file.size : null}]
 
-      // let recArry = ["name":filess ? filess.[0].file.name : null,"type":filess ? filess.[0].file.type : null,"sizze":filess ? filess.[0].file.size : null]
+      // let reactJson = buffer.push(recArry);
 
-      // buffer.push(recArry);
- 
-      
+      // const myObjStr = JSON.stringify(recArry);
+      // console.log(myObjStr);
+       const myObjStr = JSON.stringify(empArray);
+       console.log(myObjStr);
 
   return (
  <div>
@@ -167,7 +170,13 @@ export default function CustomizedDialogs(props) {
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
           
-          {/* {buffer}  */}
+          {empArray.map((number) => 
+                   <div>
+                    <p>{number.name}</p>
+                    <p>{number.type}</p>
+                    <p>{number.fileSize}</p>
+                   </div>
+          )} 
            {/* <div id = "myInput">{filess ? filess.[0].file.name : null }</div>
            <div>{filess ? filess.[0].file.type : null }</div>
            <div>{filess ? filess.[0].file.size : null }</div> */}
