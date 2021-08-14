@@ -22,15 +22,18 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const useStyles = makeStyles(theme => ({
   root: {
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
-  loginAvatar:{
+  loginAvatar: {
     marginLeft: '9px',
     width: '30px',
     height: '30px',
+    borderRadius: 4,
   },
   logoContainer: {
     width: 100,
@@ -75,18 +78,16 @@ const TopBar = ({
   themeToggler,
   themeMode,
   ...rest
-  }) => {
+}) => {
   const classes = useStyles();
 
+  // Code for Right Dropdown  Menu
 
-
-  // Code for Right Dropdown  Menu 
-  
   const StyledMenu = withStyles({
     paper: {
       border: '1px solid #d3d4d5',
     },
-       })((props) => (
+  })(props => (
     <Menu
       elevation={0}
       getContentAnchorEl={null}
@@ -100,27 +101,36 @@ const TopBar = ({
       }}
       {...props}
     />
-    ));
+  ));
 
-    const StyledMenuItem = withStyles((theme) => ({
-      root: {
-        '&:focus': {
-          backgroundColor: theme.palette.secondary.main,
-          '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-            color: theme.palette.common.white,
-          },
+  const StyledMenuItem = withStyles(theme => ({
+    deleteIcon4: {
+      '& svg': {
+        fontSize: 100,
+      },
+    },
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.secondary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
         },
       },
-    }))(MenuItem);
-    
+    },
+    // notification1: {
+    //   fontSize: 36,
+    //   color: '#2d3748',
+    // },
+  }))(MenuItem);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  // Code for Right Dropdown menu ends 
+  // Code for Right Dropdown menu ends
 
   return (
     <AppBar
@@ -146,6 +156,11 @@ const TopBar = ({
         </div>
 
         <Box flexGrow={1} />
+        <IconButton className="notification">
+          <Badge color="primary" badgeContent={0} showZero>
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
         <DarkModeToggler themeMode={themeMode} onClick={() => themeToggler()} />
         <Hidden smDown>
           <List disablePadding className={classes.navigationContainer}>
@@ -155,16 +170,18 @@ const TopBar = ({
               <Button
                 className={classes.listItemText}
                 component="a"
-               
                 variant="outlined"
                 onClick={handleClick}
               >
-               Rahul Yadav
-
-                <Avatar variant="square" className={classes.loginAvatar} src="/broken-image.jpg" />
+                Praveen Singh
+                <Avatar
+                  variant="square"
+                  className={classes.loginAvatar}
+                  src="/broken-image.jpg"
+                />
               </Button>
             </ListItem>
-             <Box mt={2}>
+            <Box mt={2}>
               <StyledMenu
                 id="customized-menu"
                 anchorEl={anchorEl}
@@ -172,15 +189,14 @@ const TopBar = ({
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-              <StyledMenuItem>
-                <ListItemIcon>
-                  <ExitToAppIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-              </StyledMenuItem>
-            </StyledMenu>
+                <StyledMenuItem>
+                  <ListItemIcon>
+                    <ExitToAppIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </StyledMenuItem>
+              </StyledMenu>
             </Box>
-
           </List>
         </Hidden>
         <Hidden mdUp>

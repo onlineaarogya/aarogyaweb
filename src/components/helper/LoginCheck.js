@@ -11,7 +11,7 @@ const checkToken =  data => {
         // console.log('getToken form helper',data);
         return data;
     }else{
-        window.location.replace('signin');
+        window.location.replace(process.env.NEXT_PUBLIC_BASE_URL+'/signin');
     }
   
    
