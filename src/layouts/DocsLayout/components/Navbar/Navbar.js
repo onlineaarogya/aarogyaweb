@@ -11,6 +11,7 @@ import {
   makeStyles,
   ListItemIcon,
   ListItemText,
+  Divider,
 } from '@material-ui/core';
 import NavItem from './components/NavItem';
 import { components } from './data';
@@ -36,6 +37,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontWeight: 700,
+    marginTop:"20px",
+    marginLeft:"12px",
   },
   iconWidth:{
     minWidth:"32px",
@@ -55,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -135,15 +138,55 @@ const Navbar = ({ onMobileClose, openMobile }) => {
 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
+         <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles`}>
           <ListItem button className={classes.nested} style={{marginLeft:"14px"}}>
             <ListItemIcon className={classes.iconWidth}>
              <i class="far fa-file-alt"></i>
             </ListItemIcon>
             <ListItemText primary="Record" />
           </ListItem>
+         </Link> 
           
         </List>
-      </Collapse>       
+      </Collapse>    
+
+      <Divider/>
+
+      <div> <Typography
+                  variant="button"
+                  color="textSecondary"
+                  className={classes.title}
+                >
+                 Support
+                </Typography>
+       </div>
+      <Link href="#">
+      <ListItem button>
+         <ListItemIcon className={classes.iconWidth}>
+           <i class="fas fa-user-md"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Log Complaint" />
+      </ListItem>
+      </Link>
+
+      <Link href="#">
+      <ListItem button>
+         <ListItemIcon className={classes.iconWidth}>
+           <i class="fas fa-user-md"></i>
+           </ListItemIcon>
+        <ListItemText  primary="Legal Information" />
+      </ListItem>
+      </Link>
+
+      <Link href="#">
+      <ListItem button>
+         <ListItemIcon className={classes.iconWidth}>
+           <i class="fas fa-user-md"></i>
+           </ListItemIcon>
+        <ListItemText  primary="FAQ's" />
+      </ListItem>
+      </Link>
+
        </List>
       </Box>
       <Box flexGrow={1} />

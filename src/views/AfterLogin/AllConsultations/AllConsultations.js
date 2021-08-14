@@ -3,6 +3,8 @@ import { parse } from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import { Section } from 'components/organisms';
 import { Loading, Consultations } from './components';
+import  Breadcrumb  from '../Reusable/Breadcrumb';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,6 +30,7 @@ const AllConsultations = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
+      <Breadcrumb url="All Consultations"/>
       <Section className={classes.section}>
         <Suspense fallback={<Loading />}>
       <Consultations/>

@@ -52,6 +52,7 @@ const useStyles = makeStyles(theme => ({
   profileImage: {
     display: 'flex !important',
     justifyContent: 'center !important',
+    marginTop:"-20px"
   },
 }));
 
@@ -201,7 +202,7 @@ export default function FamilyMembers() {
                 container
                 className="mobileContainer"
                 spacing={3}
-                style={{ paddingTop: 20 }}
+                style={{ paddingTop: 10 }}
                 > 
                 <Grid item md={12} xs={12}>
                     <div className={classes.profileImage}>

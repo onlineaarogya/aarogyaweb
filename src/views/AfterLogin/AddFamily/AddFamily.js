@@ -3,6 +3,8 @@ import { parse } from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import { Section } from 'components/organisms';
 import { Loading, AddFamilyMember } from './components';
+import  Breadcrumb  from '../Reusable/Breadcrumb';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,8 +30,10 @@ const AddFamily = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
+      <Breadcrumb url="Add Family Member"/>
       <Section className={classes.section}>
         <Suspense fallback={<Loading />}>
+          
       <AddFamilyMember/>
         </Suspense>
       </Section>
