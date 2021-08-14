@@ -29,10 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/account/add-family-member.js"
     ],
-    "/account/our-doctor": [
+    "/medifiles": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/account/our-doctor.js"
+      "static/chunks/pages/medifiles.js"
     ]
   },
   "ampFirstPages": []

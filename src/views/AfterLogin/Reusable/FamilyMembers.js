@@ -11,15 +11,17 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
+  RadioGroup,
+  Radio,
   FormGroup,
   IconButton,
   Avatar,
-  Radio,
+
   Box,
 } from '@material-ui/core';
 
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Formik,Field } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -61,6 +63,9 @@ export default function FamilyMembers() {
     defaultMatches: true,
   });
   const [imgPreview, setImgPreview] = useState('');
+
+
+  
   return (
     <div>
       <Grid container spacing={isMd ? 4 : 2}>
@@ -79,9 +84,9 @@ export default function FamilyMembers() {
             dob: new Date(),
             age: '',
             height: '',
+            gender:'',
             weight: '',
             blood_group: '',
-            email: '',
             state: '',
             district: '',
             city: '',
@@ -97,33 +102,84 @@ export default function FamilyMembers() {
             first_name: Yup.string()
               .max(255)
               .required('Fist Name is required'),
+            last_name: Yup.string()
+              .max(255)
+              .required('Last Name is required'),
+            // dob: Yup.string()
+            //   .max(255)
+            //   .required('Date of Birth is required'),
+            age: Yup.string()
+              .max(255)
+              .required('Age is required'),
+            blood_group: Yup.string()
+              .max(255)
+              .required('Blood Group is required'),
+            height: Yup.string()
+              .max(255)
+              .required('Height is required'),
+             weight: Yup.string()
+               .max(255)
+              .required('Weight is required'),
+            address: Yup.string()
+              .max(255)
+              .required('Address is required'),
+            state: Yup.string()
+              .max(255)
+              .required('State is required'),
+            district: Yup.string()
+              .max(255)
+              .required('District is required'),
+            city: Yup.string()
+              .max(255)
+              .required('City is required'),
+            // gender: Yup.string()
+            //   .max(255)
+            //   .required('Gender is required'),
+            pinCode: Yup.string()
+             .min(6, 'Must be exactly 6 digits')
+             .max(6, 'Must be exactly 6 digits')
+             .required('Pincode is required')
+           
+
           })}
-          onSubmit={async (values, { setSubmitting }) => {
+          // onSubmit={(values, {setSubmitting}) => {
+          //   setTimeout(() => {
+          //     setSubmitting(false);
+          //     alert(JSON.stringify(values, null, 2));
+          //   }, 500);
+          // }}
+          onSubmit={ (values, { setSubmitting, isSubmitting}) => {
+          setTimeout(() => {
+              setSubmitting(false);
+              console.log(JSON.stringify(values, null, 2));
+            }, 2000);
+
             // POST request using fetch inside
             // var newData = Object.assign(values, {
             //   id: editData._id,
             //   action: 'update'
             // });
-
-            console.log(JSON.stringify(values, null, 2));
+            setSubmitting(true);
+            // alert(JSON.stringify(values, null, 2));
+            // alert(isSubmitting)
             // const res = await getEmployeeAction(
             //   JSON.stringify(newData, null, 2)
             // );
-            if (res.success) {
-              // setSnackValue(res.message);
-              // setSnackStatus('success');
-              // handleClick();
-              setSubmitting(false);
-              // setTimeout(() => {
-              //   navigate('/app/view-employee', { replace: true });
-              // }, 3000);
-            } else {
-              // console.log(res.message);
-              // setSnackValue(res.message);
-              // setSnackStatus('error');
-              // handleClick();
-              setSubmitting(false);
-            }
+            // if (res.success) {
+            //   // setSnackValue(res.message);
+            //   // setSnackStatus('success');
+            //   // handleClick();
+            //   setSubmitting(true);
+            //   // setTimeout(() => {
+            //   //   navigate('/app/view-employee', { replace: true });
+            //   // }, 3000);
+            // } else {
+            //   // console.log(res.message);
+            //   // setSnackValue(res.message);
+            //   // setSnackStatus('error');
+            //   // handleClick();
+            //   // setSubmitting(false);
+            // }
             // console.log(res);
           }}
         >
@@ -134,6 +190,7 @@ export default function FamilyMembers() {
             handleSubmit,
             isSubmitting,
             setFieldValue,
+            isValid,
             touched,
             values,
             resetForm,
@@ -145,7 +202,47 @@ export default function FamilyMembers() {
                 className="mobileContainer"
                 spacing={3}
                 style={{ paddingTop: 20 }}
-              >
+                > 
+                <Grid item md={12} xs={12}>
+                    <div className={classes.profileImage}>
+                      <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="profile_image"
+                        type="file"
+                        onChange={event => {
+                          setFieldValue('file', event.currentTarget.files[0]);
+                          document.getElementById(
+                            'output',
+                          ).src = window.URL.createObjectURL(
+                            event.currentTarget.files[0],
+                          );
+
+                          setImgPreview(
+                            window.URL.createObjectURL(
+                              event.currentTarget.files[0],
+                            ),
+                          );
+                        }}
+                        hidden
+                      />
+                      <label htmlFor="profile_image">
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                        >
+                          {/* <PhotoCamera /> */}
+                          <Avatar
+                            className={classes.large}
+                            id="output"
+                            src={imgPreview}
+                          />
+                        </IconButton>
+                      </label>
+                    </div>
+                  </Grid>
+               
                 <Grid item md={2} xs={12}>
                   <TextField
                     id="select"
@@ -193,19 +290,48 @@ export default function FamilyMembers() {
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <FormGroup row>
-                    <FormControlLabel
-                      control={<Checkbox color="primary" />}
-                      label="Male"
+                  
+                  <RadioGroup name="gender" value={values.gender}>
+                   
+                      <Box flexWrap="wrap">
+                       <FormControlLabel
+                        value="male"
+                        control={<Radio disabled={isSubmitting} />}
+                        label="Male"
+                        disabled={isSubmitting}
+                      />
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio disabled={isSubmitting}/>}
+                        label="Female"
+                        disabled={isSubmitting}
+                      />
+                      <FormControlLabel
+                        value="others"
+                        control={<Radio disabled={isSubmitting} />}
+                        label="Others"
+                        disabled={isSubmitting}
+                      />
+                     </Box>
+                     </RadioGroup>
+                    {/* <FormControlLabel
+                       control={<Radio disabled={isSubmitting} />}
+                       disabled={isSubmitting}
+                       label="Male"
+                       value="Male"
+                    
                     />
 
                     <FormControlLabel
-                      control={<Checkbox color="primary" />}
-                      label="Female"
+                       control={<Radio disabled={isSubmitting} />}
+                       disabled={isSubmitting}
+                       label="Female"
+                       value="Female"
                     />
                     <FormControlLabel
-                      control={<Checkbox color="primary" />}
+                      control={<Radio color="primary" />}
                       label="Others"
-                    />
+                    /> */}
                   </FormGroup>
                 </Grid>
 
@@ -218,7 +344,7 @@ export default function FamilyMembers() {
                       helperText={touched.dob && errors.dob}
                       label="Date of Birth"
                       name="dob"
-                      format="dd/MM/yyyy"
+                      format="dd-MM-yyyy"
                       onBlur={handleBlur}
                       onChange={value => setFieldValue('dob', value)}
                       value={values.dob}
@@ -332,9 +458,9 @@ export default function FamilyMembers() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
+                    <MenuItem value="O negative">Delhi</MenuItem>
+                    <MenuItem value="O positive">Haryana</MenuItem>
+                    <MenuItem value="B negative">Sikkim</MenuItem>
                   </TextField>
                 </Grid>
 
@@ -352,9 +478,9 @@ export default function FamilyMembers() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
+                    <MenuItem value="O negative">Patna</MenuItem>
+                    <MenuItem value="O positive">Sirsa</MenuItem>
+                    <MenuItem value="B negative">Gangtok</MenuItem>
                   </TextField>
                 </Grid>
 
@@ -372,9 +498,9 @@ export default function FamilyMembers() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
+                    <MenuItem value="O negative">Mumbai</MenuItem>
+                    <MenuItem value="O positive">Delhi</MenuItem>
+                    <MenuItem value="B negative">Rajkot</MenuItem>
                   </TextField>
                 </Grid>
 
@@ -391,13 +517,14 @@ export default function FamilyMembers() {
                     onChange={handleChange}
                     value={values.pinCode}
                     variant="outlined"
+                    
                   />
                 </Grid>
-
+                
                 <Box my={2} ml={1.4}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={!isValid || isSubmitting}
                     fullWidth
                     size="large"
                     type="submit"
@@ -405,8 +532,12 @@ export default function FamilyMembers() {
                   >
                     Save Profile
                   </Button>
-                  {isSubmitting && <LinearProgress />}
+                  {/* <h3>{isSubmitting ? isSubmitting : 'Dheeraj'}</h3> */}
+                 
+                  {isSubmitting &&   <LinearProgress /> }
+                  {/* <LinearProgress /> */}
                 </Box>
+               
               </Grid>
               {/* Custom form end */}
             </form>
