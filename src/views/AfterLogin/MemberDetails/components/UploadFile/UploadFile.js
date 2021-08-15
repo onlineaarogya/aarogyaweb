@@ -119,6 +119,7 @@ export default function CustomizedDialogs(props) {
 
   return (
  <div>
+        <Grid item xs={12} lg={12}>
     <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
       Add New Medical Record 
       {/* {filess ? filess.[0].file.name : null } */}
@@ -201,7 +202,7 @@ export default function CustomizedDialogs(props) {
       </Dialog>
 
       {/* Auto Complete Box */}
-    
+      </Grid>
     </div>
   );
 }

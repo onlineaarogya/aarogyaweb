@@ -6,7 +6,7 @@ import { LearnMoreLink } from 'components/atoms';
 import Link from 'next/link';
 import { getPatientLogin } from '../../../../components/helper/PatientApi';
 import AlertMassage from '../../../../components/helper/AlertMessage';
-import Router from 'next/router'
+import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,7 +19,9 @@ const schema = {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
       maximum: 10,
-      message: "must be 10 digit"
+      message: 'must be 10 digit',
+      minimum: 10,
+      message: 'must be 10 digit',
     },
   },
   // password: {
@@ -76,30 +78,29 @@ const Form = () => {
     event.preventDefault();
 
     if (formState.isValid) {
-      var data = JSON.stringify({"mobile":formState.values.mobile});
-     
-      const res = await getPatientLogin(data);
-      if(res.success){
-       setStatusBase('')
-       setStatusBase({
-        key: 22,
-        status: 'success',
-        msg:
-          'Check your mobile for the OTP',
-      });
-      Router.push(`/signin-otp?mob=${formState.values.mobile}`, undefined, { shallow: true })
-     
-   }else{
-     setStatusBase('');
-     setStatusBase({
-       key: 22,
-       status: 'error',
-       msg:res.message,
-     });           
+      var data = JSON.stringify({ mobile: formState.values.mobile });
 
-   }
-   console.log('res', res);
-   setSubiting(false);
+      const res = await getPatientLogin(data);
+      if (res.success) {
+        setStatusBase('');
+        setStatusBase({
+          key: 22,
+          status: 'success',
+          msg: 'Check your mobile for the OTP',
+        });
+        Router.push(`/signin-otp?mob=${formState.values.mobile}`, undefined, {
+          shallow: true,
+        });
+      } else {
+        setStatusBase('');
+        setStatusBase({
+          key: 22,
+          status: 'error',
+          msg: res.message,
+        });
+      }
+      console.log('res', res);
+      setSubiting(false);
     }
 
     setFormState(formState => ({
@@ -116,13 +117,13 @@ const Form = () => {
 
   return (
     <div className={classes.root}>
-    {status ? (
-      <AlertMassage
-        key={status.key}
-        message={status.msg}
-        status={status.status}
-      />
-    ) : null}
+      {status ? (
+        <AlertMassage
+          key={status.key}
+          message={status.msg}
+          status={status.status}
+        />
+      ) : null}
       <form name="password-reset-form" method="post" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
