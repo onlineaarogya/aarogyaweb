@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Box,
@@ -15,15 +16,24 @@ import {
 } from '@material-ui/core';
 import { Image, DarkModeToggler } from 'components/atoms';
 import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import ListItemText from '@material-ui/core/ListItemText';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const useStyles = makeStyles(theme => ({
   root: {
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
-  loginAvatar:{
+  loginAvatar: {
     marginLeft: '9px',
     width: '30px',
     height: '30px',
+    borderRadius: 4,
   },
   logoContainer: {
     width: 100,
@@ -71,6 +81,57 @@ const TopBar = ({
 }) => {
   const classes = useStyles();
 
+  // Code for Right Dropdown  Menu
+
+  const StyledMenu = withStyles({
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
+  })(props => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      {...props}
+    />
+  ));
+
+  const StyledMenuItem = withStyles(theme => ({
+    deleteIcon4: {
+      '& svg': {
+        fontSize: 100,
+      },
+    },
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.secondary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+    // notification1: {
+    //   fontSize: 36,
+    //   color: '#2d3748',
+    // },
+  }))(MenuItem);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  // Code for Right Dropdown menu ends
+
   return (
     <AppBar
       className={clsx(classes.root, className)}
@@ -95,6 +156,11 @@ const TopBar = ({
         </div>
 
         <Box flexGrow={1} />
+        <IconButton className="notification">
+          <Badge color="primary" badgeContent={0} showZero>
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
         <DarkModeToggler themeMode={themeMode} onClick={() => themeToggler()} />
         <Hidden smDown>
           <List disablePadding className={classes.navigationContainer}>
@@ -104,15 +170,33 @@ const TopBar = ({
               <Button
                 className={classes.listItemText}
                 component="a"
-                href="/"
                 variant="outlined"
+                onClick={handleClick}
               >
-               Rahul Yadav
-
-                <Avatar className={classes.loginAvatar} src="/broken-image.jpg" />
+                Praveen Singh
+                <Avatar
+                  variant="square"
+                  className={classes.loginAvatar}
+                  src="/broken-image.jpg"
+                />
               </Button>
             </ListItem>
-
+            <Box mt={2}>
+              <StyledMenu
+                id="customized-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <StyledMenuItem>
+                  <ListItemIcon>
+                    <ExitToAppIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </StyledMenuItem>
+              </StyledMenu>
+            </Box>
           </List>
         </Hidden>
         <Hidden mdUp>
