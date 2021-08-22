@@ -106,16 +106,66 @@ export default function CustomizedDialogs(props) {
       // Record Store in Array 
 
       // let empArray = []
-      let buffer = []
+      // let buffer = []
 
-      let empArray = [{"name":filess ? filess.[0].file.name : null},{"type":filess ? filess.[0].file.type : null},{"fileSize":filess ? filess.[0].file.size : null}]
+      // let empArray = [{"name":filess ? filess.[0].file.name : null},{"type":filess ? filess.[0].file.type : null},{"fileSize":filess ? filess.[0].file.size : null}]
 
-      // let reactJson = buffer.push(recArry);
+      // // let reactJson = buffer.push(recArry);
 
-      // const myObjStr = JSON.stringify(recArry);
-      // console.log(myObjStr);
-       const myObjStr = JSON.stringify(empArray);
-       console.log(myObjStr);
+      // // const myObjStr = JSON.stringify(recArry);
+      // // console.log(myObjStr);
+      //  const myObjStr = JSON.stringify(empArray);
+      //  console.log(myObjStr);
+
+
+
+       const documentUpload = (values) =>
+       {
+        let data = new FormData();
+
+        data.append('title', "Dheeraj");
+        data.append('field_resume_c', values);
+        data.append('email',"dys@email.com");
+        data.append('body', "Hello I am Dheeraj");
+        data.append('field_applied_for_', 363);
+        console.log("Print value",values);
+        console.log('dsds',values.resume);
+        return fetch(
+          `${process.env.NEXT_PUBLIC_DB_HOST}/api/post-contact`,
+          {
+            method: 'post',
+            // mode: 'no-cors',
+            // headers: new Headers({
+            //   Accept: 'application/json',
+            // }),
+            body: data,
+          },
+        )
+          .then(response => response.json())
+          .then(result => {
+            console.log('Success:', result);
+            // console.log(result);
+
+            // setStatusBase({
+            //   key: 22,
+            //   status: 'success',
+            //   msg:
+            //     'Your application for the' +
+            //     values.jobName +
+            //     'job has been successfully submitted.',
+            // });
+            // setSubmitting(false);
+            // resetForm(values);
+          })
+          .catch(error => {
+            // setStatusBase({
+            //   key: 22,
+            //   status: 'error',
+            //   msg: error,
+            // });
+            console.log(error)
+          });
+       }
 
   return (
  <div>
@@ -127,7 +177,7 @@ export default function CustomizedDialogs(props) {
     
     <DropzoneDialogBase
         dialogTitle={dialogTitle()}
-        acceptedFiles={['image/*']}
+        acceptedFiles={['image/*','application/pdf','application/docs']}
         fileObjects={fileObjects}
         cancelButtonText={"cancel"}
         submitButtonText={"submit"}
@@ -149,6 +199,7 @@ export default function CustomizedDialogs(props) {
         onClose={() => setOpen(false)}
         onSave={() => {
           console.log('onSave', fileObjects);
+          documentUpload(fileObjects.[0].file)
           setOpen(false);
         }}
         showPreviews={true}
@@ -171,13 +222,13 @@ export default function CustomizedDialogs(props) {
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
           
-          {empArray.map((number) => 
+          {/* {empArray.map((number) => 
                    <div>
                     <p>{number.name}</p>
                     <p>{number.type}</p>
                     <p>{number.fileSize}</p>
                    </div>
-          )} 
+          )}  */}
            {/* <div id = "myInput">{filess ? filess.[0].file.name : null }</div>
            <div>{filess ? filess.[0].file.type : null }</div>
            <div>{filess ? filess.[0].file.size : null }</div> */}

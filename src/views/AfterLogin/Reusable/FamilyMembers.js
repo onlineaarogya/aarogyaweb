@@ -11,7 +11,6 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
-  RadioGroup,
   Radio,
   FormGroup,
   IconButton,
@@ -29,6 +28,8 @@ import {
   KeyboardDatePicker,
   DateTimePicker,
 } from '@material-ui/pickers';
+import { RadioGroup } from 'formik-material-ui';
+
 const useStyles = makeStyles(theme => ({
   inputTitle: {
     fontWeight: 700,
@@ -83,6 +84,7 @@ export default function FamilyMembers() {
             first_name: '',
             last_name: '',
             dob: new Date(),
+            gender:'',
             age: '',
             height: '',
             gender:'',
@@ -106,6 +108,8 @@ export default function FamilyMembers() {
             last_name: Yup.string()
               .max(255)
               .required('Last Name is required'),
+            gender: Yup.string()
+              .required(' Gender is Required'),
             // dob: Yup.string()
             //   .max(255)
             //   .required('Date of Birth is required'),
@@ -290,50 +294,28 @@ export default function FamilyMembers() {
                   />
                 </Grid>
                 <Grid item md={6} xs={12}>
-                  <FormGroup row>
-                  
-                  <RadioGroup name="gender" value={values.gender}>
-                   
-                      <Box flexWrap="wrap">
-                       <FormControlLabel
-                        value="male"
-                        control={<Radio disabled={isSubmitting} />}
-                        label="Male"
-                        disabled={isSubmitting}
-                      />
-                      <FormControlLabel
-                        value="female"
-                        control={<Radio disabled={isSubmitting}/>}
-                        label="Female"
-                        disabled={isSubmitting}
-                      />
-                      <FormControlLabel
-                        value="others"
-                        control={<Radio disabled={isSubmitting} />}
-                        label="Others"
-                        disabled={isSubmitting}
-                      />
-                     </Box>
-                     </RadioGroup>
-                    {/* <FormControlLabel
-                       control={<Radio disabled={isSubmitting} />}
-                       disabled={isSubmitting}
-                       label="Male"
-                       value="Male"
-                    
-                    />
-
+                 <Field component={RadioGroup} name="gender">
+                   <Grid container>
                     <FormControlLabel
-                       control={<Radio disabled={isSubmitting} />}
-                       disabled={isSubmitting}
-                       label="Female"
-                       value="Female"
+                      value="m"
+                      control={<Radio color="primary" disabled={isSubmitting} />}
+                      disabled={isSubmitting}
+                      label="Male"
                     />
                     <FormControlLabel
-                      control={<Radio color="primary" />}
-                      label="Others"
-                    /> */}
-                  </FormGroup>
+                      value="f"
+                      control={<Radio color="primary" disabled={isSubmitting} />}
+                      disabled={isSubmitting}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="o"
+                      control={<Radio color="primary" disabled={isSubmitting} />}
+                      label="Other"
+                    />
+                    </Grid>
+                    <div>{ !isValid || isSubmitting ? (values.gender != '' ?  <p></p> : <p style={{color:"red"}}>Gender is Required</p>) : <p></p> }</div>
+                  </Field>
                 </Grid>
 
                 <Grid item md={6} xs={12}>
@@ -510,7 +492,7 @@ export default function FamilyMembers() {
                     error={Boolean(touched.pinCode && errors.pinCode)}
                     fullWidth
                     helperText={touched.pinCode && errors.pinCode}
-                    label="pinCode(Kg) *"
+                    label="Pincode *"
                     // margin="normal"
                     name="pinCode"
                     type="number"

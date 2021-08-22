@@ -18,6 +18,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from 'next/link';
+import {checkToken} from '../../../../../components/helper/LoginCheck'
+import {getFamilyDoctorDetailByUid} from '../../../../../components/helper/PatientApi'
+import Router from 'next/router'
+
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -42,28 +47,46 @@ const ViewFamilyDoctor = props => {
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
-  const [data, setData] = useState('');
-  const fetchData = async () => {
-    const req = await fetch(
-      'https://randomuser.me/api/?gender=male&results=100',
-    );
-    const newData = await req.json();
+  const [data, setData] = useState([]);
+  // const fetchData = async () => {
+  //   const req = await fetch(
+  //     'https://randomuser.me/api/?gender=male&results=100',
+  //   );
+  //   const newData = await req.json();
 
-    return setData(newData.results);
-  };
+  //   return setData(newData.results);
+
+  
+  // };
+
+  const getFamilyDoctor = async () =>
+  {
+    var doctorData = await getFamilyDoctorDetailByUid();
+    console.log("Name:",doctorData);
+     setData(doctorData.familyDoctors);
+  }
 
   useEffect(() => {
-    fetchData();
+    const loginToken = checkToken();
+      if(loginToken)
+      {
+        getFamilyDoctor();
+      }
+      else
+      {
+        Router.push('/signin', undefined, { shallow: true })
+      }
+    // fetchData();
   }, [0]);
 
-  const rows = [
-    { id: 1,name: 'Dr.Anish' , mobile:8792020200, email:"seth@yahoo.com",specilist:"Dentist", state:"Bihar",city:"Patna",address:"Patna Sahib"},
-    { id: 1,name: 'Dr.Krupa', mobile:7903992929, email:"ana@gmail.com",specilist:"Kedney", state:"Gujrat",city:"Rajkot",address:"Outer Village"},
-    { id: 1,name: 'Dr.Rabies', mobile:7793939939, email:"sad12@gmail.com",specilist:"Surgon", state:"MP",city:"Indore",address:"Stadium Road"},
-    { id: 1,name: 'Dr.Kamla', mobile:8803399392, email:"rabies@yahoo.com",specilist:"Artho", state:"Bihar",city:"Patna",address:"Patna Sahib"},
-    { id: 1,name: 'Dr.Trmup', mobile:9039328833, email:"ds23@yahoo.in",specilist:"Medicine", state:"Sikkim",city:"Gangtok",address:"Outer City"},
+  // const rows = [
+  //   { id: 1,name: 'Dr.Anish' , mobile:8792020200, email:"seth@yahoo.com",specilist:"Dentist", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+  //   { id: 1,name: 'Dr.Krupa', mobile:7903992929, email:"ana@gmail.com",specilist:"Kedney", state:"Gujrat",city:"Rajkot",address:"Outer Village"},
+  //   { id: 1,name: 'Dr.Rabies', mobile:7793939939, email:"sad12@gmail.com",specilist:"Surgon", state:"MP",city:"Indore",address:"Stadium Road"},
+  //   { id: 1,name: 'Dr.Kamla', mobile:8803399392, email:"rabies@yahoo.com",specilist:"Artho", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+  //   { id: 1,name: 'Dr.Trmup', mobile:9039328833, email:"ds23@yahoo.in",specilist:"Medicine", state:"Sikkim",city:"Gangtok",address:"Outer City"},
    
-  ];
+  // ];
 
   return (
     <div className={className} {...rest}>
@@ -101,26 +124,24 @@ const ViewFamilyDoctor = props => {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell component="th">Name</TableCell>
-                <TableCell>Mobile Number</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Specialization</TableCell>
-                <TableCell>State</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>Address</TableCell>
+                <TableCell component="th" align="center">Name</TableCell>
+                <TableCell align="center">Mobile Number</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="center">Expierence</TableCell>
+                <TableCell align="center">Pincode</TableCell>
+                <TableCell align="center">State</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
+              {data.map(row => (
                 <TableRow key={row.id}>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.mobile}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.specilist}</TableCell>
-                  <TableCell>{row.state}</TableCell>
-                  <TableCell>{row.city}</TableCell>
-                  <TableCell>{row.address}</TableCell>
-
+                  <TableCell align="center">{row.first_name}</TableCell>
+                  <TableCell align="center">{row.mobile}</TableCell>
+                  <TableCell align="center">{row.email}</TableCell>
+                  <TableCell align="center">{row.yrs_of_practice}</TableCell>
+                  <TableCell align="center">{row.pincode}</TableCell>
+                  <TableCell align="center">{row.address}</TableCell>
+                
                   {/* <TableCell align="right">{row.carbs}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell> */}
                 </TableRow>

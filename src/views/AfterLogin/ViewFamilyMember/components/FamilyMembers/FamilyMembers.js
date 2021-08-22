@@ -18,6 +18,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from 'next/link';
 import Avatar from '@material-ui/core/Avatar';
+import {checkToken} from '../../../../../components/helper/LoginCheck'
+import {getFamilyDependentByUid} from '../../../../../components/helper/PatientApi'
+import Router from 'next/router'
+
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -42,28 +47,51 @@ const FamilyMembers = props => {
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
-  const [data, setData] = useState('');
-  const fetchData = async () => {
-    const req = await fetch(
-      'https://randomuser.me/api/?gender=male&results=100',
-    );
-    const newData = await req.json();
+  const [data, setData] = useState([]);
+  // const fetchData = async () => {
+  //   const req = await fetch(
+  //     'https://randomuser.me/api/?gender=male&results=100',
+  //   );
+  //   const newData = await req.json();
 
-    return setData(newData.results);
-  };
+  //   return setData(newData.results);
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [0]);
+
+  // const rows = [
+  //   { id: 1,firstName: 'Jon' ,lastName: 'Seth', email:"seth@yahoo.com", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+  //   { id: 1,firstName: 'Jonis' ,lastName: 'Anam', email:"ana@gmail.com", state:"Gujrat",city:"Rajkot",address:"Outer Village"},
+  //   { id: 1,firstName: 'Amber' ,lastName: 'Saxena', email:"sad12@gmail.com", state:"MP",city:"Indore",address:"Stadium Road"},
+  //   { id: 1,firstName: 'Rabies' ,lastName: 'Kumar', email:"rabies@yahoo.com", state:"Bihar",city:"Patna",address:"Patna Sahib"},
+  //   { id: 1,firstName: 'Dinesh' ,lastName: 'Singh', email:"ds23@yahoo.in", state:"Sikkim",city:"Gangtok",address:"Outer City"},
+  //   { id: 1,firstName: 'Sahil' ,lastName: 'Saxena', email:"sad12@gmail.com", state:"MP",city:"Indore",address:"Stadium Road"},
+  // ];
+
+
+  // Api call for View Family Dependent
+
+  const getFamilyDependent = async () =>
+  {
+    var doctorData = await getFamilyDependentByUid();
+    console.log("Name:",doctorData);
+     setData(doctorData.dependents);
+  }
 
   useEffect(() => {
-    fetchData();
+    const loginToken = checkToken();
+      if(loginToken)
+      {
+        getFamilyDependent();
+      }
+      else
+      {
+        Router.push('/signin', undefined, { shallow: true })
+      }
+    // fetchData();
   }, [0]);
-
-  const rows = [
-    { id: 1,firstName: 'Jon' ,lastName: 'Seth', email:"seth@yahoo.com", state:"Bihar",city:"Patna",address:"Patna Sahib"},
-    { id: 1,firstName: 'Jonis' ,lastName: 'Anam', email:"ana@gmail.com", state:"Gujrat",city:"Rajkot",address:"Outer Village"},
-    { id: 1,firstName: 'Amber' ,lastName: 'Saxena', email:"sad12@gmail.com", state:"MP",city:"Indore",address:"Stadium Road"},
-    { id: 1,firstName: 'Rabies' ,lastName: 'Kumar', email:"rabies@yahoo.com", state:"Bihar",city:"Patna",address:"Patna Sahib"},
-    { id: 1,firstName: 'Dinesh' ,lastName: 'Singh', email:"ds23@yahoo.in", state:"Sikkim",city:"Gangtok",address:"Outer City"},
-    { id: 1,firstName: 'Sahil' ,lastName: 'Saxena', email:"sad12@gmail.com", state:"MP",city:"Indore",address:"Stadium Road"},
-  ];
 
   return (
     <div className={className} {...rest}>
@@ -102,22 +130,22 @@ const FamilyMembers = props => {
                 <TableCell component="th">Image</TableCell>
                 <TableCell component="th">First Name</TableCell>
                 <TableCell >Last Name</TableCell>
-                <TableCell>email</TableCell>
+                <TableCell>Gender</TableCell>
                 <TableCell>State</TableCell>
-                <TableCell>City</TableCell>
+                <TableCell>D.O.B</TableCell>
                 <TableCell>Address</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
+              {data.map(row => (
                 <TableRow key={row.id}>
                   
                   <TableCell> <Avatar variant="square" className={classes.square}>P</Avatar></TableCell>
-                  <TableCell>{row.firstName}</TableCell>
-                  <TableCell >{row.lastName}</TableCell>
-                  <TableCell >{row.email}</TableCell>
-                  <TableCell >{row.state}</TableCell>
-                  <TableCell >{row.city}</TableCell>
+                  <TableCell>{row.first_name}</TableCell>
+                  <TableCell >{row.middle_name}</TableCell>
+                  <TableCell >{row.last_name}</TableCell>
+                  <TableCell >{row.gender}</TableCell>
+                  <TableCell >{row.dob}</TableCell>
                   <TableCell >{row.address}</TableCell>
                   {/* <TableCell >{row.carbs}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell> */}

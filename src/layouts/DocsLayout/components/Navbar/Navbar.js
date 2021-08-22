@@ -25,6 +25,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { useState } from 'react';
 import Link from 'next/link';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles(theme => ({
   mobileDrawer: {
@@ -156,6 +157,19 @@ const Navbar = ({ onMobileClose, openMobile }) => {
                     <i class="far fa-file-alt"></i>
                   </ListItemIcon>
                   <ListItemText primary="Record" />
+                </ListItem>
+              </Link>
+
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/setting`}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  style={{ marginLeft: '14px' }}
+                >
+                  <ListItemIcon className={classes.iconWidth}>
+                   <i class="fas fa-cog"></i>
+                  </ListItemIcon>
+                  <ListItemText primary="Setting" />
                 </ListItem>
               </Link>
             </List>
