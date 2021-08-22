@@ -105,6 +105,15 @@ function MemberDetails() {
 
   const classes = useStyles();
   var columns = [
+     {
+     // field: 'name',
+     render: row => (
+
+         <div className="fileIcon">
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}><ShareIcon/></Button>
+         </div>
+     ),},
+
     { title: 'id', field: 'id', hidden: true },
     {
       title: <h4 class={classes.headerWidth}>File Name</h4>,
@@ -261,72 +270,17 @@ function MemberDetails() {
 
   // Tab of Table
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const clickMe = () => {
-    setAnchorEl(
-      <div style={{ fontSize: '12px' }}>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          style={{ width: '200px', marginLeft: '100px', marginTop: '110px' }}
-        >
-          <List>
-            <ListItem style={{ height: '40px' }}>
-              <WhatsAppIcon
-                className={classes.icon}
-                style={{ color: 'green' }}
-              />
-              <Button variant="raised" color="primary">
-                {' '}
-                WhatsApp{' '}
-              </Button>
-            </ListItem>
-
-            <ListItem style={{ height: '40px' }}>
-              <GetAppIcon
-                className={classes.icon}
-                style={{ color: '#4b4bb2' }}
-              />{' '}
-              <Button
-                classes={{ root: classes.button, label: classes.label }}
-                variant="raised"
-                size="small"
-                color="primary"
-              >
-                Download{' '}
-              </Button>
-            </ListItem>
-
-            <ListItem style={{ height: '40px' }}>
-              <EmailIcon
-                className={classes.icon}
-                style={{ color: '#957982' }}
-              />{' '}
-              <Button
-                /* Use classes property to inject custom styles */
-                classes={{ root: classes.button, label: classes.label }}
-                variant="raised"
-                color="primary"
-              >
-                Email{' '}
-              </Button>
-            </ListItem>
-          </List>
-        </Menu>
-      </div>,
-    );
-  };
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
 
   return (
     <div style={{ padding: 26 }}>
@@ -362,33 +316,26 @@ function MemberDetails() {
                     }}
                     columns={columns}
                     data={filterdata}
-                    actions={[
-                      {
-                        icon: 'savess',
-                        tooltip: 'Save Users',
-                        // onClick: (event, rowData) => alert("You saved " + rowData.name)
-                        onClick: { clickMe },
-                      },
-                    ]}
-                    components={{
-                      Action: props => (
-                        <Button
-                          onClick={clickMe}
-                          style={{ textTransform: 'none' }}
-                          size="small"
-                        >
-                          <ShareIcon style={{ color: 'green' }} />
-                        </Button>
-                      ),
-                    }}
+                    
                   />
-                  {anchorEl}
+                 
                 </Grid>
               </Grid>
             </Paper>
           </div>
         </Grid>
       </Grid>
+      <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}><Typography color="primary"><i class="fas fa-file-export"></i></Typography><Button  >Give File Access</Button></MenuItem>
+          <MenuItem onClick={handleClose}><Typography color="primary"><i class="fas fa-window-close"></i></Typography><Button  >Remove File Access</Button></MenuItem>
+     </Menu>
+
     </div>
   );
 }

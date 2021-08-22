@@ -8,6 +8,8 @@ import {
   Button,
   Divider,
   LinearProgress,
+  FormLabel, 
+  FormControl,
   MenuItem,
   FormControlLabel,
   Checkbox,
@@ -17,9 +19,8 @@ import {
   Radio,
   Box,
 } from '@material-ui/core';
-
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Formik,Field, Form } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -27,6 +28,13 @@ import {
   KeyboardDatePicker,
   DateTimePicker,
 } from '@material-ui/pickers';
+import { updateNonNullChain } from 'typescript';
+import {addFamilyDoctorDetail} from '../../../components/helper/PatientApi';
+import { async } from 'validate.js';
+import AlertMassage from '../../../components/helper/AlertMessage';
+// import Router from 'next/router';
+import { RadioGroup } from 'formik-material-ui';
+
 const useStyles = makeStyles(theme => ({
   inputTitle: {
     fontWeight: 700,
@@ -61,8 +69,19 @@ export default function AddFamilyDoctor() {
     defaultMatches: true,
   });
   const [imgPreview, setImgPreview] = useState('');
+
+ // Alert message code 
+  const [status, setStatusBase] = React.useState('');
+  
   return (
     <div>
+      {status ? (
+        <AlertMassage
+          key={status.key}
+          message={status.msg}
+          status={status.status}
+        />
+      ) : null}
       <Grid container spacing={isMd ? 4 : 2}>
         {/* <Grid item xs={12}>
               <Typography variant="h6" color="textPrimary">
@@ -76,20 +95,31 @@ export default function AddFamilyDoctor() {
             title: '',
             first_name: '',
             last_name: '',
+            middle_name:'',
+            email:'',
+            mobile:'',
+            gender:'',
+            specialist:'',
             dob: new Date(),
-            age: '',
-            height: '',
-            weight: '',
-            blood_group: '',
-            email: '',
+            experience:'',
             state: '',
-            district: '',
             city: '',
             pinCode: '',
             // mobile: editData.mobile,
             address: '',
             // password: editData.password
           }}
+
+          // validate={(values) => {
+          //   const errors = {};
+      
+          //   if (!values.gender) {
+          //     errors.gender = 'Required';
+          //     // alert('Gender Required');
+          //   } 
+          //   return errors;
+          // }}
+
           validationSchema={Yup.object().shape({
             title: Yup.string()
               .max(255)
@@ -97,32 +127,96 @@ export default function AddFamilyDoctor() {
             first_name: Yup.string()
               .max(255)
               .required('Fist Name is required'),
+            last_name: Yup.string()
+              .max(255)
+              .required('Last Name is required'),
+            gender: Yup.string()
+              .required(' Gender is Required'),
+           middle_name: Yup.string()
+              .max(255)
+              .required('Middle Name is required'),  
+           email: Yup.string()
+              .max(255)
+              .required('Email is required'),  
+           mobile: Yup.string()
+              .max(255)
+              .required('Mobile is required'),    
+            experience: Yup.string()
+              .max(255)
+              .required('Experience is required'),    
+            specialist: Yup.string()
+              .max(255)
+              .required('Specialization is required'),  
+            // dob: Yup.string()
+            //   .max(255)
+            //   .required('Date of Birth is required'),
+            // age: Yup.string()
+            //   .max(255)
+            //   .required('Age is required'),
+           
+            address: Yup.string()
+              .max(255)
+              .required('Address is required'),
+            state: Yup.string()
+              .max(255)
+              .required('State is required'),
+            city: Yup.string()
+              .max(255)
+              .required('City is required'),
+            // gender: Yup.string()
+            //   .max(255)
+            //   .required('Gender is required'),
+            pinCode: Yup.string()
+             .min(6, 'Must be exactly 6 digits')
+             .max(6, 'Must be exactly 6 digits')
+             .required('Pincode is required')
+           
+
           })}
-          onSubmit={async (values, { setSubmitting }) => {
+          // onSubmit={(values, {setSubmitting}) => {
+          //   setTimeout(() => {
+          //     setSubmitting(false);
+          //     alert(JSON.stringify(values, null, 2));
+          //   }, 500);
+          // }}
+          onSubmit={async (values, { setSubmitting, isSubmitting}) => {
+            // console.log(JSON.stringify(values, null, 2));
+            // return;
+
+          setTimeout(() => {
+              setSubmitting(false);
+              console.log(JSON.stringify(values, null, 2));
+            }, 2000);
+            const res = await addFamilyDoctorDetail(values, null, 2);
+
             // POST request using fetch inside
             // var newData = Object.assign(values, {
             //   id: editData._id,
             //   action: 'update'
             // });
-
-            console.log(JSON.stringify(values, null, 2));
+            setSubmitting(true);
+            // alert(JSON.stringify(values, null, 2));
+            // alert(isSubmitting)
             // const res = await getEmployeeAction(
             //   JSON.stringify(newData, null, 2)
             // );
             if (res.success) {
-              // setSnackValue(res.message);
-              // setSnackStatus('success');
-              // handleClick();
-              setSubmitting(false);
-              // setTimeout(() => {
-              //   navigate('/app/view-employee', { replace: true });
-              // }, 3000);
+              setStatusBase('');
+              setStatusBase({
+                key: 22,
+                status: 'success',
+                msg: 'You data has been inserted successfully',
+              });
+              Router.push("/account/family-doctor", undefined, {
+                shallow: true,
+              });
             } else {
-              // console.log(res.message);
-              // setSnackValue(res.message);
-              // setSnackStatus('error');
-              // handleClick();
-              setSubmitting(false);
+              setStatusBase('');
+              setStatusBase({
+                key: 22,
+                status: 'error',
+                msg: res.message,
+              });
             }
             // console.log(res);
           }}
@@ -134,6 +228,7 @@ export default function AddFamilyDoctor() {
             handleSubmit,
             isSubmitting,
             setFieldValue,
+            isValid,
             touched,
             values,
             resetForm,
@@ -144,8 +239,9 @@ export default function AddFamilyDoctor() {
                 container
                 className="mobileContainer"
                 spacing={3}
-                style={{ paddingTop: 20 }}
-              >
+                style={{ paddingTop: 10 }}
+                > 
+               
                 <Grid item md={2} xs={12}>
                   <TextField
                     id="select"
@@ -164,7 +260,7 @@ export default function AddFamilyDoctor() {
                     <MenuItem value="Mr.">Mr.</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item md={5} xs={12}>
+                <Grid item md={3} xs={12}>
                   <TextField
                     error={Boolean(touched.first_name && errors.first_name)}
                     fullWidth
@@ -178,7 +274,23 @@ export default function AddFamilyDoctor() {
                     variant="outlined"
                   />
                 </Grid>
-                <Grid item md={5} xs={12}>
+
+
+                <Grid item md={3} xs={12}>
+                  <TextField
+                    error={Boolean(touched.middle_name && errors.middle_name)}
+                    fullWidth
+                    helperText={touched.middle_name && errors.middle_name}
+                    label="Middle Name *"
+                    name="middle_name"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.middle_name}
+                    variant="outlined"
+                  />
+                </Grid>
+
+                <Grid item md={4} xs={12}>
                   <TextField
                     error={Boolean(touched.last_name && errors.last_name)}
                     fullWidth
@@ -191,22 +303,50 @@ export default function AddFamilyDoctor() {
                     variant="outlined"
                   />
                 </Grid>
+
                 <Grid item md={6} xs={12}>
-                  <FormGroup row>
+                
+                   {/* <Field component={RadioGroup} name="gender">
+                    <Grid container>
+                      <label>
+                        <Field   type="radio" name="gender" value="f" />
+                        Male
+                      </label>
+                      <label>
+                        <Field  type="radio" name="gender" value="m" />
+                        Female
+                      </label>
+                        
+
+                   
+                    </Grid>
+                  </Field>
+                  <div>{ !isValid || isSubmitting ? (values.gender != '' ?  <p></p> : <p style={{color:"red"}}>Gender is Required</p>) : <p></p> }</div>
+                  */}
+                
+                   <Field component={RadioGroup} name="gender">
+                   <Grid container>
                     <FormControlLabel
-                      control={<Checkbox color="primary" />}
+                      value="m"
+                      control={<Radio color="primary" disabled={isSubmitting} />}
+                      disabled={isSubmitting}
                       label="Male"
                     />
-
                     <FormControlLabel
-                      control={<Checkbox color="primary" />}
+                      value="f"
+                      control={<Radio color="primary" disabled={isSubmitting} />}
+                      disabled={isSubmitting}
                       label="Female"
                     />
                     <FormControlLabel
-                      control={<Checkbox color="primary" />}
-                      label="Others"
+                      value="o"
+                      control={<Radio color="primary" disabled={isSubmitting} />}
+                      label="Other"
                     />
-                  </FormGroup>
+                    </Grid>
+                  </Field>
+
+                 <div>{ !isValid || isSubmitting ? (values.gender != '' ?  <p></p> : <p style={{color:"red"}}>Gender is Required</p>) : <p></p> }</div>
                 </Grid>
 
                 <Grid item md={6} xs={12}>
@@ -218,7 +358,7 @@ export default function AddFamilyDoctor() {
                       helperText={touched.dob && errors.dob}
                       label="Date of Birth"
                       name="dob"
-                      format="dd/MM/yyyy"
+                      format="dd-MM-yyyy"
                       onBlur={handleBlur}
                       onChange={value => setFieldValue('dob', value)}
                       value={values.dob}
@@ -232,6 +372,84 @@ export default function AddFamilyDoctor() {
 
                 <Grid item md={6} xs={12}>
                   <TextField
+                    error={Boolean(touched.email && errors.email)}
+                    fullWidth
+                    helperText={touched.email && errors.email}
+                    label="Email*"
+                    name="email"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.email}
+                    variant="outlined"
+                  />
+                </Grid>
+
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    error={Boolean(touched.mobile && errors.mobile)}
+                    fullWidth
+                    helperText={touched.mobile && errors.mobile}
+                    label="Mobile *"
+                    name="mobile"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.mobile}
+                    variant="outlined"
+                  />
+                </Grid>
+
+
+                <Grid item md={6} xs={5}>
+                  <TextField
+                    id="experience"
+                    error={Boolean(touched.experience && errors.experience)}
+                    fullWidth
+                    helperText={touched.experience && errors.experience}
+                    label="Experience *"
+                    name="experience"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.experience}
+                    variant="outlined"
+                    select
+                  >
+                    <MenuItem  value="1">1 Year</MenuItem>
+                    <MenuItem  value="1">2 Years</MenuItem>
+                    <MenuItem  value="1">3 Years</MenuItem>
+                    <MenuItem  value="1">4 Years</MenuItem>
+                    <MenuItem  value="1">5 Years</MenuItem>
+                    <MenuItem  value="1">6 Years</MenuItem>
+                   
+                  </TextField>
+                </Grid>
+
+                <Grid item md={6} xs={5}>
+                  <TextField
+                    id="specialist"
+                    error={Boolean(touched.specialist && errors.specialist)}
+                    fullWidth
+                    helperText={touched.specialist && errors.specialist}
+                    label="Specialization*"
+                    name="specialist"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.specialist}
+                    variant="outlined"
+                    select
+                  >
+                    <MenuItem value="1">Dentist</MenuItem>
+                    <MenuItem value="2">Orthopedic</MenuItem>
+                    <MenuItem value="3">Paediatrician</MenuItem>
+                    <MenuItem value="4">Psychiatrists</MenuItem>
+                    <MenuItem value="5">Veterinarian</MenuItem>
+                    <MenuItem value="6">Radiologist</MenuItem>
+                   
+                  </TextField>
+                </Grid>
+
+
+                {/* <Grid item md={6} xs={12}>
+                  <TextField
                     error={Boolean(touched.age && errors.age)}
                     fullWidth
                     helperText={touched.age && errors.age}
@@ -243,60 +461,9 @@ export default function AddFamilyDoctor() {
                     value={values.age}
                     variant="outlined"
                   />
-                </Grid>
+                </Grid> */}
 
-                <Grid item md={6} xs={12}>
-                  <TextField
-                    id="blood_group"
-                    error={Boolean(touched.blood_group && errors.blood_group)}
-                    fullWidth
-                    helperText={touched.blood_group && errors.blood_group}
-                    label="Blood Group *"
-                    name="blood_group"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.blood_group}
-                    variant="outlined"
-                    select
-                  >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
-                  </TextField>
-                </Grid>
-
-                <Grid item md={6} xs={12}>
-                  <TextField
-                    error={Boolean(touched.height && errors.height)}
-                    fullWidth
-                    helperText={touched.height && errors.height}
-                    label="Height(Ft) *"
-                    // margin="normal"
-                    name="height"
-                    type="number"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.height}
-                    variant="outlined"
-                  />
-                </Grid>
-
-                <Grid item md={6} xs={12}>
-                  <TextField
-                    error={Boolean(touched.weight && errors.weight)}
-                    fullWidth
-                    helperText={touched.weight && errors.weight}
-                    label="Weight(Kg) *"
-                    // margin="normal"
-                    name="weight"
-                    type="number"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.weight}
-                    variant="outlined"
-                  />
-                </Grid>
-
+                
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
@@ -318,47 +485,24 @@ export default function AddFamilyDoctor() {
                   />
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
-                    id="state"
-                    error={Boolean(touched.state && errors.state)}
+                    error={Boolean(touched.pinCode && errors.pinCode)}
                     fullWidth
-                    helperText={touched.state && errors.state}
-                    label="State *"
-                    name="state"
+                    helperText={touched.pinCode && errors.pinCode}
+                    label="Pincode *"
+                    // margin="normal"
+                    name="pinCode"
+                    
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.state}
+                    value={values.pinCode}
                     variant="outlined"
-                    select
-                  >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
-                  </TextField>
+                    
+                  />
                 </Grid>
 
-                <Grid item md={6} xs={12}>
-                  <TextField
-                    id="district"
-                    error={Boolean(touched.district && errors.district)}
-                    fullWidth
-                    helperText={touched.district && errors.district}
-                    label="District *"
-                    name="district"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.district}
-                    variant="outlined"
-                    select
-                  >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
-                  </TextField>
-                </Grid>
-
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     id="city"
                     error={Boolean(touched.city && errors.city)}
@@ -372,32 +516,36 @@ export default function AddFamilyDoctor() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
+                    <MenuItem value="32">Mumbai</MenuItem>
+                    <MenuItem value="32">Delhi</MenuItem>
+                    <MenuItem value="32">Rajkot</MenuItem>
                   </TextField>
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
-                    error={Boolean(touched.pinCode && errors.pinCode)}
+                    id="state"
+                    error={Boolean(touched.state && errors.state)}
                     fullWidth
-                    helperText={touched.pinCode && errors.pinCode}
-                    label="pinCode(Kg) *"
-                    // margin="normal"
-                    name="pinCode"
-                    type="number"
+                    helperText={touched.state && errors.state}
+                    label="State *"
+                    name="state"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.pinCode}
+                    value={values.state}
                     variant="outlined"
-                  />
+                    select
+                  >
+                    <MenuItem value="4460">Delhi</MenuItem>
+                    <MenuItem value="4460">Haryana</MenuItem>
+                    <MenuItem value="4460">Sikkim</MenuItem>
+                  </TextField>
                 </Grid>
-
+                
                 <Box my={2} ml={1.4}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={!isValid || isSubmitting}
                     fullWidth
                     size="large"
                     type="submit"
@@ -405,8 +553,12 @@ export default function AddFamilyDoctor() {
                   >
                     Save Profile
                   </Button>
-                  {isSubmitting && <LinearProgress />}
+                  {/* <h3>{isSubmitting ? isSubmitting : 'Dheeraj'}</h3> */}
+                 
+                  {isSubmitting &&   <LinearProgress /> }
+                  {/* <LinearProgress /> */}
                 </Box>
+               
               </Grid>
               {/* Custom form end */}
             </form>
