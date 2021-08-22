@@ -25,7 +25,7 @@ import {Formik, Form, Field} from 'formik';
 import {
 Switch,
 } from 'formik-material-ui';
-
+import  Breadcrumb  from '../Reusable/MediBreadcrumb';
 
 
 const useStyles = makeStyles(theme => ({
@@ -105,9 +105,10 @@ const Data = props => {
   
 
   return (
+  <div className="medifle-setting">
+    <Breadcrumb url="Setting"/>
     <div className={classes.tableWidth} style={{ overflow:"hidden"}}>
       <Grid container>
-       
         <Grid item md={11}>
          <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -147,7 +148,7 @@ const Data = props => {
                                     onChange={handleClickOpens}
                                      type="checkbox" name="rememberMe" />
                                 }
-                                label="Remember Me"
+                                label="File Access"
                               />
                             </Box>
                           </Form>
@@ -190,6 +191,7 @@ const Data = props => {
         </DialogActions>
       </Dialog>
       </Grid>
+    </div>
     </div>
   );
 };
