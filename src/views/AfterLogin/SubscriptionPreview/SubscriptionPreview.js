@@ -23,7 +23,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import  Breadcrumb  from '../Reusable/MediBreadcrumb';
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -93,7 +93,9 @@ const Subscriptions = props => {
   });
 
   return (
-    <div className={classes.paperPadding} >
+    <div className="subs-preview">
+       <Breadcrumb url="Subscription Preview"/>
+     <div className={classes.paperPadding} >
       <Paper elevation={0} >
        <div className={classes.containerPadding}>
         <Grid container >
@@ -201,7 +203,7 @@ const Subscriptions = props => {
             </Grid>
             </div>
           </Paper>  
-          
+       </div>    
      </div>
   )
 }

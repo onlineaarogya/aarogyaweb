@@ -81,12 +81,17 @@ const Navbar = ({ onMobileClose, openMobile }) => {
               <ListItemText className="accountInfo" primary="Account Profile" />
             </ListItem>
           </Link>
+
+          <Link
+            href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/plans-subscriptions`}
+          >
           <ListItem button>
             <ListItemIcon className={classes.iconWidth}>
               <i class="fas fa-handshake-slash"></i>
             </ListItemIcon>
             <ListItemText primary="Subscription" />
           </ListItem>
+          </Link>
 
           <Link
             href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/family-member`}
@@ -172,6 +177,20 @@ const Navbar = ({ onMobileClose, openMobile }) => {
                   <ListItemText primary="Setting" />
                 </ListItem>
               </Link>
+
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/plans-subscriptions`}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  style={{ marginLeft: '14px' }}
+                >
+                  <ListItemIcon className={classes.iconWidth}>
+                  <i class="fas fa-handshake-slash"></i>
+                  </ListItemIcon>
+                  <ListItemText primary="Subscription" />
+                </ListItem>
+              </Link>
+
             </List>
           </Collapse>
 

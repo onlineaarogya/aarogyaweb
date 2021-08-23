@@ -38,7 +38,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import EmailIcon from '@material-ui/icons/Email';
-
+import  Breadcrumb  from '../Reusable/MediBreadcrumb';
 import { FileIcon, defaultStyles } from 'react-file-icon';
 
 function MemberDetails() {
@@ -283,6 +283,8 @@ function MemberDetails() {
   
 
   return (
+  <div className="member-detail">
+    <Breadcrumb url="Member Details"/>
     <div style={{ padding: 26 }}>
       <Grid container>
         <Grid item xs={12}>
@@ -332,10 +334,11 @@ function MemberDetails() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}><Typography color="primary"><i class="fas fa-file-export"></i></Typography><Button  >Give File Access</Button></MenuItem>
-          <MenuItem onClick={handleClose}><Typography color="primary"><i class="fas fa-window-close"></i></Typography><Button  >Remove File Access</Button></MenuItem>
+          <MenuItem onClick={handleClose}><Typography color="primary">  <WhatsAppIcon style={{color:"green",fontSize:"19px",marginTop:"4px"}}/> </Typography><Button  >WhatsApp</Button></MenuItem>
+          <MenuItem onClick={handleClose}><Typography color="primary"><GetAppIcon  style={{color:"#4b4bb2",fontSize:"19px",marginTop:"4px"}} /> </Typography><Button  >Download</Button></MenuItem>
+          <MenuItem onClick={handleClose}><Typography color="primary"> <EmailIcon  style={{color:"#957982",fontSize:"19px",marginTop:"4px"}} /> </Typography><Button  >Download</Button></MenuItem>
      </Menu>
-
+     </div>
     </div>
   );
 }

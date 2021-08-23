@@ -10,14 +10,7 @@ import {
   Button,
   Divider,
 } from '@material-ui/core';
-import MetaTitle from 'components/helper/MetaTitle';
-import AddIcon from '@material-ui/icons/Add';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+
 
 import Link from 'next/link';
 // import {checkToken} from '../../../components/helper/LoginCheck'
@@ -26,7 +19,7 @@ import Router from 'next/router'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-
+import  Breadcrumb  from '../Reusable/MediBreadcrumb';
 
 
 const useStyles = makeStyles(theme => ({
@@ -64,6 +57,8 @@ const Subscriptions = props => {
   });
 
   return (
+  <div className="subscription">
+   <Breadcrumb url="Subscription"/>
     <div className={classes.paperPadding}>
       <Paper elevation={3} >
       <div className={classes.containerPadding}>
@@ -256,7 +251,9 @@ const Subscriptions = props => {
             </Grid>  
             <Grid item xs={4}>
                <Box  mb={4} ml={2}>
-                  <Button  color="primary" variant="contained">Continue</Button>
+                 <Button variant="contained" color="primary" href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview`}>
+                    Continue
+                 </Button>
                </Box>  
             </Grid>  
             <Grid item xs={3}>
@@ -269,6 +266,7 @@ const Subscriptions = props => {
        </div>
      </Paper>  
      </div>
+    </div>  
   )
 }
 
