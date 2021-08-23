@@ -168,4 +168,40 @@ const addFamilyDoctorDetail = async data => {
       return regResponse;
  };
 
-export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail};
+
+ // Fetch Data for Subscription Page 
+
+
+ const getSubscriptionDetails = async data => { 
+
+  const loginToken = checkToken();
+   var myHeaders = new Headers();
+   if(loginToken)
+    {
+       var bearerTokern = loginToken.access_token; 
+    }
+    else
+    {
+      return(1);
+    }
+
+  myHeaders.append("Authorization",`Bearer ${bearerTokern}`)
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  const response = await fetch(
+     "https://cms.onlineaarogya.com/api/get-all-subscription"
+    );
+
+    const regResponse = await response.json();
+    console.log("My Response",regResponse);
+
+    return regResponse;
+};
+
+
+export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,getSubscriptionDetails};
