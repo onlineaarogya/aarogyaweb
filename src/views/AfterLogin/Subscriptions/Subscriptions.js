@@ -20,7 +20,8 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import  Breadcrumb  from '../Reusable/MediBreadcrumb';
-
+import {checkToken} from '../../../components/helper/LoginCheck'
+import {getSubscriptionDetails} from '../../../components/helper/PatientApi'
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -56,6 +57,36 @@ const Subscriptions = props => {
     defaultMatches: true,
   });
 
+
+  // Code for API Load 
+
+  const [datas, setDatas] = useState([]);
+
+  const getSubscriptionData = async () =>
+  {
+    var subscriptionData = await getSubscriptionDetails();
+    console.log("Name:",subscriptionData);
+     setDatas(subscriptionData.data);
+  }
+
+  useEffect(() => {
+      const loginToken = checkToken();
+      if(loginToken)
+      {
+        getSubscriptionData();
+      }
+      else
+      {
+        Router.push('/signin', undefined, { shallow: true })
+      }
+  }, [])
+
+
+  //
+
+  
+
+
   return (
   <div className="subscription">
    <Breadcrumb url="Subscription"/>
@@ -71,22 +102,32 @@ const Subscriptions = props => {
         <Grid container> 
          <Grid item xs={12} lg={1}></Grid> 
          <Grid  item xs={12} lg={11}> 
-            <Box mb={4}><Typography color="secondary" variant="h5">Unlimited Online Doctor </Typography>
-            <Typography color="secondary" variant="h5">Consulation with all Spcialiasts</Typography></Box></Grid>
+            <Box mb={4}><Typography color="secondary" variant="h5">Lorem Spciso codle sit </Typography>
+            <Typography color="secondary" variant="h5">Special ipsum dolor sit amet </Typography></Box></Grid>
        </Grid>
 
-       <Grid container spacing={isMd ? 4 : 2}> 
+       <Grid container> 
           
-          <Grid item xs={10}>
+          <Grid item xs={12}>
            <div className="plans-subscription" > 
              <Grid container>
-              <Grid item xs={4} container justify = "center">
-                <Box height={80} color="white" p={2}  bgcolor="#f1acac" mx={0.5} width={120} display="inline-block">
-                    <Box mt={2} ml={1}>Prime Cube</Box>
-                  </Box> 
+             {datas.map(row => (
+              
+               <Grid item lg={4} sm={12} xs={12} container justify = "center">
+                   <Box >
+                       <a href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`} title="thefront"> 
+                         <img src={row.image} /></a>
+                   <Box mt={3} ml={7} mb={3}> <Button variant="contained" color="primary" href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview`}>
+                    Select Plan
+                  </Button></Box>
+                 
+                </Box>  
               </Grid>
+          
+              
+              ))}
 
-              <Grid item xs={4} container justify = "center">
+              {/* <Grid item xs={4} container justify = "center">
                  <Box height={80} color="white"  p={2}  bgcolor="#ff0010" mx={0.5} width={120} display="inline-block">
                    <Box mt={2} ml={0}>Medium Cube</Box>
                   <Box  ml={3} mt={1.7}><ArrowDropDownIcon fontSize="large" style={{color:"red",position:"absolute"}} /></Box> 
@@ -97,10 +138,10 @@ const Subscriptions = props => {
                 <Box height={80} color="white" p={2}  bgcolor="#f1acac" mx={0.5} width={120} display="inline-block">
                    <Box mt={2} ml={1}>Gold Cube</Box>
                 </Box> 
-              </Grid>
+              </Grid> */}
            </Grid> 
 
-           <Grid container>
+           {/* <Grid container>
               <Grid item xs={4} container justify = "center">
               </Grid>
               <Grid item xs={4} container justify = "center">
@@ -243,23 +284,32 @@ const Subscriptions = props => {
                </Box>  
            </Grid> 
           
-         </Grid> 
+         </Grid>  */}
+            
+       
 
-         <Grid container style={{marginTop:"50px"}}>
+         {/* <Grid container justify = "center">
+            <Box mt={5}> <Button variant="contained" color="primary" href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview`}>
+                 Continue
+                 </Button>
+            </Box>
+        </Grid> */}
+
+         {/* <Grid container style={{marginTop:"50px"}}>
           
-           <Grid item xs={5}>
+           <Grid item xs={5} lg={5}>
             </Grid>  
-            <Grid item xs={4}>
+            <Grid item xs={2} lg={2}>
                <Box  mb={4} ml={2}>
                  <Button variant="contained" color="primary" href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview`}>
                     Continue
                  </Button>
                </Box>  
             </Grid>  
-            <Grid item xs={3}>
+            <Grid item xs={5} lg={5}>
             </Grid>  
-           </Grid>  
-
+           </Grid>   */}
+              
          </div>
         </Grid>
        </Grid>

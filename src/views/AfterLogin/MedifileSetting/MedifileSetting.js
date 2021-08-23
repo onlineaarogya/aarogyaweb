@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
  
   tableWidth:
   {
-    width:"1100px",
     padding:45,
   },
   
@@ -109,7 +108,7 @@ const Data = props => {
     <Breadcrumb url="Setting"/>
     <div className={classes.tableWidth} style={{ overflow:"hidden"}}>
       <Grid container>
-        <Grid item md={11}>
+        <Grid item md={12}>
          <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>

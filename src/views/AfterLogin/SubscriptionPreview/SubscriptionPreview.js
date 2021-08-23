@@ -9,6 +9,8 @@ import {
   Typography,
   Button,
   Divider,
+  RadioGroup,
+  FormLabel,
 } from '@material-ui/core';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -24,6 +26,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import  Breadcrumb  from '../Reusable/MediBreadcrumb';
+import {getSubscriptionDetails} from '../../../components/helper/PatientApi'
+import {checkToken} from '../../../components/helper/LoginCheck'
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -49,10 +53,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  formControl:
-  {
-    width:"170px"
-  },
+
   dependentStyle:
   {
     padding:"5px",
@@ -74,12 +75,17 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 150,
   },
   btnSize:{
-    width:"120px",
-    height:"50px"
-  }
+    minWidth: 150,
+    height:55
+  },
+  radio: {
+    '&$checked': {
+      color: 'white'
+    }
+  },
 }));
 
 const Subscriptions = props => {
@@ -92,6 +98,49 @@ const Subscriptions = props => {
     defaultMatches: true,
   });
 
+  // Code for radio button
+  const [value, setValue] = React.useState('female');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+
+  // Code for Load data from API 
+
+
+    const [datas, setDatas] = useState([]);
+
+    const getSubscriptionData = async () =>
+    {
+      var subscriptionData = await getSubscriptionDetails();
+      console.log("Name:",subscriptionData);
+      setDatas(subscriptionData.data);
+    }
+
+    useEffect(() => {
+        const loginToken = checkToken();
+        if(loginToken)
+        {
+          getSubscriptionData();
+        }
+        else
+        {
+          Router.push('/signin', undefined, { shallow: true })
+        }
+    }, [])
+
+
+  //
+
+
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get('nid');
+  console.log("check Nid",myParam);
+
+
+
   return (
     <div className="subs-preview">
        <Breadcrumb url="Subscription Preview"/>
@@ -100,34 +149,76 @@ const Subscriptions = props => {
        <div className={classes.containerPadding}>
         <Grid container >
           <Grid item xs={12} lg={6}>
+
+          {datas.map(row => (
               <Paper elevation={0} >
                 <Grid container className={classes.dependentStyle}>
                     <Grid itme xs={12} lg={12}>
-                      <Box p={2} color="white" style={{backgroundColor:"#1d70ec",borderRadius:"5px"}}>
-                      <Grid container> 
-                        <Grid itme xs={1}>
-                          <Box mt={2}><input type="radio" value="female" style={{backgroundColor:"white",height:"25px",width:"25px"}} /></Box>
-                        </Grid>  
-                        <Grid itme xs={8}>
-                          <Box ml={1}> <Typography variant="h6">Prime Cube</Typography> 
-                          <Typography>On Call Suppor for Customer</Typography> </Box> 
-                        </Grid>
-                        <Grid itme xs={3}>
-                            <Box mt={1}><Typography variant="h6" align="center">₹ 8,212</Typography></Box> 
-                        </Grid>
-                        </Grid>
-                        </Box>   
-                      </Grid>  
-                    </Grid>
-                  </Paper>  
+                      
+                 {/* <div>{ !isValid || isSubmitting ? (values.gender != '' ?  <p></p> : <p style={{color:"red"}}>Gender is Required</p>) : <p></p> }</div> */}
+                    
+              {row.nid != myParam ?  <Box p={2} style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
+                
+                <Grid container> 
+                  <Grid itme xs={1}>
+                    <Box mt={1}>
+                    <FormControl component="fieldset">
+                      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                        <FormControlLabel value="male" classes={{root: classes.radio}}  control={<Radio/>}/>
+                     </RadioGroup>
+                    </FormControl>
+                    </Box>
+                  </Grid>  
+                  <Grid itme xs={8}>
+                    <Box ml={1}> <Typography variant="h6">{row.title}</Typography> 
+                    <Typography>On Call Suppor for Customer</Typography> </Box> 
+                  </Grid>
+                  <Grid itme xs={3}>
+                      <Box mt={1}><Typography variant="h6" align="center">₹ {row.field_subscription_charges}</Typography></Box> 
+                  </Grid>
+                  </Grid>
+                  </Box>  
+                   :
+                   
+                 <Box p={2} color="white" style={{backgroundColor:"red",borderRadius:"5px"}}>
+                 <Grid container> 
+                  <Grid itme xs={1}>
+                    <Box mt={1}>
+                    <FormControl component="fieldset">
+                      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                        <FormControlLabel value="male" classes={{root: classes.radio}}  control={<Radio/>}/>
+                     </RadioGroup>
+                    </FormControl>
+                    </Box>
+                  </Grid>  
+                  <Grid itme xs={8}>
+                    <Box ml={1}> <Typography variant="h6">{row.title}</Typography> 
+                    <Typography>On Call Suppor for Customer</Typography> </Box> 
+                  </Grid>
+                  <Grid itme xs={3}>
+                      <Box mt={1}><Typography variant="h6" align="center">₹ {row.field_subscription_charges}</Typography></Box> 
+                  </Grid>
+                  </Grid>
+                  </Box> }
+                       
+                  </Grid>  
+                 </Grid>
+                </Paper>  
+                ))}
 
-              <Paper elevation={0} >
+
+              {/* <Paper elevation={0} >
               <Grid container className={classes.dependentStyle}>
                   <Grid itme xs={12} lg={12}>
                     <Box p={2}  style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
                     <Grid container> 
                       <Grid itme xs={1}>
-                        <Box mt={2} mr={2}><input type="radio" value="female" style={{backgroundColor:"white",height:"25px",width:"25px"}} /></Box>
+                        <Box mt={1} mr={2}> <FormControl component="fieldset">
+                            <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                              <FormControlLabel value="female" control={<Radio color="#1b5e20" backgroundColor="white" />}/>
+                           </RadioGroup>
+                          </FormControl>
+                        </Box>
                       </Grid>  
                       <Grid itme xs={8}>
                         <Box ml={1}> <Typography variant="h6">Medium Cube</Typography> 
@@ -148,7 +239,13 @@ const Subscriptions = props => {
                     <Box p={2}  style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
                     <Grid container> 
                       <Grid itme xs={1}>
-                        <Box mt={2}><input type="radio" value="female" style={{backgroundColor:"white",height:"25px",width:"25px"}} /></Box>
+                        <Box mt={1}> 
+                          <FormControl component="fieldset">
+                            <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                              <FormControlLabel value="other" control={<Radio color="#1b5e20"  />}/>
+                           </RadioGroup>
+                          </FormControl>
+                        </Box>
                       </Grid>  
                       <Grid itme xs={8}>
                         <Box ml={1}> <Typography variant="h6">Gold Cube</Typography> 
@@ -161,23 +258,26 @@ const Subscriptions = props => {
                       </Box>   
                   </Grid>   
                 </Grid>
-              </Paper>  
+              </Paper>   */}
               </Grid>   
               
               <Grid item xs={1}></Grid>
 
-              <Grid item xs={8} lg={4}>
+              <Grid item xs={12} md={8} lg={5}>
                 <Paper elevation={4}>
                   <Box p={2}>
-                    <Typography variant="h5" >Prime Cube</Typography>
+                    <Typography variant="h5" >Basic Plan</Typography>
                     <Typography color="secondary">Free Service + Membership</Typography>
                      <Box mt={2} display="flex"><CheckIcon className={classes.iconColor}/> <Typography>24*7 Service</Typography></Box>
                      <Box mt={2} display="flex"><CheckIcon className={classes.iconColor}/> <Typography >On Call Support Help</Typography></Box>
                      <Box mt={2} display="flex"><CheckIcon className={classes.iconColor}/> <Typography >No Extra Charge</Typography></Box>
-                     <Box mt={4}>
+                      <Box mt={2} display="flex">
+                        <Box><Typography >₹ </Typography></Box> <Box ml={0}><Typography variant="h5">500</Typography></Box>
+                      </Box>
+                     <Box mt={2}>
                       <Grid container> 
-                       <Grid item xs={7}>
-                        <div>
+                       <Grid item  xs={12} sm={6} lg={6}>
+                        <Box   align="center">
                           <FormControl variant="outlined"  className={classes.formControl}>
                           <InputLabel id="demo-simple-select-outlined-label">Select Member</InputLabel>
                           <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Select Member">
@@ -189,10 +289,10 @@ const Subscriptions = props => {
                             <MenuItem value={30}>Arnold S</MenuItem>
                           </Select>
                          </FormControl>
-                       </div>
-                      </Grid>
-                       <Grid item xs={5}>
-                        <Box mt={1}  align="center"> <Button className={classes.btnSize} variant="contained" size="large"  color="primary">Submit</Button></Box>
+                       </Box>
+                       </Grid>
+                       <Grid item  xs={12} sm={6} lg={6}>
+                        <Box mt={1} align="center"> <Button className={classes.btnSize} variant="contained" size="large"  color="primary">Make Payment</Button></Box>
                         </Grid> 
                        </Grid>   
                      </Box> 
