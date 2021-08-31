@@ -29,7 +29,7 @@ const ViewFamilyMember = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-    <Breadcrumb url="Family Member"/>
+    <Breadcrumb url="Family Members"/>
       <Section className={classes.section}>
         <Suspense fallback={<Loading />}>
       <FamilyMembers/>

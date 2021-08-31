@@ -33,6 +33,9 @@ import {
 } from '@material-ui/pickers';
 import Medical from './Medical';
 // import FamilyMembers from '../Reusable/FamilyMembers';
+import MetaTitle from '../../../../../components/helper/MetaTitle';
+
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -111,6 +114,7 @@ const General = props => {
   return (
     // <div className={className} {...rest}>
     <div className="praveenk">
+       <MetaTitle title={`Account Info | OnlineAarogya`} metaKeyWord="" metaDescription="" />
       <AppBar position="static" color="" className={classes.tabHeader}>
         <Tabs
           value={value}

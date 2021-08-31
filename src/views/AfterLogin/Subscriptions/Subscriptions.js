@@ -10,11 +10,8 @@ import {
   Button,
   Divider,
 } from '@material-ui/core';
-
-
+import MetaTitle from '../../../components/helper/MetaTitle';
 import Link from 'next/link';
-// import {checkToken} from '../../../components/helper/LoginCheck'
-// import {getFamilyDoctorDetailByUid} from '../../../components/helper/PatientApi'
 import Router from 'next/router'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CloseIcon from '@material-ui/icons/Close';
@@ -89,6 +86,7 @@ const Subscriptions = props => {
 
   return (
   <div className="subscription">
+   <MetaTitle title={`Medifile Subscription | OnlineAarogya`} metaKeyWord="" metaDescription="" />
    <Breadcrumb url="Subscription"/>
     <div className={classes.paperPadding}>
       <Paper elevation={3} >
@@ -112,19 +110,16 @@ const Subscriptions = props => {
            <div className="plans-subscription" > 
              <Grid container>
              {datas.map(row => (
-              
                <Grid item lg={4} sm={12} xs={12} container justify = "center">
-                   <Box >
-                       <a href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`} title="thefront"> 
-                         <img src={row.image} /></a>
-                   <Box mt={3} ml={7} mb={3}> <Button variant="contained" color="primary" href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview`}>
+                <Box >
+                  <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`} title="thefront"> 
+                  <img src={row.image} /></Link>
+                   <Box mt={3} ml={7} mb={3}> 
+                   <Button variant="contained" color="primary" href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`}>
                     Select Plan
                   </Button></Box>
-                 
                 </Box>  
               </Grid>
-          
-              
               ))}
 
               {/* <Grid item xs={4} container justify = "center">
