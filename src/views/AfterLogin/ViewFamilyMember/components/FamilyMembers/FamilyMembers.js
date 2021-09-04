@@ -21,7 +21,7 @@ import Avatar from '@material-ui/core/Avatar';
 import {checkToken} from '../../../../../components/helper/LoginCheck'
 import {getFamilyDependentByUid} from '../../../../../components/helper/PatientApi'
 import Router from 'next/router'
-
+import MetaTitle from '../../../../../components/helper/MetaTitle';
 
 
 const useStyles = makeStyles(theme => ({
@@ -95,6 +95,7 @@ const FamilyMembers = props => {
 
   return (
     <div className={className} {...rest}>
+       <MetaTitle title={`Family Members | OnlineAarogya`} metaKeyWord="" metaDescription="" />
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
           <div className={classes.titleCta}>

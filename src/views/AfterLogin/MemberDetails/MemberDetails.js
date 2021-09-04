@@ -40,6 +40,8 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import EmailIcon from '@material-ui/icons/Email';
 import  Breadcrumb  from '../Reusable/MediBreadcrumb';
 import { FileIcon, defaultStyles } from 'react-file-icon';
+import MetaTitle from '../../../components/helper/MetaTitle';
+
 
 function MemberDetails() {
   const tableIcons = {
@@ -284,6 +286,7 @@ function MemberDetails() {
 
   return (
   <div className="member-detail">
+    <MetaTitle title={`Medifile Member Details | OnlineAarogya`} metaKeyWord="" metaDescription="" />
     <Breadcrumb url="Member Details"/>
     <div style={{ padding: 26 }}>
       <Grid container>

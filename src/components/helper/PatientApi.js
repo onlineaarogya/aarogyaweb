@@ -170,8 +170,6 @@ const addFamilyDoctorDetail = async data => {
 
 
  // Fetch Data for Subscription Page 
-
-
  const getSubscriptionDetails = async data => { 
 
   const loginToken = checkToken();

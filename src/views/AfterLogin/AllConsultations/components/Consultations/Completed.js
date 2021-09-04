@@ -7,6 +7,10 @@ import TableIcons from 'components/helper/TableIcons';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 import RepeatIcon from '@material-ui/icons/Repeat';
+import MetaTitle from '../../../../../components/helper/MetaTitle';
+
+
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -192,6 +196,7 @@ const Completed = props => {
 
   return (
     <div className={className} {...rest}>
+      <MetaTitle title={`All Consultations | OnlineAarogya`} metaKeyWord="" metaDescription="" />
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item md={12}>
           <MaterialTable

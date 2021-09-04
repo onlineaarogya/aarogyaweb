@@ -6,6 +6,8 @@ import MaterialTable from 'material-table';
 import TableIcons from 'components/helper/TableIcons';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import DateFnsUtils from '@date-io/date-fns';
+import MetaTitle from '../../../../../components/helper/MetaTitle';
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -191,6 +193,7 @@ const Data = props => {
 
   return (
     <div className={className} {...rest}>
+       <MetaTitle title={`Our Doctor | OnlineAarogya`} metaKeyWord="" metaDescription="" />
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item md={12}>
           <MaterialTable

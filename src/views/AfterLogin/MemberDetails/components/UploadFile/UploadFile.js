@@ -9,9 +9,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { Autocomplete } from '@material-ui/lab';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,createTheme,  useTheme,
+  MuiThemeProvider } from "@material-ui/core/styles";
 import axios from "axios";
-import  { useState } from "react";
+import  { useState,useEffect } from "react";
 import {
   Button,
   Divider,
@@ -46,26 +47,23 @@ const styles = (theme) => ({
 });
 
 // CSS For Dialog Box and Dropzon box
+
 const stylesss = makeStyles((theme) => ({
-  dropZo: {
-     
-      zIndex:1250,
-      position: "relative",
-    },
    diaLog :
    {
-      position: "absolute",
-      zIndex:1252,
+        position:"absolute",
+        zIndex: '1301 !important',
+        inset:"0px",
+       
     },
+   
   }
 ));
-
-
-
 
 export default function CustomizedDialogs(props) {
     // const [open, setOpen] = React.useState(false);
     const classes = stylesss();
+
     // Code for Dropzone File
     const [open, setOpen] = React.useState(false);
       const [fileObjects, setFileObjects] = React.useState([]);
@@ -87,8 +85,6 @@ export default function CustomizedDialogs(props) {
       const [opens, setOpens] = React.useState(false);
       const [filess, setFiless] = React.useState();
 
-     
-
       const handleClickOpen = () => {
         setOpens(true);
        
@@ -101,23 +97,33 @@ export default function CustomizedDialogs(props) {
           var dt =  document.getElementById('myInput').textContent;  
           alert(dt)
       }
-
-
       // Record Store in Array 
+      
+      
+    
+    
 
-      // let empArray = []
-      // let buffer = []
+   
+         //setArray(oldArray => [...oldArray,empArray]);
+   
+      //  const  empArrays = [
+      //     {"name":filess ? filess.[0].file.name : null},
+      //     {"type":filess ? filess.[0].file.type : null},
+      //     {"fileSize":filess ? filess.[0].file.size : null}]
 
-      // let empArray = [{"name":filess ? filess.[0].file.name : null},{"type":filess ? filess.[0].file.type : null},{"fileSize":filess ? filess.[0].file.size : null}]
+     
+     
+     
+     
+     // fruits.push("Kiwi");
 
-      // // let reactJson = buffer.push(recArry);
+      // const myObjStr = JSON.stringify(reactJson);
+   
+      // console.log("My All Images are ",array);
 
-      // // const myObjStr = JSON.stringify(recArry);
-      // // console.log(myObjStr);
+      // console.log("My Json Response",array);
       //  const myObjStr = JSON.stringify(empArray);
       //  console.log(myObjStr);
-
-
 
        const documentUpload = (values) =>
        {
@@ -167,15 +173,68 @@ export default function CustomizedDialogs(props) {
           });
        }
 
+
+       /// Code for maing array 
+
+      const [mystatess,setMystate] = useState([]);
+
+      const [autodata,setAutodat] = useState('');
+
+      const [value, setValue] = React.useState(null);
+
+      const[bigarray,setBigarray]= useState([]);
+
+ 
+      const addItemArray = () =>{
+
+        setMystate([
+           {"name":filess ? filess.[0].file.name : null},
+           {"type":filess ? filess.[0].file.type : null},
+           {"fileSize":filess ? filess.[0].file.size : null},
+           
+        ])
+       
+        setBigarray([...mystatess])
+
+        
+        console.log("Given new array",mystatess);
+        console.log("This is Big Array",bigarray);
+
+        const myObjStr = JSON.stringify(bigarray);
+        console.log("JSON Array Data is here",myObjStr);
+
+       // alert(myObjStr)
+
+      }
+        
+   
+       const [mystatesss,setMystates] = useState([]);
+      //  setMystate([...autodata,autodata]);
+
+        // const autoShowing = () =>
+        //     {
+        //        setMystates([...autodata,autodata]);
+        //        console.log("my array can be",mystatess)
+        //     }
+     
+
+      //  const autoShowing = () =>
+      //  {
+      //    alert(autodata)
+      //    console.log("Hello I am ",autodata)
+      //  }
+      // console.log("Hello I am ",mystatess)
+
   return (
  <div>
-        <Grid item xs={12} lg={12}>
+  <Grid item xs={12} lg={12}>
     <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
       Add New Medical Record 
       {/* {filess ? filess.[0].file.name : null } */}
     </Button>
     
     <DropzoneDialogBase
+       
         dialogTitle={dialogTitle()}
         acceptedFiles={['image/*','application/pdf','application/docs']}
         fileObjects={fileObjects}
@@ -183,15 +242,15 @@ export default function CustomizedDialogs(props) {
         submitButtonText={"submit"}
         maxFileSize={5000000}
         open={open}
-        dropzoneClass= {
-          classes.dropZo
-        }
+        dropzoneClass={classes.dropZones}
         onAdd={newFileObjs => {
           setFiless(newFileObjs)
           console.log('onAdd', newFileObjs);
           console.log('The File Name is',filess)
           setFileObjects([].concat(fileObjects, newFileObjs));
           handleClickOpen();
+          addItemArray();
+        
         }}
         onDelete={deleteFileObj => {
           console.log('onDelete', deleteFileObj);
@@ -201,6 +260,7 @@ export default function CustomizedDialogs(props) {
           console.log('onSave', fileObjects);
           documentUpload(fileObjects.[0].file)
           setOpen(false);
+         
         }}
         showPreviews={true}
         showFileNamesInPreview={true}
@@ -208,10 +268,20 @@ export default function CustomizedDialogs(props) {
 
       {/* Code for Dialog Box  */}
      
-     
+     <div style={{marginLeft:"478px"}} >
       <Dialog
         className={classes.diaLog}
-        
+        // BackdropProps={{
+        //   classes: {
+        //    root: classes.diaLog
+        //   }
+        //  }}
+        PaperProps={{
+          style: {
+            height:"450px",
+            width:"450px"
+          },
+        }}
         open={opens}
         keepMounted
         onClose={handleClose}
@@ -221,29 +291,25 @@ export default function CustomizedDialogs(props) {
         <DialogTitle id="alert-dialog-slide-title">{"Select Record"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-          
-          {/* {empArray.map((number) => 
-                   <div>
-                    <p>{number.name}</p>
-                    <p>{number.type}</p>
-                    <p>{number.fileSize}</p>
-                   </div>
-          )}  */}
            {/* <div id = "myInput">{filess ? filess.[0].file.name : null }</div>
            <div>{filess ? filess.[0].file.type : null }</div>
            <div>{filess ? filess.[0].file.size : null }</div> */}
-         
+         </DialogContentText>
           <Autocomplete
+             disablePortal
               id="combo-box-demo"
               options={top100Films}
               getOptionLabel={(option) => option.title}
               style={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+              // value={(e)=>setAutodat(e.target.value)}
+              onChange={(event, value) => setAutodat(value)}
+              renderInput={(params) => <TextField   style={{ width: 300 }} {...params} label="Combo box" variant="outlined" />}
             />
-          </DialogContentText>
+          
+
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleData} color="primary">
+          <Button onClick={addItemArray} color="primary">
             Submit
           </Button>
           <Button onClick={handleClose} color="primary">
@@ -251,7 +317,7 @@ export default function CustomizedDialogs(props) {
           </Button>
         </DialogActions>
       </Dialog>
-
+       </div>
       {/* Auto Complete Box */}
       </Grid>
     </div>
@@ -259,10 +325,10 @@ export default function CustomizedDialogs(props) {
 }
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
+  { title: 'Sugar Report', year: 1994 },
+  { title: 'Blood Report', year: 1972 },
+  { title: 'Sample Data', year: 1974 },
+  { title: 'Brain Test', year: 2008 },
+  { title: 'Cold Report', year: 1957 },
  
 ];

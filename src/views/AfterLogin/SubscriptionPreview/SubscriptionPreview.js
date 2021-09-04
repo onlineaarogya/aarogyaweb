@@ -15,8 +15,6 @@ import {
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from 'next/link';
-// import {checkToken} from '../../../components/helper/LoginCheck'
-// import {getFamilyDoctorDetailByUid} from '../../../components/helper/PatientApi'
 import Radio from '@material-ui/core/Radio';
 import { BorderColor } from '@material-ui/icons';
 import CheckIcon from '@material-ui/icons/Check';
@@ -28,6 +26,8 @@ import Select from '@material-ui/core/Select';
 import  Breadcrumb  from '../Reusable/MediBreadcrumb';
 import {getSubscriptionDetails} from '../../../components/helper/PatientApi'
 import {checkToken} from '../../../components/helper/LoginCheck'
+import MetaTitle from '../../../components/helper/MetaTitle';
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -99,7 +99,7 @@ const Subscriptions = props => {
   });
 
   // Code for radio button
-  const [value, setValue] = React.useState('female');
+  const [value, setValue] = React.useState();
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -133,6 +133,8 @@ const Subscriptions = props => {
 
   //
 
+   //const [gender, setGender] = useState('plan_one');
+
 
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -143,28 +145,27 @@ const Subscriptions = props => {
 
   return (
     <div className="subs-preview">
-       <Breadcrumb url="Subscription Preview"/>
+    <MetaTitle title={`Medifile Subscription Preview | OnlineAarogya`} metaKeyWord="" metaDescription="" />
+    <Breadcrumb url="Subscription Preview"/>
      <div className={classes.paperPadding} >
       <Paper elevation={0} >
        <div className={classes.containerPadding}>
         <Grid container >
           <Grid item xs={12} lg={6}>
-
-          {datas.map(row => (
+            
+            {datas.map(row => (
               <Paper elevation={0} >
                 <Grid container className={classes.dependentStyle}>
-                    <Grid itme xs={12} lg={12}>
-                      
-                 {/* <div>{ !isValid || isSubmitting ? (values.gender != '' ?  <p></p> : <p style={{color:"red"}}>Gender is Required</p>) : <p></p> }</div> */}
-                    
-              {row.nid != myParam ?  <Box p={2} style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
-                
-                <Grid container> 
+                  <Grid itme xs={12} lg={12}>
+                   {row.nid != myParam ?  <Box p={2} style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
+
+                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`} title="thefront"> 
+                 <Grid container> 
                   <Grid itme xs={1}>
                     <Box mt={1}>
                     <FormControl component="fieldset">
-                      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                        <FormControlLabel value="male" classes={{root: classes.radio}}  control={<Radio/>}/>
+                      <RadioGroup aria-label="plan" name="value" value={value} onChange={(e)=>setValue(e.target.value)}>
+                        <FormControlLabel value={row.field_subscription_charges} classes={{root: classes.radio}}   control={<Radio/>}/>
                      </RadioGroup>
                     </FormControl>
                     </Box>
@@ -177,16 +178,19 @@ const Subscriptions = props => {
                       <Box mt={1}><Typography variant="h6" align="center">₹ {row.field_subscription_charges}</Typography></Box> 
                   </Grid>
                   </Grid>
-                  </Box>  
+                  </Link>
+                </Box>  
+               
                    :
-                   
+              
+                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`} title="thefront">  
                  <Box p={2} color="white" style={{backgroundColor:"red",borderRadius:"5px"}}>
                  <Grid container> 
                   <Grid itme xs={1}>
                     <Box mt={1}>
                     <FormControl component="fieldset">
-                      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                        <FormControlLabel value="male" classes={{root: classes.radio}}  control={<Radio/>}/>
+                      <RadioGroup aria-label="plan" name="value" value={value} onChange = {(e)=>setValue(e.target.value)}  >
+                        <FormControlLabel value={row.field_subscription_charges} classes={{root: classes.radio}}  control={<Radio/>}/>
                      </RadioGroup>
                     </FormControl>
                     </Box>
@@ -198,8 +202,13 @@ const Subscriptions = props => {
                   <Grid itme xs={3}>
                       <Box mt={1}><Typography variant="h6" align="center">₹ {row.field_subscription_charges}</Typography></Box> 
                   </Grid>
+                  
                   </Grid>
-                  </Box> }
+                 
+                  </Box>
+                  </Link>
+                  
+                  }
                        
                   </Grid>  
                  </Grid>
