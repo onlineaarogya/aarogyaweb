@@ -117,7 +117,108 @@ const getFamilyDependentByUid = async data => {
     return regResponse;
 };
 
-// Function For Add Family Member
+
+// Get Medical History of Dependent 
+
+const getDependentMedicalHistory = async data => { 
+
+  const loginToken = checkToken();
+   var myHeaders = new Headers();
+   if(loginToken)
+    {
+       var bearerTokern = loginToken.access_token; 
+    }
+    else
+    {
+      return(1);
+    }
+
+  myHeaders.append("Authorization",`Bearer ${bearerTokern}`)
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  const response = await fetch(
+      process.env.NEXT_PUBLIC_PATIENT_API_URL + 'profile/getMedicalHistory',
+      requestOptions,
+    );
+
+    const regResponse = await response.json();
+    console.log("My Response",regResponse);
+
+    return regResponse;
+};
+
+// Function For Add Family Member Dependent
+
+const addFamilyMember = async data => { 
+
+  console.log("API Data called here ",data);
+
+   const loginToken = checkToken();
+   var myHeaders = new Headers();
+   if(loginToken)
+    {
+       var bearerTokern = loginToken.access_token; 
+    }
+    else
+    {
+      return(1);
+    }
+  
+   myHeaders.append("Content-Type", "application/json");
+   myHeaders.append("Authorization",`Bearer ${bearerTokern}`)
+
+   var recordData = JSON.stringify({
+     "relationship_id": 3,
+     "title": data.title,
+     "first_name": data.first_name,
+     "middle_name":data.middle_name,
+     "last_name": data.last_name,
+     "blood_group_id": data.blood_group,
+     "gender": data.gender,
+     "dob": "22-11-2007",
+     "height": data.height,
+     "weight": data.weight,
+     "address": data.address,
+     "city": data.city,
+     "state_id": data.state,
+     "pincode": data.pinCode,
+     "medical_problems": [
+      "test",
+      "test2"
+    ],
+    "allergies": [
+      "Api"
+    ],
+    "procedures": [],
+    "lifestyles": [],
+    "diagnosis": [
+      "super"
+    ],
+    "findings": [
+      "first"
+    ]
+   });
+   const requestOptions = {
+     method: 'POST',
+     headers:myHeaders,
+     body: recordData,
+     redirect: 'follow'
+   };
+    const response = await fetch(
+       process.env.NEXT_PUBLIC_PATIENT_API_URL + 'profile/addEditDependent',
+       requestOptions,
+     );
+     const regResponse = await response.json();
+     return regResponse;
+};
+
+
+// Function For Add Family Doctor
 const addFamilyDoctorDetail = async data => { 
 
    console.log("API Data called here ",data);
@@ -145,7 +246,7 @@ const addFamilyDoctorDetail = async data => {
       "mobile": data.mobile,
       "gender": data.gender,
       "address": data.address,
-      "city_id": data.city,
+      "city": data.city,
       "state_id": data.state,
       "pincode": data.pinCode,
       "speciality_id": data.specialist,
@@ -202,4 +303,4 @@ const addFamilyDoctorDetail = async data => {
 };
 
 
-export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,getSubscriptionDetails};
+export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification,getDependentMedicalHistory, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,addFamilyMember,getSubscriptionDetails};

@@ -297,13 +297,12 @@ function MemberDetails() {
                 <Grid item xs={12}>
                   <Box mt={2} mb={4} display="flex">
                     <UploadFile />
-
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={name}
                       onChange={e => setName(e.target.value)}
-                      style={{ marginLeft: '30px' }}
+                      style={{ marginLeft: '-240px' }}
                     >
                       <MenuItem value="showall">Select Member</MenuItem>
                       <MenuItem value="Johny">Johny</MenuItem>
@@ -313,6 +312,8 @@ function MemberDetails() {
                     </Select>
                   </Box>
 
+                 </Grid>
+                <Grid item xs={12}>
                   <MaterialTable
                     icons={tableIcons}
                     title="Member Details"

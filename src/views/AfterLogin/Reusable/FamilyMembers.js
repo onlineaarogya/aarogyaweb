@@ -29,6 +29,10 @@ import {
   DateTimePicker,
 } from '@material-ui/pickers';
 import { RadioGroup } from 'formik-material-ui';
+import {addFamilyMember} from '../../../components/helper/PatientApi';
+import { async } from 'validate.js';
+import AlertMassage from '../../../components/helper/AlertMessage';
+
 
 const useStyles = makeStyles(theme => ({
   inputTitle: {
@@ -82,16 +86,15 @@ export default function FamilyMembers() {
           initialValues={{
             title: '',
             first_name: '',
+            middle_name:'',
             last_name: '',
             dob: new Date(),
             gender:'',
-            age: '',
             height: '',
             gender:'',
             weight: '',
             blood_group: '',
             state: '',
-            district: '',
             city: '',
             pinCode: '',
             // mobile: editData.mobile,
@@ -104,7 +107,10 @@ export default function FamilyMembers() {
               .required('Title is required'),
             first_name: Yup.string()
               .max(255)
-              .required('Fist Name is required'),
+              .required('First Name is required'),
+            middle_name: Yup.string()
+              .max(255)
+              .required('Middle Name is required'),
             last_name: Yup.string()
               .max(255)
               .required('Last Name is required'),
@@ -113,9 +119,6 @@ export default function FamilyMembers() {
             // dob: Yup.string()
             //   .max(255)
             //   .required('Date of Birth is required'),
-            age: Yup.string()
-              .max(255)
-              .required('Age is required'),
             blood_group: Yup.string()
               .max(255)
               .required('Blood Group is required'),
@@ -131,9 +134,7 @@ export default function FamilyMembers() {
             state: Yup.string()
               .max(255)
               .required('State is required'),
-            district: Yup.string()
-              .max(255)
-              .required('District is required'),
+          
             city: Yup.string()
               .max(255)
               .required('City is required'),
@@ -153,18 +154,38 @@ export default function FamilyMembers() {
           //     alert(JSON.stringify(values, null, 2));
           //   }, 500);
           // }}
-          onSubmit={ (values, { setSubmitting, isSubmitting}) => {
+          onSubmit={async (values, { setSubmitting, isSubmitting}) => {
           setTimeout(() => {
               setSubmitting(false);
               console.log(JSON.stringify(values, null, 2));
             }, 2000);
-
+ 
+            const res = await addFamilyMember(values, null, 2);
             // POST request using fetch inside
             // var newData = Object.assign(values, {
             //   id: editData._id,
             //   action: 'update'
             // });
             setSubmitting(true);
+
+            if (res.success) {
+              setStatusBase('');
+              setStatusBase({
+                key: 22,
+                status: 'success',
+                msg: 'You data has been inserted successfully',
+              });
+              Router.push("/account/family-member", undefined, {
+                shallow: true,
+              });
+            } else {
+              setStatusBase('');
+              setStatusBase({
+                key: 22,
+                status: 'error',
+                msg: res.message,
+              });
+            }
             // alert(JSON.stringify(values, null, 2));
             // alert(isSubmitting)
             // const res = await getEmployeeAction(
@@ -266,7 +287,7 @@ export default function FamilyMembers() {
                     <MenuItem value="Mr.">Mr.</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item md={5} xs={12}>
+                <Grid item md={3} xs={12}>
                   <TextField
                     error={Boolean(touched.first_name && errors.first_name)}
                     fullWidth
@@ -280,7 +301,24 @@ export default function FamilyMembers() {
                     variant="outlined"
                   />
                 </Grid>
-                <Grid item md={5} xs={12}>
+
+                <Grid item md={3} xs={12}>
+                  <TextField
+                    error={Boolean(touched.middle_name && errors.middle_name)}
+                    fullWidth
+                    helperText={touched.middle_name && errors.middle_name}
+                    label="Middle Name *"
+                    // margin="normal"
+                    name="middle_name"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.middle_name}
+                    variant="outlined"
+                  />
+                </Grid>
+
+                
+                <Grid item md={4} xs={12}>
                   <TextField
                     error={Boolean(touched.last_name && errors.last_name)}
                     fullWidth
@@ -339,22 +377,9 @@ export default function FamilyMembers() {
                   </MuiPickersUtilsProvider>
                 </Grid>
 
-                <Grid item md={6} xs={12}>
-                  <TextField
-                    error={Boolean(touched.age && errors.age)}
-                    fullWidth
-                    helperText={touched.age && errors.age}
-                    label="Age *"
-                    name="age"
-                    type="number"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.age}
-                    variant="outlined"
-                  />
-                </Grid>
+      
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     id="blood_group"
                     error={Boolean(touched.blood_group && errors.blood_group)}
@@ -368,13 +393,13 @@ export default function FamilyMembers() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">O negative</MenuItem>
-                    <MenuItem value="O positive">O positive</MenuItem>
-                    <MenuItem value="B negative">B negative</MenuItem>
+                    <MenuItem value="6">O negative</MenuItem>
+                    <MenuItem value="6">O positive</MenuItem>
+                    <MenuItem value="6">B negative</MenuItem>
                   </TextField>
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     error={Boolean(touched.height && errors.height)}
                     fullWidth
@@ -390,7 +415,7 @@ export default function FamilyMembers() {
                   />
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     error={Boolean(touched.weight && errors.weight)}
                     fullWidth
@@ -427,7 +452,7 @@ export default function FamilyMembers() {
                   />
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     id="state"
                     error={Boolean(touched.state && errors.state)}
@@ -441,33 +466,14 @@ export default function FamilyMembers() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">Delhi</MenuItem>
-                    <MenuItem value="O positive">Haryana</MenuItem>
-                    <MenuItem value="B negative">Sikkim</MenuItem>
+                    <MenuItem value="32">Delhi</MenuItem>
+                    <MenuItem value="32">Haryana</MenuItem>
+                    <MenuItem value="32">Sikkim</MenuItem>
                   </TextField>
                 </Grid>
 
-                <Grid item md={6} xs={12}>
-                  <TextField
-                    id="district"
-                    error={Boolean(touched.district && errors.district)}
-                    fullWidth
-                    helperText={touched.district && errors.district}
-                    label="District *"
-                    name="district"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.district}
-                    variant="outlined"
-                    select
-                  >
-                    <MenuItem value="O negative">Patna</MenuItem>
-                    <MenuItem value="O positive">Sirsa</MenuItem>
-                    <MenuItem value="B negative">Gangtok</MenuItem>
-                  </TextField>
-                </Grid>
-
-                <Grid item md={6} xs={12}>
+              
+                <Grid item md={4} xs={12}>
                   <TextField
                     id="city"
                     error={Boolean(touched.city && errors.city)}
@@ -481,13 +487,13 @@ export default function FamilyMembers() {
                     variant="outlined"
                     select
                   >
-                    <MenuItem value="O negative">Mumbai</MenuItem>
-                    <MenuItem value="O positive">Delhi</MenuItem>
-                    <MenuItem value="B negative">Rajkot</MenuItem>
+                    <MenuItem value="4460">Mumbai</MenuItem>
+                    <MenuItem value="4460">Delhi</MenuItem>
+                    <MenuItem value="4460">Rajkot</MenuItem>
                   </TextField>
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     error={Boolean(touched.pinCode && errors.pinCode)}
                     fullWidth
@@ -503,7 +509,8 @@ export default function FamilyMembers() {
                     
                   />
                 </Grid>
-                
+
+                <Grid container justify = "center">
                 <Box my={2} ml={1.4}>
                   <Button
                     color="primary"
@@ -520,7 +527,7 @@ export default function FamilyMembers() {
                   {isSubmitting &&   <LinearProgress /> }
                   {/* <LinearProgress /> */}
                 </Box>
-               
+                </Grid>
               </Grid>
               {/* Custom form end */}
             </form>

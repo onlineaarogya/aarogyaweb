@@ -178,7 +178,7 @@ export default function CustomizedDialogs(props) {
 
       const [mystatess,setMystate] = useState([]);
 
-      const [autodata,setAutodat] = useState('');
+      const [autodata,setAutodat] = useState();
 
       const [value, setValue] = React.useState(null);
 
@@ -193,15 +193,18 @@ export default function CustomizedDialogs(props) {
            {"fileSize":filess ? filess.[0].file.size : null},
            
         ])
-       
-        setBigarray([...mystatess])
 
         
-        console.log("Given new array",mystatess);
-        console.log("This is Big Array",bigarray);
+       
+      
 
-        const myObjStr = JSON.stringify(bigarray);
-        console.log("JSON Array Data is here",myObjStr);
+
+        
+        // console.log("Given new array",mystatess);
+         console.log("This is Big Array",mystatess);
+
+        // const myObjStr = JSON.stringify(bigarray);
+        // console.log("JSON Array Data is here",myObjStr);
 
        // alert(myObjStr)
 
@@ -223,7 +226,16 @@ export default function CustomizedDialogs(props) {
       //    alert(autodata)
       //    console.log("Hello I am ",autodata)
       //  }
-      // console.log("Hello I am ",mystatess)
+
+       console.log("Hello I am ",autodata)
+
+       const addItemArrayss = ()=>
+       {
+          setMystates(autodata)
+          console.log('My New Array will be like',mystatesss)
+       }
+
+       
 
   return (
  <div>
@@ -234,7 +246,6 @@ export default function CustomizedDialogs(props) {
     </Button>
     
     <DropzoneDialogBase
-       
         dialogTitle={dialogTitle()}
         acceptedFiles={['image/*','application/pdf','application/docs']}
         fileObjects={fileObjects}
@@ -271,15 +282,10 @@ export default function CustomizedDialogs(props) {
      <div style={{marginLeft:"478px"}} >
       <Dialog
         className={classes.diaLog}
-        // BackdropProps={{
-        //   classes: {
-        //    root: classes.diaLog
-        //   }
-        //  }}
         PaperProps={{
           style: {
-            height:"450px",
-            width:"450px"
+            height:"400px",
+            width:"350px"
           },
         }}
         open={opens}
@@ -301,6 +307,9 @@ export default function CustomizedDialogs(props) {
               options={top100Films}
               getOptionLabel={(option) => option.title}
               style={{ width: 300 }}
+              onChange={(event, newValue) => {
+                setAutodat(newValue);
+              }}
               // value={(e)=>setAutodat(e.target.value)}
               onChange={(event, value) => setAutodat(value)}
               renderInput={(params) => <TextField   style={{ width: 300 }} {...params} label="Combo box" variant="outlined" />}
@@ -309,7 +318,7 @@ export default function CustomizedDialogs(props) {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={addItemArray} color="primary">
+          <Button onClick={addItemArrayss} color="primary">
             Submit
           </Button>
           <Button onClick={handleClose} color="primary">
