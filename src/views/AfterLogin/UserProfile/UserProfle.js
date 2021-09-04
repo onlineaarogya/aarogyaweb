@@ -1,14 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Typography,
-  Paper,
-  Box,
-  Divider,
-  Grid,
-  Button,
-  MenuItem,
-} from '@material-ui/core';
+import {Typography,Paper,Box,Divider,Grid,Button,MenuItem,} from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Imag1 from './Imag1.png';
 import Table from '@material-ui/core/Table';
@@ -20,6 +12,17 @@ import TableRow from '@material-ui/core/TableRow';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // Picker
 import Link from 'next/link';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import {getPatientLogin} from '../../../components/helper/PatientApi'
+import {getFamilyDependentByUid} from '../../../components/helper/PatientApi'
+import {checkToken} from '../../../components/helper/LoginCheck'
+import MedicalHistory from '../UserProfile/components/GetMedicalHistory/MedicalHistory';
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -68,36 +71,49 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function UserProfile() {
-  const rows = [
-    {
-      id: 1,
-      firstName: 'Jon',
-      lastName: 'Seth',
-      email: 'seth@yahoo.com',
-      state: 'Bihar',
-    },
-    {
-      id: 1,
-      firstName: 'Jonis',
-      lastName: 'Anam',
-      email: 'ana@gmail.com',
-      state: 'Gujrat',
-    },
-    {
-      id: 1,
-      firstName: 'Amber',
-      lastName: 'Saxena',
-      email: 'sad12@gmail.com',
-      state: 'MP',
-    },
-    {
-      id: 1,
-      firstName: 'Rabies',
-      lastName: 'Kumar',
-      email: 'rabies@yahoo.com',
-      state: 'Bihar',
-    },
-  ];
+ 
+  // Code for load API Data into a table
+
+  const [data, setData] = React.useState([]);
+
+  const getFamilyDependent = async () =>
+  {
+    var doctorData = await getFamilyDependentByUid();
+    console.log("Name:",doctorData);
+     setData(doctorData.dependents);
+  }
+
+  useEffect(() => {
+    const loginToken = checkToken();
+      if(loginToken)
+      {
+        getFamilyDependent();
+      }
+      else
+      {
+        Router.push('/signin', undefined, { shallow: true })
+      }
+    // fetchData();
+  }, [0]);
+
+  // To get Logged User Details
+ 
+    const [user, setUser] = React.useState('');
+
+  const getPatientLoginss =  async () =>
+  {
+    var doctorDatas = await checkToken();
+    console.log("User Detail:",doctorDatas);
+    setUser(doctorDatas.user);
+  }
+  
+  React.useEffect(() => {
+    //console.log('ssssssssssssssss',user)
+    getPatientLoginss();
+  },[]);
+
+
+  // Code for Progress bar
 
   const [completed, setCompleted] = React.useState('');
   const classess = useStyles();
@@ -110,16 +126,30 @@ function UserProfile() {
     }, 1000);
   }, []);
 
+
+  // Code for Open Model Box for Viewing Medical History
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+
   return (
     <div style={{ padding: 46 }}>
       {/* <Box mb={2}><Typography inline variant="h6" align="center">User Profile</Typography></Box> */}
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           {/* <div className={classess.root}>
              Hello I am jain Hakum
            </div> */}
-
-          <div className="profile-detials" style={{ width: '300px' }}>
+           
+          <div className="profile-detials" style={{ width: '320px' }}>
             <Box p={4} boxShadow={3}>
               <Paper elevation={0}>
                 {/* <img src={Imag1}  height="160px" width="200px" style={{marginLeft:"20px"}}/> */}
@@ -134,15 +164,15 @@ function UserProfile() {
                 ></Avatar>
               </Paper>
               <Typography align="center" variant="h6">
-                <b>Praveen Singh</b>
+                <b>{user.name}</b>
               </Typography>
               <Box mt={1} mb={1}></Box>
               <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
-                  <Typography>Email :</Typography>
+                  <Typography>Email:</Typography>
                 </Grid>
                 <Grid item xs>
-                  <Typography>dysenff@gmail.com</Typography>
+                  <Typography>{user.email}</Typography>
                 </Grid>
               </Grid>
               <Box mt={1} mb={1}></Box>
@@ -151,10 +181,10 @@ function UserProfile() {
                   <Typography>Mobile :</Typography>
                 </Grid>
                 <Grid item xs>
-                  <Typography>+91 920200202</Typography>
+                  <Typography>{user.mobile}</Typography>
                 </Grid>
               </Grid>
-
+            
               <Box mt={1} mb={1}></Box>
               <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
@@ -162,9 +192,12 @@ function UserProfile() {
                 </Grid>
                 <Grid item xs>
                   <Typography>Andheri (Mumbai)</Typography>
+                 
                 </Grid>
               </Grid>
-
+              {/* <Button onClick={getPatientLogins} color="primary" autoFocus>
+                 Close
+            </Button> */}
               <Box mt={1} mb={1}></Box>
               <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
@@ -187,6 +220,17 @@ function UserProfile() {
               </Grid>
 
               <Box mt={4} mb={0}>
+                  <Button
+                    size="small"
+                    onClick={handleClickOpen}
+                    color="primary"
+                    style={{ marginLeft: '40px' }}
+                   >
+                    View Medical History
+                  </Button>
+              </Box>
+
+              <Box mt={2} mb={0}>
                 <Link href="account/account-info">
                   <Button
                     size="small"
@@ -203,7 +247,7 @@ function UserProfile() {
         </Grid>
         {/* <Grid item xs={12} lg={1}></Grid> */}
 
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={7}>
           <Box boxShadow={0} p={0}>
             <Box
               alignContent="flex-end"
@@ -214,12 +258,12 @@ function UserProfile() {
             >
               <Grid container>
                 <Grid item xs={12} lg={2}>
-                  <div
+                   <div
                     className="progressBar"
                     style={{ marginTop: '-98px', marginLeft: '10px' }}
-                  >
+                    >
                     <div className={classess.percentage}>
-                      {completed ? completed + '%' : null}
+                      {completed ? <p>{user.profile_completion_progress}</p> :null}
                     </div>
                     <CircularProgress
                       className={classess.progress}
@@ -231,7 +275,7 @@ function UserProfile() {
                   </div>
                 </Grid>
                 <Grid item xs={12} lg={10}>
-                  <Box mt={2}>
+                  <Box mt={2} ml={3}>
                     <Typography align="left" variant="h6">
                       <b>Profile Progress</b>
                     </Typography>
@@ -239,9 +283,9 @@ function UserProfile() {
                   <p
                     color="secondary"
                     align="left"
-                    style={{ marginLeft: '13px', marginTop: '-3px' }}
+                    style={{ marginLeft: '38px', marginTop: '-3px' }}
                   >
-                    90% Completed
+                    {user.profile_completion_progress} Completed
                   </p>
                 </Grid>
               </Grid>
@@ -259,12 +303,13 @@ function UserProfile() {
                     <TableCell component="th">Image</TableCell>
                     <TableCell component="th">First Name</TableCell>
                     <TableCell>Last Name</TableCell>
-                    <TableCell>email</TableCell>
-                    <TableCell>State</TableCell>
+                    <TableCell>Gender</TableCell>
+                    <TableCell>Dob</TableCell>
+                    <TableCell>Address</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map(row => (
+                  {data.map(row => (
                     <TableRow key={row.id}>
                       <TableCell>
                         {' '}
@@ -272,10 +317,11 @@ function UserProfile() {
                           P
                         </Avatar>
                       </TableCell>
-                      <TableCell>{row.firstName}</TableCell>
-                      <TableCell>{row.lastName}</TableCell>
-                      <TableCell>{row.email}</TableCell>
-                      <TableCell>{row.state}</TableCell>
+                      <TableCell>{row.first_name}</TableCell>
+                      <TableCell>{row.last_name}</TableCell>
+                      <TableCell>{row.gender}</TableCell>
+                      <TableCell>{row.dob}</TableCell>
+                      <TableCell>{row.address}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -284,6 +330,31 @@ function UserProfile() {
           </Box>
         </Grid>
       </Grid>
+
+       {/* Model Box to view Medical History */}
+
+        <Dialog
+          maxWidth={'md'} // 'sm' || 'md' || 'lg' || 'xl'
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{""}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <MedicalHistory/>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              {/* Disagree */}
+            </Button>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
     </div>
   );
 }

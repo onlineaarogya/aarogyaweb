@@ -275,7 +275,6 @@ export default function AddFamilyDoctor() {
                   />
                 </Grid>
 
-
                 <Grid item md={3} xs={12}>
                   <TextField
                     error={Boolean(touched.middle_name && errors.middle_name)}
@@ -349,7 +348,7 @@ export default function AddFamilyDoctor() {
                  <div>{ !isValid || isSubmitting ? (values.gender != '' ?  <p></p> : <p style={{color:"red"}}>Gender is Required</p>) : <p></p> }</div>
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                {/* <Grid item md={6} xs={12}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       disableToolbar
@@ -368,7 +367,7 @@ export default function AddFamilyDoctor() {
                       }}
                     />
                   </MuiPickersUtilsProvider>
-                </Grid>
+                </Grid> */}
 
                 <Grid item md={6} xs={12}>
                   <TextField
@@ -384,7 +383,7 @@ export default function AddFamilyDoctor() {
                   />
                 </Grid>
 
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField
                     error={Boolean(touched.mobile && errors.mobile)}
                     fullWidth
@@ -399,7 +398,7 @@ export default function AddFamilyDoctor() {
                 </Grid>
 
 
-                <Grid item md={6} xs={5}>
+                <Grid item md={4} xs={5}>
                   <TextField
                     id="experience"
                     error={Boolean(touched.experience && errors.experience)}
@@ -423,7 +422,7 @@ export default function AddFamilyDoctor() {
                   </TextField>
                 </Grid>
 
-                <Grid item md={6} xs={5}>
+                <Grid item md={4} xs={5}>
                   <TextField
                     id="specialist"
                     error={Boolean(touched.specialist && errors.specialist)}
@@ -541,8 +540,8 @@ export default function AddFamilyDoctor() {
                     <MenuItem value="4460">Sikkim</MenuItem>
                   </TextField>
                 </Grid>
-                
-                <Box my={2} ml={1.4}>
+                <Grid container justify = "center">
+                 <Box my={2} ml={1.4}>
                   <Button
                     color="primary"
                     disabled={!isValid || isSubmitting}
@@ -558,7 +557,7 @@ export default function AddFamilyDoctor() {
                   {isSubmitting &&   <LinearProgress /> }
                   {/* <LinearProgress /> */}
                 </Box>
-               
+                </Grid>
               </Grid>
               {/* Custom form end */}
             </form>

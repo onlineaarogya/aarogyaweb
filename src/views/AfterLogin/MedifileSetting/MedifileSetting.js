@@ -54,18 +54,18 @@ function createData(name, fileSize, uploadDate, uploadedBy, verification, price)
   };
 }
 
-const rows = [
-   { id: 1, name: 'Shelter', fileSize: '10 MB', uploadDate: '22/03/2021',  uploadedBy: 'Arjun',   verification: 'Pending'},
-      { id: 1, name: 'Johny', fileSize: '20 MB',  uploadDate: '12/11/2020', uploadedBy: 'Rulap',  verification: 'Processing'},
-      { id: 1, name: 'Ajay', fileSize: '32 MB', uploadDate: '22/02/1990', uploadedBy: 'Arjun',  verification: 'Completed'},
-      { id: 1, name: 'Arjun', fileSize: '222 KB', uploadDate: '22/21/2021',  uploadedBy: 'Hemant',  verification: 'Pending'},
-      { id: 1, name: 'Sethia', fileSize: '120 KB', uploadDate: '22/21/2021', uploadedBy: 'Arjun',  verification: 'Pending'},
-      { id: 1, name: 'Depad', fileSize: '10 MB', uploadDate: '22/21/2021', uploadedBy: 'Arjun',  verification: 'Processing'},
-      { id: 1, name: 'Shrpad', fileSize: '10 MB', uploadDate: '22/21/2021', uploadedBy: 'Pankaj',  verification: 'Processing'},
-      { id: 1, name: 'Hampesh', fileSize: '10 MB', uploadDate: '22/21/2011', uploadedBy: 'Deband',  verification: 'Pending'},
+// const rows = [
+//    { id: 1, name: 'Shelter', fileSize: '10 MB', uploadDate: '22/03/2021',  uploadedBy: 'Arjun',   verification: 'Pending'},
+//       { id: 1, name: 'Johny', fileSize: '20 MB',  uploadDate: '12/11/2020', uploadedBy: 'Rulap',  verification: 'Processing'},
+//       { id: 1, name: 'Ajay', fileSize: '32 MB', uploadDate: '22/02/1990', uploadedBy: 'Arjun',  verification: 'Completed'},
+//       { id: 1, name: 'Arjun', fileSize: '222 KB', uploadDate: '22/21/2021',  uploadedBy: 'Hemant',  verification: 'Pending'},
+//       { id: 1, name: 'Sethia', fileSize: '120 KB', uploadDate: '22/21/2021', uploadedBy: 'Arjun',  verification: 'Pending'},
+//       { id: 1, name: 'Depad', fileSize: '10 MB', uploadDate: '22/21/2021', uploadedBy: 'Arjun',  verification: 'Processing'},
+//       { id: 1, name: 'Shrpad', fileSize: '10 MB', uploadDate: '22/21/2021', uploadedBy: 'Pankaj',  verification: 'Processing'},
+//       { id: 1, name: 'Hampesh', fileSize: '10 MB', uploadDate: '22/21/2011', uploadedBy: 'Deband',  verification: 'Pending'},
    
 
-];
+// ];
 
 function Row(props) 
 
@@ -113,44 +113,37 @@ function handleSwitchChange (e) {
   
 //  code for fetching data from api 
 
-  const [datas, setDatas] = useState([]);
-  const getFamilyDoctor = async () =>
-  {
-    var doctorData = await getFamilyDependentByUid();
-    console.log("Name:",doctorData);
-      setDatas(doctorData.dependents);
-  }
+  // const [datas, setDatas] = useState([]);
+  // const getFamilyDoctor = async () =>
+  // {
+  //   var doctorData = await getFamilyDependentByUid();
+  //   console.log("Name:",doctorData);
+  //     setDatas(doctorData.dependents);
+  // }
 
-  useEffect(() => {
-      const loginToken = checkToken();
-      if(loginToken)
-      {
-        getFamilyDoctor();
-      }
-      else
-      {
-        Router.push('/signin', undefined, { shallow: true })
-      }
-  }, [])
+  // useEffect(() => {
+  //     const loginToken = checkToken();
+  //     if(loginToken)
+  //     {
+  //       getFamilyDoctor();
+  //     }
+  //     else
+  //     {
+  //       Router.push('/signin', undefined, { shallow: true })
+  //     }
+  // }, [])
 
 
   return (
     <React.Fragment>
       
-      <TableRow>
-        <TableCell>{row.name}</TableCell>
-        <TableCell >{row.fileSize}</TableCell>
-        <TableCell >{row.uploadDate}</TableCell>
-        <TableCell >{row.uploadedBy}</TableCell>
-        <TableCell >{row.verification}</TableCell>
-        <TableCell component="th" scope="row">
+    
           <Switch
           checked={fileAcces}
           onChange={handleClickOpens}
           color="primary"
         />
-        </TableCell>
-      </TableRow>
+       
 
       <Dialog open={opens} onClose={handleCloses} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">{"Enter OTP for Verification"}</DialogTitle>
@@ -198,6 +191,41 @@ Row.propTypes = {
 
 
 export default function CollapsibleTable() {
+
+  const [datas, setDatas] = useState([]);
+  const getFamilyDoctor = async () =>
+  {
+    var doctorData = await getFamilyDependentByUid();
+    console.log("Name:",doctorData);
+      setDatas(doctorData.dependents);
+  }
+
+  useEffect(() => {
+      const loginToken = checkToken();
+      if(loginToken)
+      {
+        getFamilyDoctor();
+      }
+      else
+      {
+        Router.push('/signin', undefined, { shallow: true })
+      }
+  }, [])
+    //   const [datas, setData] = useState([]);
+
+    // const fetchData = async () => {
+    //     const res = await fetch(
+    //     'https://jsonplaceholder.typicode.com/users',
+    //     );
+    //     const json = await res.json();
+    //     setData(json);
+    // };
+
+    // useEffect(() => {
+    //     fetchData()
+    // },)
+
+
   return (
     <div>
        <MetaTitle title={`Medifile Setting | OnlineAarogya`} metaKeyWord="" metaDescription="" />
@@ -219,9 +247,16 @@ export default function CollapsibleTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
+          {datas.map((row) => (
+              <TableRow>
+                 <TableCell >{row.first_name}</TableCell>
+                 <TableCell >{row.last_name}</TableCell>
+                 <TableCell >{row.gender}</TableCell>
+                 <TableCell >{row.dob}</TableCell>
+                 <TableCell >{row.address}</TableCell>
+                 <TableCell ><Row key={row.name} row={row} /></TableCell>
+               </TableRow>
+           ))}
         </TableBody>
       </Table>
        </TableContainer>
