@@ -302,5 +302,26 @@ const addFamilyDoctorDetail = async data => {
     return regResponse;
 };
 
+// Code for Resend OTP 
 
-export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification,getDependentMedicalHistory, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,addFamilyMember,getSubscriptionDetails};
+const resendOtpRequest = async data => { 
+
+  var raw = JSON.stringify({
+    mobile: "8121272954",
+    "vtype": "register_otp"
+  });
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: raw,
+  };
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_PATIENT_API_URL + 'auth/resendOtp',
+    requestOptions,
+  );
+  const regResponse = await response.json();
+  return regResponse;
+  }
+
+export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification,getDependentMedicalHistory, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,addFamilyMember,getSubscriptionDetails,resendOtpRequest};

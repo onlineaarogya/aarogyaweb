@@ -13,6 +13,7 @@ import { LearnMoreLink } from 'components/atoms';
 import Link from 'next/link';
 import { getPatientRegister } from '../../../../components/helper/PatientApi';
 import AlertMassage from '../../../../components/helper/AlertMessage';
+import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,16 +46,38 @@ const schema = {
     //   minimum: 8,
     // },
   },
-  email: {
-    presence: { allowEmpty: false, message: 'is required', email: true },
-    length: {
-      maximum: 120,
-    },
-  },
+  // email: {
+  //   presence: { allowEmpty: false, message: 'is required', email: true },
+  //   length: {
+  //     maximum: 120,
+  //   },
+  // },
 };
 
 const Form = () => {
   const classes = useStyles();
+
+    
+  const schema = {
+    mobile: {
+      presence: { allowEmpty: false, message: 'is required' },
+      length: {
+        maximum: 10,
+        message: 'must be 10 digit',
+        minimum: 10,
+        message: 'must be 10 digit',
+      },
+    },
+    title: {
+      presence: { allowEmpty: false, message: 'is required' },
+    },
+    firstName: {
+      presence: { allowEmpty: false, message: 'is required' },
+    },
+    lastName: {
+      presence: { allowEmpty: false, message: 'is required' },
+    },
+  };
 
   const [formState, setFormState] = React.useState({
     isValid: false,
@@ -65,9 +88,14 @@ const Form = () => {
 
   const [subming, setSubiting] = React.useState(false);
   const [status, setStatusBase] = React.useState('');
+  const [progress,setProgress] = React.useState(false);
+  const [disable, setDisable] = React.useState(true);
+  const [clearform, setClearform] = React.useState('');
+  const [submitbtn,setSubmitbtn] = React.useState(false);
+  const timer = React.useRef();  // For calling timer on Progressbar
 
   React.useEffect(() => {
-    const errors = validate(formState.values, schema);
+    const errors = validate(formState.values,schema);
 
     setFormState(formState => ({
       ...formState,
@@ -93,27 +121,43 @@ const Form = () => {
         [event.target.name]: true,
       },
     }));
+    setSubiting(false);
+    setDisable(event.target.value === '');
   };
-
+  
   const handleSubmit = async event => {
     event.preventDefault();
-    setSubiting(true);
-    if (formState.isValid) {
-      
-      // window.location.replace('/');
+     setSubiting(true);
+     if (formState.isValid) 
+     {
+       // Code for Progressbar timer
+      if (!progress)
+       {  
+        setProgress(<LinearProgress/>)
+        timer.current = setTimeout(() => {  
+          setProgress(false);  
+        }, 1000);  
+       }  
+       // Ends here
 
       var data = JSON.stringify({"title":formState.values.title,"first_name":formState.values.firstName,"middle_name":"","last_name":formState.values.lastName,"mobile":formState.values.mobile,"email":formState.values.email});
      
          const res = await getPatientRegister(data);
          if(res.success){
+        //  setClearform(formState.values.title='',formState.values.firstName='',formState.values.lastName='',formState.values.mobile='',formState.values.email='',)
+        //  setSubmitbtn(true)
           setStatusBase('')
-         setStatusBase({
+          setStatusBase({
           key: 22,
           status: 'success',
           msg:
             'Account has been created successfully.',
         });
-        
+        setTimeout(() => {  
+          Router.push('/signin') 
+        }, 3000);  
+    
+       
       }else{
         // setStatusBase('');
         // // console.log('hello error else');
@@ -127,17 +171,18 @@ const Form = () => {
           setStatusBase({
             key: 22,
             status: 'error',
+            
             msg: res.errors.email ? res.errors.email : '' + res.errors.mobile ? ' ' + res.errors.mobile:'',
-       
+             
         });
-          
-                  
-
+      
       }
-      // console.log('res', res);
-      setSubiting(false);
-    }
 
+
+      // console.log('res', res);
+
+    }
+     
     setFormState(formState => ({
       ...formState,
       touched: {
@@ -145,8 +190,10 @@ const Form = () => {
         ...formState.errors,
       },
     }));
+   
+ 
   };
-
+ 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
   // console.log('api Url', process.env.NEXT_PUBLIC_PATIENT_API_URL);
@@ -161,7 +208,7 @@ const Form = () => {
     ) : null}
       <form name="password-reset-form" method="post" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <TextField
               // placeholder="Firs"
               label="Title *"
@@ -181,6 +228,7 @@ const Form = () => {
               {/* <MenuItem value="2">Enterprise</MenuItem> */}
             </TextField>
           </Grid>
+          {/* <Grid item xs={1}></Grid> */}
 
           <Grid item xs={5}>
             <TextField
@@ -199,7 +247,7 @@ const Form = () => {
               value={formState.values.firstName || ''}
             />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <TextField
               placeholder="Last name"
               label="Last name *"
@@ -217,11 +265,14 @@ const Form = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
+            {/* <TextField
               placeholder="Mobile"
               label="Mobile *"
               variant="outlined"
               size="medium"
+              onInput={(e)=>{ 
+                e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+              }}
               name="mobile"
               fullWidth
               helperText={
@@ -229,17 +280,36 @@ const Form = () => {
               }
               error={hasError('mobile')}
               onChange={handleChange}
-              type="mobile"
+              type="number"
+              value={formState.values.mobile || ''}
+            /> */}
+             <TextField
+              placeholder="Mobile"
+              label="Mobile *"
+              variant="outlined"
+              size="medium"
+              name="mobile"
+              onInput={(e)=>{ 
+                e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+              }}
+              fullWidth
+              helperText={
+                hasError('mobile') ? formState.errors.mobile[0] : null
+              }
+              error={hasError('mobile')}
+              onChange={handleChange}
+              type="number"
               value={formState.values.mobile || ''}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               placeholder="Email"
-              label="Email *"
+              label="Email"
               variant="outlined"
               size="medium"
               name="email"
+
               fullWidth
               helperText={hasError('email') ? formState.errors.email[0] : null}
               error={hasError('email')}
@@ -256,17 +326,34 @@ const Form = () => {
             </i>
           </Grid>
           <Grid item xs={12}>
-            <Button
+            
+           <Button size="large" variant="contained" type="submit" color="primary" disabled={disable} fullWidth> Submit </Button>
+            {progress !== false ? <LinearProgress /> : null  }
+           
+            {/* <Button
               size="large"
               variant="contained"
               type="submit"
               color="primary"
               fullWidth
+              
             >
               Submit
+            </Button> */}
+            {/* { subming == false ? 
+            <Button size="large" variant="contained" type="submit" color="primary" fullWidth>
+             Submit
+           </Button>
+             : 
+             <div>
+             <Button size="large" variant="contained" type="submit" color="primary" disabled fullWidth>
+              Submit 
             </Button>
-            {subming ? <LinearProgress /> : null}
-            
+       
+           
+            </div>
+           }
+             */} 
           </Grid>
           <Grid item xs={12}>
             <Typography

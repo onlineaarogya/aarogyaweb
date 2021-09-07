@@ -133,6 +133,9 @@ const Form = () => {
               variant="outlined"
               size="medium"
               name="mobile"
+              onInput={(e)=>{ 
+                e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+              }}
               fullWidth
               helperText={
                 hasError('mobile') ? formState.errors.mobile[0] : null
@@ -163,7 +166,7 @@ const Form = () => {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography
+            {/* <Typography
               variant="subtitle1"
               color="textSecondary"
               align="center"
@@ -177,7 +180,7 @@ const Form = () => {
                   />
                 </a>
               </Link>
-            </Typography>
+            </Typography> */}
           </Grid>
         </Grid>
       </form>
