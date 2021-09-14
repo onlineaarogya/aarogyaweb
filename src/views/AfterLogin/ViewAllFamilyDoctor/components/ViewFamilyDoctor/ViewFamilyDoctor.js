@@ -47,7 +47,13 @@ const ViewFamilyDoctor = props => {
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
+
+
+
+
   const [data, setData] = useState([]);
+
+  
   // const fetchData = async () => {
   //   const req = await fetch(
   //     'https://randomuser.me/api/?gender=male&results=100',
@@ -134,7 +140,9 @@ const ViewFamilyDoctor = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map(row => (
+              {
+              data ? 
+              data.map(row => (
                 <TableRow key={row.id}>
                   <TableCell align="center">{row.first_name}</TableCell>
                   <TableCell align="center">{row.mobile}</TableCell>
@@ -142,11 +150,14 @@ const ViewFamilyDoctor = props => {
                   <TableCell align="center">{row.yrs_of_practice}</TableCell>
                   <TableCell align="center">{row.pincode}</TableCell>
                   <TableCell align="center">{row.address}</TableCell>
-                
-                  {/* <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell> */}
                 </TableRow>
-              ))}
+              )) 
+              : 
+              <Grid container justify = "center">
+                 <Typography>No Data Found</Typography>
+              </Grid>
+             }
+              
             </TableBody>
           </Table>
         </TableContainer>

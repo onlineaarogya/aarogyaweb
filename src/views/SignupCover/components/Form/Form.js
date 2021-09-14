@@ -57,7 +57,6 @@ const schema = {
 const Form = () => {
   const classes = useStyles();
 
-    
   const schema = {
     mobile: {
       presence: { allowEmpty: false, message: 'is required' },

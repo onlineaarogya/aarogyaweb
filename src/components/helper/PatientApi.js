@@ -324,4 +324,81 @@ const resendOtpRequest = async data => {
   return regResponse;
   }
 
-export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification,getDependentMedicalHistory, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,addFamilyMember,getSubscriptionDetails,resendOtpRequest};
+
+// Support API 
+
+const getSupportTicket = async data => { 
+
+  const loginToken = checkToken();
+   var myHeaders = new Headers();
+   if(loginToken)
+    {
+       var bearerTokern = loginToken.access_token; 
+    }
+    else
+    {
+      return(1);
+    }
+
+  myHeaders.append("Authorization",`Bearer ${bearerTokern}`)
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  const response = await fetch(
+      process.env.NEXT_PUBLIC_PATIENT_API_URL + 'support/index',
+      requestOptions,
+    );
+
+    const regResponse = await response.json();
+    console.log("My Response",regResponse);
+
+    return regResponse;
+};
+
+
+// Code for Submit Support Raise Ticket 
+
+
+const raiseSupportTicket = async data => { 
+
+  console.log("API Data called here ",data);
+
+   const loginToken = checkToken();
+   var myHeaders = new Headers();
+   if(loginToken)
+    {
+       var bearerTokern = loginToken.access_token; 
+    }
+    else
+    {
+      return(1);
+    }
+  
+   myHeaders.append("Content-Type", "application/json");
+   myHeaders.append("Authorization",`Bearer ${bearerTokern}`)
+
+   var recordData = JSON.stringify({
+     "ticket_subject": data.subject,
+     "ticket_description": data.message,
+     "support_category_id": data.bookingID
+   });
+   const requestOptions = {
+     method: 'POST',
+     headers:myHeaders,
+     body: recordData,
+     redirect: 'follow'
+   };
+    const response = await fetch(
+       process.env.NEXT_PUBLIC_PATIENT_API_URL + 'support/raiseTicket',
+       requestOptions,
+     );
+     const regResponse = await response.json();
+     return regResponse;
+};
+
+
+export { getPatientLogin, getPatientRegister, getPatientLoginOtpVerification,getDependentMedicalHistory, getFamilyDoctorDetailByUid, getFamilyDependentByUid, addFamilyDoctorDetail,addFamilyMember,getSubscriptionDetails,resendOtpRequest,getSupportTicket,raiseSupportTicket};

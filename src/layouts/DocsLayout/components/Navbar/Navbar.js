@@ -206,7 +206,7 @@ const Navbar = ({ onMobileClose, openMobile }) => {
               Support
             </Typography>
           </div>
-          <Link href="#">
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/customer-support`}>
             <ListItem button>
               <ListItemIcon className={classes.iconWidth}>
                 <i class="fa fa-envelope" aria-hidden="true"></i>

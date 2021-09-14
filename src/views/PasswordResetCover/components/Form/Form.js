@@ -309,7 +309,7 @@ const Form = () => {
              
               { statuss == STATUS.STARTED ?  <Box mt={0} >
               <Typography variant="subtitle1" color="textSecondary"
-              align="center"  className="timer" > Resend OTP in <span style={{color:"green",fontWeight:"bold"}}>{twoDigits(minutesToDisplay)}:
+              align="center"  className="timer" > Resend OTP in <i class="far fa-clock"></i> <span style={{color:"green",fontWeight:"bold"}}>{twoDigits(minutesToDisplay)}:
                {twoDigits(secondsToDisplay)}</span> </Typography>
              </Box> 
               :            

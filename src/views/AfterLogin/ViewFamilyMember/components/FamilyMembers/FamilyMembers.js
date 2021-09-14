@@ -138,7 +138,7 @@ const FamilyMembers = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map(row => (
+              { data ?  data.map(row => (
                 <TableRow key={row.id}>
                   
                   <TableCell> <Avatar variant="square" className={classes.square}>P</Avatar></TableCell>
@@ -151,7 +151,10 @@ const FamilyMembers = props => {
                   {/* <TableCell >{row.carbs}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell> */}
                 </TableRow>
-              ))}
+              ))
+               :
+                <p>No Record Found</p>
+              }
             </TableBody>
           </Table>
         </TableContainer>
