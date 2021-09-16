@@ -93,7 +93,7 @@ const Navbar = ({ onMobileClose, openMobile }) => {
           </ListItem>
           </Link>
 
-          <Link
+          <a
             href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/family-member`}
           >
             <ListItem button>
@@ -102,9 +102,9 @@ const Navbar = ({ onMobileClose, openMobile }) => {
               </ListItemIcon>
               <ListItemText primary="Family Members" />
             </ListItem>
-          </Link>
+          </a>
 
-          <Link
+          <a
             href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/family-doctor`}
           >
             <ListItem button>
@@ -113,7 +113,7 @@ const Navbar = ({ onMobileClose, openMobile }) => {
               </ListItemIcon>
               <ListItemText primary="Family Doctor" />
             </ListItem>
-          </Link>
+          </a>
 
           <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/account/our-doctor`}>
             <ListItem button>
@@ -165,7 +165,7 @@ const Navbar = ({ onMobileClose, openMobile }) => {
                 </ListItem>
               </Link>
 
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/setting`}>
+              <a href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/setting`}>
                 <ListItem
                   button
                   className={classes.nested}
@@ -176,7 +176,7 @@ const Navbar = ({ onMobileClose, openMobile }) => {
                   </ListItemIcon>
                   <ListItemText primary="Setting" />
                 </ListItem>
-              </Link>
+              </a>
 
               <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/plans-subscriptions`}>
                 <ListItem

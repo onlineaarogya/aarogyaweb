@@ -491,13 +491,16 @@ export default function AddFamilyDoctor() {
 
                 <Grid item md={4} xs={12}>
                   <TextField
-                   // error={Boolean(touched.pinCode && errors.pinCode)}
+                    error={Boolean(touched.pinCode && errors.pinCode)}
                     fullWidth
-                  //  helperText={touched.pinCode && errors.pinCode}
+                    helperText={touched.pinCode && errors.pinCode}
                     label="Pincode *"
                     // margin="normal"
                     name="pinCode"
-                    
+                    type="number"
+                    onInput={(e)=>{ 
+                      e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,6)
+                    }}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.pinCode}
