@@ -144,13 +144,13 @@ function UserProfile() {
     <div style={{ padding: 46 }}>
       {/* <Box mb={2}><Typography inline variant="h6" align="center">User Profile</Typography></Box> */}
       <Grid container>
-        <Grid item xs={5}>
+        <Grid item xs={12}  sm={6}  lg={5}>
           {/* <div className={classess.root}>
              Hello I am jain Hakum
            </div> */}
            
           <div className="profile-detials" style={{ width: '320px' }}>
-            <Box p={4} boxShadow={3}>
+            <Box p={4} boxShadow={3} mb={2}>
               <Paper elevation={0}>
                 {/* <img src={Imag1}  height="160px" width="200px" style={{marginLeft:"20px"}}/> */}
                 <Avatar
@@ -247,7 +247,7 @@ function UserProfile() {
         </Grid>
         {/* <Grid item xs={12} lg={1}></Grid> */}
 
-        <Grid item xs={12} lg={7}>
+        <Grid item xs={12}  sm={6}  lg={7}>
           <Box boxShadow={0} p={0}>
             <Box
               alignContent="flex-end"

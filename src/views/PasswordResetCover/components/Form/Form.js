@@ -3,17 +3,24 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, Button, TextField } from '@material-ui/core';
 import validate from 'validate.js';
 import { LearnMoreLink } from 'components/atoms';
-import { getPatientLoginOtpVerification } from '../../../../components/helper/PatientApi';
+import { getPatientLoginOtpVerification,resendOtpRequest } from '../../../../components/helper/PatientApi';
 import AlertMassage from '../../../../components/helper/AlertMessage';
 import Router from 'next/router'
+
 import Encodr from "encodr"
 import Cookies from 'js-cookie'
+import {useState,useRef,useEffect} from 'react';
+import { Paper,Box, Avatar,Link as Nv } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert';
+import { browserHistory } from 'react-router'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
 }));
+
 
 
 const schema = {
@@ -128,6 +135,140 @@ const Form = () => {
     const [subming, setSubiting] = React.useState(false);
     const [status, setStatusBase] = React.useState('');
 
+
+    // Code for Resend OTP
+    
+    // const [counter, setCounter] = React.useState(10);
+    // const [resendotp,setResendOTP] = useState();
+    // const [hide ,setHide] = useState({
+    //   isActive: false
+    // }); 
+    // const [filee,setFilee] = useState(true);
+    // let history = useHistory();
+
+
+    // const otpResend = async(e)=>
+    // {
+    //   //e.preventDefault();
+    //   const res = await resendOtpRequest();
+    //   if (res.success) 
+    //   {
+    //     setStatusBase('');
+    //     setStatusBase({
+    //       key: 22,
+    //       status: 'success',
+    //       msg: 'OTP Resend Successfully',
+    //     });
+    //     // Router.push('/signin-otp')
+    //     //otpTimer();
+    //   }
+    //   if(filee==true)
+    //     {
+    //       setFilee(false)
+    //     }
+    //     else
+    //     {
+    //       setFilee(true)
+    //     }
+    // }
+
+    //    setTimeout(() => {
+    //       setResendOTP(<a href=''>Resend OTP</a>)
+    //       setFilee(true)
+    //      }, 10000)
+
+    //   useEffect(() => {
+    //     const timer =
+    //     counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    //     return () => clearInterval(timer)
+    //  }, [counter]);
+
+
+    // Timer for OTP 
+
+     // Code for Resend OTP Starts here 
+
+   const handleStart = async() => {
+    const res = await resendOtpRequest();
+    if (res.success) 
+    {
+      setStatusBase('');
+      setStatusBase({
+        key: 22,
+        status: 'success',
+        msg: 'OTP Resend Successfully',
+      });
+    }
+    setStatus(STATUS.STARTED)
+    setSecondsRemaining(INITIAL_COUNT)
+    }
+
+    const STATUS = {
+      STARTED: 'Started',
+      STOPPED:  <Typography
+      variant="subtitle1"
+      color="textSecondary"
+      align="center"
+      >
+      Didn't  recieve code  ?  
+      <LearnMoreLink title="Resent OTP" onClick={handleStart} />
+    </Typography> 
+    }
+ 
+
+  const INITIAL_COUNT = 10
+  const twoDigits = (num) => String(num).padStart(2, '0')
+  const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT)
+  const [statuss, setStatus] = useState(STATUS.STOPPED)
+  const [appear, setAppear] = useState(true)
+
+  const secondsToDisplay = secondsRemaining % 60
+  const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60
+  const minutesToDisplay = minutesRemaining % 60
+  const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60
+ 
+  
+  const handleStop = () => {
+    setStatus(STATUS.STOPPED)
+  }
+  const handleReset = () => {
+    setStatus(STATUS.STOPPED)
+  }
+  useInterval(
+    () => {
+      if (secondsRemaining > 0) 
+      {
+        setSecondsRemaining(secondsRemaining - 1)
+      } 
+      else 
+      {
+        setStatus(STATUS.STOPPED)
+      }
+    },
+    statuss === STATUS.STARTED ? 1000 : null,
+    // passing null stops the interval
+  )
+
+  function useInterval(callback, delay) {
+    const savedCallback = useRef()
+  
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback
+    }, [callback])
+  
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current()
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay)
+        return () => clearInterval(id)
+      }
+    }, [delay])
+  }
+
   return (
     <div className={classes.root}>
     {status ? (
@@ -162,26 +303,21 @@ const Form = () => {
             </i>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              size="large"
-              variant="contained"
-              type="submit"
-              color="primary"
-              fullWidth
-            >
-              Submit
-            </Button>
+            <Button size="large" variant="contained"type="submit"color="primary"fullWidth >Submit</Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography
-              variant="subtitle1"
-              color="textSecondary"
-              align="center"
-            >
-              Didn't  recieve code  ?  
-              <LearnMoreLink title="Resent OTP" href="/signin-cover" />
-            </Typography>
-          </Grid>
+             
+              { statuss == STATUS.STARTED ?  <Box mt={0} >
+              <Typography variant="subtitle1" color="textSecondary"
+              align="center"  className="timer" > Resend OTP in <i class="far fa-clock"></i> <span style={{color:"green",fontWeight:"bold"}}>{twoDigits(minutesToDisplay)}:
+               {twoDigits(secondsToDisplay)}</span> </Typography>
+             </Box> 
+              :            
+              statuss
+              }
+            
+            </Grid>
+       
         </Grid>
       </form>
     </div>

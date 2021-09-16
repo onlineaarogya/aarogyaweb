@@ -132,21 +132,22 @@ export default function AddFamilyDoctor() {
               .required('Last Name is required'),
             gender: Yup.string()
               .required(' Gender is Required'),
-           middle_name: Yup.string()
-              .max(255)
-              .required('Middle Name is required'),  
-           email: Yup.string()
-              .max(255)
-              .required('Email is required'),  
+          //  middle_name: Yup.string()
+          //     .max(255)
+          //     .required('Middle Name is required'),  
+          //  email: Yup.string()
+          //     .max(255)
+          //     .required('Email is required'),  
            mobile: Yup.string()
-              .max(255)
-              .required('Mobile is required'),    
-            experience: Yup.string()
-              .max(255)
-              .required('Experience is required'),    
-            specialist: Yup.string()
-              .max(255)
-              .required('Specialization is required'),  
+                .min(10, 'Mobile must be in 10 digits')
+                .max(10, 'Mobile must be in 10 digits')
+                .required('Mobile is required'),
+            // experience: Yup.string()
+            //   .max(255)
+            //   .required('Experience is required'),    
+            // specialist: Yup.string()
+            //   .max(255)
+            //   .required('Specialization is required'),  
             // dob: Yup.string()
             //   .max(255)
             //   .required('Date of Birth is required'),
@@ -154,22 +155,22 @@ export default function AddFamilyDoctor() {
             //   .max(255)
             //   .required('Age is required'),
            
-            address: Yup.string()
-              .max(255)
-              .required('Address is required'),
-            state: Yup.string()
-              .max(255)
-              .required('State is required'),
-            city: Yup.string()
-              .max(255)
-              .required('City is required'),
+            // address: Yup.string()
+            //   .max(255)
+            //   .required('Address is required'),
+            // state: Yup.string()
+            //   .max(255)
+            //   .required('State is required'),
+            // city: Yup.string()
+            //   .max(255)
+            //   .required('City is required'),
             // gender: Yup.string()
             //   .max(255)
             //   .required('Gender is required'),
-            pinCode: Yup.string()
-             .min(6, 'Must be exactly 6 digits')
-             .max(6, 'Must be exactly 6 digits')
-             .required('Pincode is required')
+            // pinCode: Yup.string()
+            //  .min(6, 'Must be exactly 6 digits')
+            //  .max(6, 'Must be exactly 6 digits')
+            //  .required('Pincode is required')
            
 
           })}
@@ -277,9 +278,9 @@ export default function AddFamilyDoctor() {
 
                 <Grid item md={3} xs={12}>
                   <TextField
-                    error={Boolean(touched.middle_name && errors.middle_name)}
+                   // error={Boolean(touched.middle_name && errors.middle_name)}
                     fullWidth
-                    helperText={touched.middle_name && errors.middle_name}
+                   // helperText={touched.middle_name && errors.middle_name}
                     label="Middle Name *"
                     name="middle_name"
                     onBlur={handleBlur}
@@ -371,9 +372,9 @@ export default function AddFamilyDoctor() {
 
                 <Grid item md={6} xs={12}>
                   <TextField
-                    error={Boolean(touched.email && errors.email)}
+                    // error={Boolean(touched.email && errors.email)}
                     fullWidth
-                    helperText={touched.email && errors.email}
+                    //helperText={touched.email && errors.email}
                     label="Email*"
                     name="email"
                     onBlur={handleBlur}
@@ -390,7 +391,11 @@ export default function AddFamilyDoctor() {
                     helperText={touched.mobile && errors.mobile}
                     label="Mobile *"
                     name="mobile"
+                    type="number"
                     onBlur={handleBlur}
+                    onInput={(e)=>{ 
+                      e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+                    }}
                     onChange={handleChange}
                     value={values.mobile}
                     variant="outlined"
@@ -401,9 +406,9 @@ export default function AddFamilyDoctor() {
                 <Grid item md={4} xs={5}>
                   <TextField
                     id="experience"
-                    error={Boolean(touched.experience && errors.experience)}
+                    //error={Boolean(touched.experience && errors.experience)}
                     fullWidth
-                    helperText={touched.experience && errors.experience}
+                    //helperText={touched.experience && errors.experience}
                     label="Experience *"
                     name="experience"
                     onBlur={handleBlur}
@@ -425,9 +430,9 @@ export default function AddFamilyDoctor() {
                 <Grid item md={4} xs={5}>
                   <TextField
                     id="specialist"
-                    error={Boolean(touched.specialist && errors.specialist)}
+                   // error={Boolean(touched.specialist && errors.specialist)}
                     fullWidth
-                    helperText={touched.specialist && errors.specialist}
+                   // helperText={touched.specialist && errors.specialist}
                     label="Specialization*"
                     name="specialist"
                     onBlur={handleBlur}
@@ -469,9 +474,9 @@ export default function AddFamilyDoctor() {
 
                 <Grid item md={12} xs={12}>
                   <TextField
-                    error={Boolean(touched.address && errors.address)}
+                   // error={Boolean(touched.address && errors.address)}
                     fullWidth
-                    helperText={touched.address && errors.address}
+                   // helperText={touched.address && errors.address}
                     label="Address"
                     // margin="normal"
                     name="address"
@@ -486,9 +491,9 @@ export default function AddFamilyDoctor() {
 
                 <Grid item md={4} xs={12}>
                   <TextField
-                    error={Boolean(touched.pinCode && errors.pinCode)}
+                   // error={Boolean(touched.pinCode && errors.pinCode)}
                     fullWidth
-                    helperText={touched.pinCode && errors.pinCode}
+                  //  helperText={touched.pinCode && errors.pinCode}
                     label="Pincode *"
                     // margin="normal"
                     name="pinCode"
@@ -504,9 +509,9 @@ export default function AddFamilyDoctor() {
                 <Grid item md={4} xs={12}>
                   <TextField
                     id="city"
-                    error={Boolean(touched.city && errors.city)}
+                   // error={Boolean(touched.city && errors.city)}
                     fullWidth
-                    helperText={touched.city && errors.city}
+                   // helperText={touched.city && errors.city}
                     label="City *"
                     name="city"
                     onBlur={handleBlur}
@@ -524,9 +529,9 @@ export default function AddFamilyDoctor() {
                 <Grid item md={4} xs={12}>
                   <TextField
                     id="state"
-                    error={Boolean(touched.state && errors.state)}
+                    //error={Boolean(touched.state && errors.state)}
                     fullWidth
-                    helperText={touched.state && errors.state}
+                   // helperText={touched.state && errors.state}
                     label="State *"
                     name="state"
                     onBlur={handleBlur}

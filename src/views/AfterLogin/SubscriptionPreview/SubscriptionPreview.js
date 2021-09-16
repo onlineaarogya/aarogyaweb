@@ -157,7 +157,7 @@ const Subscriptions = props => {
               <Paper elevation={0} >
                 <Grid container className={classes.dependentStyle}>
                   <Grid itme xs={12} lg={12}>
-                   {row.nid != myParam ?  <Box p={2} style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
+                   {row.nid != myParam ?  <Box p={2} mb={2} style={{backgroundColor:"#ececec",borderRadius:"5px"}}>
 
                 <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/medifiles/subscription-preview?nid=${row.nid}`} title="thefront"> 
                  <Grid container> 
