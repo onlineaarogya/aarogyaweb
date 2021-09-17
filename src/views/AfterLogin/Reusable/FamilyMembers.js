@@ -70,10 +70,18 @@ export default function FamilyMembers() {
   });
   const [imgPreview, setImgPreview] = useState('');
 
-
+ // Alert message code 
+ const [status, setStatusBase] = React.useState('');
   
   return (
     <div>
+        {status ? (
+        <AlertMassage
+          key={status.key}
+          message={status.msg}
+          status={status.status}
+        />
+      ) : null}
       <Grid container spacing={isMd ? 4 : 2}>
         {/* <Grid item xs={12}>
               <Typography variant="h6" color="textPrimary">
@@ -89,6 +97,7 @@ export default function FamilyMembers() {
             middle_name:'',
             last_name: '',
             dob: new Date(),
+            mobile:'',
             gender:'',
             height: '',
             gender:'',
@@ -119,6 +128,10 @@ export default function FamilyMembers() {
             // dob: Yup.string()
             //   .max(255)
             //   .required('Date of Birth is required'),
+            mobile: Yup.string()
+            .min(10, 'Mobile must be in 10 digits')
+            .max(10, 'Mobile must be in 10 digits')
+            .required('Mobile is required'),
             blood_group: Yup.string()
               .max(255)
               .required('Blood Group is required'),
@@ -142,8 +155,8 @@ export default function FamilyMembers() {
             //   .max(255)
             //   .required('Gender is required'),
             pinCode: Yup.string()
-             .min(6, 'Must be exactly 6 digits')
-             .max(6, 'Must be exactly 6 digits')
+            .min(6, 'Pincode must be in 6 digits')
+            .max(6, 'Pincode must be in 6 digits')
              .required('Pincode is required')
            
 
@@ -377,9 +390,25 @@ export default function FamilyMembers() {
                   </MuiPickersUtilsProvider>
                 </Grid>
 
-      
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    error={Boolean(touched.mobile && errors.mobile)}
+                    fullWidth
+                    helperText={touched.mobile && errors.mobile}
+                    label="Mobile *"
+                    name="mobile"
+                    type="number"
+                    onBlur={handleBlur}
+                    onInput={(e)=>{ 
+                      e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+                    }}
+                    onChange={handleChange}
+                    value={values.mobile}
+                    variant="outlined"
+                  />
+                </Grid>
 
-                <Grid item md={4} xs={12}>
+                <Grid item md={6} xs={12}>
                   <TextField
                     id="blood_group"
                     error={Boolean(touched.blood_group && errors.blood_group)}
@@ -399,7 +428,7 @@ export default function FamilyMembers() {
                   </TextField>
                 </Grid>
 
-                <Grid item md={4} xs={12}>
+                <Grid item md={6} xs={12}>
                   <TextField
                     error={Boolean(touched.height && errors.height)}
                     fullWidth
@@ -415,7 +444,7 @@ export default function FamilyMembers() {
                   />
                 </Grid>
 
-                <Grid item md={4} xs={12}>
+                <Grid item md={6} xs={12}>
                   <TextField
                     error={Boolean(touched.weight && errors.weight)}
                     fullWidth
@@ -454,25 +483,24 @@ export default function FamilyMembers() {
 
                 <Grid item md={4} xs={12}>
                   <TextField
-                    id="state"
-                    error={Boolean(touched.state && errors.state)}
+                    error={Boolean(touched.pinCode && errors.pinCode)}
                     fullWidth
-                    helperText={touched.state && errors.state}
-                    label="State *"
-                    name="state"
+                    helperText={touched.pinCode && errors.pinCode}
+                    label="Pincode *"
+                    // margin="normal"
+                    name="pinCode"
+                    onInput={(e)=>{ 
+                      e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,6)
+                    }}
+                    type="number"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.state}
+                    value={values.pinCode}
                     variant="outlined"
-                    select
-                  >
-                    <MenuItem value="32">Delhi</MenuItem>
-                    <MenuItem value="32">Haryana</MenuItem>
-                    <MenuItem value="32">Sikkim</MenuItem>
-                  </TextField>
+                    
+                  />
                 </Grid>
 
-              
                 <Grid item md={4} xs={12}>
                   <TextField
                     id="city"
@@ -495,20 +523,24 @@ export default function FamilyMembers() {
 
                 <Grid item md={4} xs={12}>
                   <TextField
-                    error={Boolean(touched.pinCode && errors.pinCode)}
+                    id="state"
+                    error={Boolean(touched.state && errors.state)}
                     fullWidth
-                    helperText={touched.pinCode && errors.pinCode}
-                    label="Pincode *"
-                    // margin="normal"
-                    name="pinCode"
-                    type="number"
+                    helperText={touched.state && errors.state}
+                    label="State *"
+                    name="state"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.pinCode}
+                    value={values.state}
                     variant="outlined"
-                    
-                  />
+                    select
+                  >
+                    <MenuItem value="32">Delhi</MenuItem>
+                    <MenuItem value="32">Haryana</MenuItem>
+                    <MenuItem value="32">Sikkim</MenuItem>
+                  </TextField>
                 </Grid>
+
 
                 <Grid container justify = "center">
                 <Box my={2} ml={1.4}>
