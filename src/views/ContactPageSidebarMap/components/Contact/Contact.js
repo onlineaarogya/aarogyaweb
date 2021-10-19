@@ -125,8 +125,9 @@ const Contact = props => {
             style={{marginTop:"80px"}}
             secondary={
               <div> <p>175/108, Landmark Business Hub, 1st floor,</p>
-               <p>Tokarkhada Silvassa, Dadra & Nagar and Daman & Diu, 396230</p> 
-               <p>hr@oaarogya.com</p>
+               <p>Tokarkhada Silvassa, Dadra & Nagar Haveli and </p> 
+               <p>Daman & Diu 396230</p>
+               <p> hr@oaarogya.com</p>
                <p>+91 9574882777</p>
                </div>
             }
