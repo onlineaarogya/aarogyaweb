@@ -120,7 +120,7 @@ const About = props => {
                   variant="h6"
                   // style={{ color: '#2d3748' }}
                 >
-                  Stop looking for answers on the search engine, take expert
+                  Stop looking for answers on the search engines, take expert
                   help. Choose the best doctor available in your locality or
                   across the country. Get personalized care and one-on-one
                   interactions for any health related issues. 100% secured
