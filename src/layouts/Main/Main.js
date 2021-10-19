@@ -294,11 +294,6 @@ const Main = ({ children, themeToggler, themeMode }) => {
             },
 
             {
-              title: 'Leadership Team',
-              href: 'our-leadership-team',
-            },
-
-            {
               title: 'How it Works',
               // href: '/service',
             },
@@ -354,32 +349,29 @@ const Main = ({ children, themeToggler, themeMode }) => {
           ],
         },
         company: {
-          groupTitle: 'City',
+          groupTitle: 'Location',
           pages: [
             {
-              title: 'Silvassa',
+              title: 'Dadra & Nagar Haveli',
               // href: '/about',
             },
             {
-              title: 'Daman',
+              title: 'Daman & Diu',
               // href: '/about-side-cover',
             },
             {
-              title: 'Vapi',
+              title: 'Silvassa',
               // href: '/pricing',
-            },
-            {
-              title: 'Jamshedpur',
-              // href: '/company-terms',
             },
             {
               title: 'Valsad',
               // href: '/company-terms',
             },
             {
-              title: 'Jaipur',
+              title: 'Vapi',
               // href: '/company-terms',
             },
+           
           ],
         },
         contact: {

@@ -101,7 +101,7 @@ const Contact = props => {
           <ListItemText
             className={classes.listItemText}
             primary="Phone"
-            secondary="+91 8866126777"
+            secondary="+91 9574882777"
             primaryTypographyProps={{
               variant: 'subtitle1',
               color: '#ffebee',

@@ -279,8 +279,8 @@ const Footer = props => {
                         : classes.navLinkMode)
                     }
                   >
-                    802, Landmark Business Hub, Silvassa, <br></br>Dadra and
-                    Nagar Haveli and Daman and Diu, 396230
+                   175/108, Landmark Business Hub, 1st floor, <br></br>Tokarkhada
+                   Silvassa, Dadra & Nagar and Daman & Diu, 396230
                   </Typography>
                   <Typography
                     variant="body2"
@@ -302,7 +302,7 @@ const Footer = props => {
                         : classes.navLinkMode)
                     }
                   >
-                    +91 8866126777
+                    +91 9574882777
                   </Typography>
                 </List>
               </Grid>

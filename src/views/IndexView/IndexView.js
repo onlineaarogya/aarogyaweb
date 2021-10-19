@@ -136,10 +136,10 @@ const IndexView = ({ themeMode }) => {
       <Features />
       {/* </SectionAlternate> */}
 
-      <SectionAlternate className={classes.sectionAlternateNoPaddingTop}>
+      {/* <SectionAlternate className={classes.sectionAlternateNoPaddingTop}> */}
         {/* <Products data={products} /> */}
-        <ProductBox />
-      </SectionAlternate>
+        {/* <ProductBox />
+      </SectionAlternate> */}
 
       <Section className={classes.sectionTop}>
         <Categories data={categories} />

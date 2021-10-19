@@ -69,7 +69,7 @@ const Contact = props => {
           <ListItemText
             className={classes.listItemText}
             primary="Phone"
-            secondary="+91 8866126777"
+            secondary="+91 9574882777"
             primaryTypographyProps={{
               variant: 'subtitle1',
               color: 'textSecondary',
@@ -122,7 +122,14 @@ const Contact = props => {
           <ListItemText
             className={classes.listItemText}
             primary="Head Office"
-            secondary="802 Landmark Business Hub Silvassa, 396230"
+            style={{marginTop:"80px"}}
+            secondary={
+              <div> <p>175/108, Landmark Business Hub, 1st floor,</p>
+               <p>Tokarkhada Silvassa, Dadra & Nagar and Daman & Diu, 396230</p> 
+               <p>hr@oaarogya.com</p>
+               <p>+91 9574882777</p>
+               </div>
+            }
             primaryTypographyProps={{
               variant: 'subtitle1',
               color: 'textSecondary',
