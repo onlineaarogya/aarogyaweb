@@ -407,9 +407,12 @@ const Main = ({ children, themeToggler, themeMode }) => {
         portfolio: {
           groupTitle: 'Legal',
           pages: [
-           
             {
-              title: 'Terms & Conditions',
+               title: 'Terms & Condition',
+              // href: '/portfolio-page',
+            },
+            {
+              title: 'Privacy Policy',
               href: '/',
             },
           ],
