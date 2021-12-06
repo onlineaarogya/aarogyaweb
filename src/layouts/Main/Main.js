@@ -169,6 +169,7 @@ const Main = ({ children, themeToggler, themeMode }) => {
             {
               title: 'General',
               href: '/account/?pid=general',
+              
             },
             {
               title: 'Security',
@@ -409,11 +410,12 @@ const Main = ({ children, themeToggler, themeMode }) => {
           pages: [
             {
                title: 'Terms & Condition',
-               href:process.env.NEXT_PUBLIC_BASE_URL + '/assets/Privacy.pdf',
+               href:process.env.NEXT_PUBLIC_BASE_URL + '/assets/terms-condition.pdf',
+              
             },
             {
               title: 'Privacy Policy',
-              href:process.env.NEXT_PUBLIC_BASE_URL + '/assets/T_C.pdf',
+              href:process.env.NEXT_PUBLIC_BASE_URL + '/assets/privacy-policy.pdf',
             },
           ],
         },
