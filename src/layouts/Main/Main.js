@@ -409,11 +409,11 @@ const Main = ({ children, themeToggler, themeMode }) => {
           pages: [
             {
                title: 'Terms & Condition',
-              // href: '/portfolio-page',
+               href:process.env.NEXT_PUBLIC_BASE_URL + '/assets/Privacy.pdf',
             },
             {
               title: 'Privacy Policy',
-              href: '/',
+              href:process.env.NEXT_PUBLIC_BASE_URL + '/assets/T_C.pdf',
             },
           ],
         },

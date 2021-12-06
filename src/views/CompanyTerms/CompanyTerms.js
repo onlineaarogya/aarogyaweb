@@ -74,7 +74,7 @@ const CompanyTerms = () => {
       <Section className={classes.pagePaddingTop}>
         <>
           <DescriptionCta
-            title="Terms of Service"
+            title="Terms & Condition"
             subtitle="Updated on 04.08.2021"
             primaryCta={
               <Button variant="outlined" color="primary" size="large">
