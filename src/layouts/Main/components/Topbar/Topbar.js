@@ -350,7 +350,7 @@ const Topbar = ({
             </Typography>
           </Link> */}
 
-          <Link
+<Link
             href={`${process.env.NEXT_PUBLIC_BASE_URL}/contact-us`}
             color="textPrimary"
             variant="body1"
@@ -359,7 +359,6 @@ const Topbar = ({
             <Typography
               variant="body1"
               color="textPrimary"
-              component="a"
               className={clsx(
                 classes.listItemText,
                 'menu-item',
